@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: true
 milestone: core_claim
-notes: "CPU validation job for the fixed evaluator/package. Expected to rerun the scaled Splannequin benchmark, keep extra-scene robustness diagnostics out of scores.json, and pass validate.py --compare."
+notes: "Continuation audit found the package locally valid and core_claim sound. This CPU test reruns the fixed evaluator/package end-to-end so the extra-scene diagnostics can support restoring core_claim_plus after a clean validate.py --compare pass."

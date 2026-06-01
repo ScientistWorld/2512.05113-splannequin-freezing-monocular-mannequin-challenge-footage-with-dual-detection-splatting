@@ -10,6 +10,8 @@ Continuation audit on 2026-06-01 found that the workspace had no reproduced scor
 
 Continuation audit on 2026-06-01 verified that the existing implementation is a scaled implementation of the paper's computational steps rather than a surrogate. I added an extra-scene evaluation axis so the next job can test whether the core effect holds beyond the original single generated scene.
 
+Continuation audit on 2026-06-01 after milestone reset confirmed the local fixed evaluator passes `python validate.py --compare`, and the last successful cluster job supports `core_claim`. Because the extra-scene evidence came from a job that failed only at validation output structure, I am submitting a clean CPU validation job before restoring `core_claim_plus`.
+
 ## Results
 
 The second CPU job ran the full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`.
