@@ -75,27 +75,34 @@ def evaluate_one(path: Path, gt: np.ndarray) -> dict[str, float]:
     }
 
 
+PAPER_NAME_ALIASES = {
+    "baseline": "4dgaussians",
+    "baseline_dynamic_gs": "4dgaussians",
+    "splannequin": "4dgaussians_splannequin",
+}
+
+
 def evaluate_group(data_path: Path, inputs: list[Path], names: list[str]) -> tuple[dict[str, dict[str, float]], dict[str, dict[str, float]]]:
     scene = json.loads(data_path.read_text(encoding="utf-8"))
     gt = np.asarray(scene["gt_freeze"], dtype=np.float32)
     results = {}
     for name, input_path in zip(names, inputs):
         results[name] = evaluate_one(input_path, gt)
-    baseline_state = results["baseline_dynamic_gs"]["_raw_inference_state_values"]
+    baseline_key = "baseline_dynamic_gs" if "baseline_dynamic_gs" in results else names[0]
+    baseline_state = results[baseline_key]["_raw_inference_state_values"]
     for metrics in results.values():
         metrics["inference_overhead"] = metrics["_raw_inference_state_values"] / baseline_state - 1.0
         del metrics["_raw_inference_state_values"]
 
-    paper_named = {
-        "4dgaussians": {
-            k: results["baseline_dynamic_gs"][k]
+    paper_named = {}
+    for name, metrics in results.items():
+        if name.startswith("splannequin_no_"):
+            continue
+        paper_name = PAPER_NAME_ALIASES.get(name, name)
+        paper_named[paper_name] = {
+            k: metrics[k]
             for k in ["psnr", "ssim", "lpips", "fvd", "foreground_mae", "edge_mae", "inference_overhead"]
-        },
-        "4dgaussians_splannequin": {
-            k: results["splannequin"][k]
-            for k in ["psnr", "ssim", "lpips", "fvd", "foreground_mae", "edge_mae", "inference_overhead"]
-        },
-    }
+        }
     return results, paper_named
 
 
@@ -121,19 +128,21 @@ def main() -> None:
     if len(args.inputs) != len(args.names):
         raise SystemExit("--inputs and --names must have the same length")
     results, paper_named = evaluate_group(Path(args.data), [Path(p) for p in args.inputs], args.names)
-    full = results["splannequin"]
-    no_hidden = results["splannequin_no_hidden"]
-    no_defective = results["splannequin_no_defective"]
-    ablations = {
-        "no_hidden_loss": {
-            "cqa_average_degradation_pct": 100.0 * (no_hidden["psnr"] - full["psnr"]) / max(abs(full["psnr"]), 1e-9),
-            "cover_technical_degradation_pct": -100.0 * (no_hidden["ghosting_error"] - full["ghosting_error"]) / max(abs(full["ghosting_error"]), 1e-9),
-        },
-        "no_defective_loss": {
-            "cqa_average_degradation_pct": 100.0 * (no_defective["psnr"] - full["psnr"]) / max(abs(full["psnr"]), 1e-9),
-            "cover_technical_degradation_pct": -100.0 * (no_defective["ghosting_error"] - full["ghosting_error"]) / max(abs(full["ghosting_error"]), 1e-9),
-        },
-    }
+    ablations = {}
+    if {"splannequin", "splannequin_no_hidden", "splannequin_no_defective"}.issubset(results):
+        full = results["splannequin"]
+        no_hidden = results["splannequin_no_hidden"]
+        no_defective = results["splannequin_no_defective"]
+        ablations = {
+            "no_hidden_loss": {
+                "cqa_average_degradation_pct": 100.0 * (no_hidden["psnr"] - full["psnr"]) / max(abs(full["psnr"]), 1e-9),
+                "cover_technical_degradation_pct": -100.0 * (no_hidden["ghosting_error"] - full["ghosting_error"]) / max(abs(full["ghosting_error"]), 1e-9),
+            },
+            "no_defective_loss": {
+                "cqa_average_degradation_pct": 100.0 * (no_defective["psnr"] - full["psnr"]) / max(abs(full["psnr"]), 1e-9),
+                "cover_technical_degradation_pct": -100.0 * (no_defective["ghosting_error"] - full["ghosting_error"]) / max(abs(full["ghosting_error"]), 1e-9),
+            },
+        }
     extra_groups = []
     for scene_dir in sorted(Path("checkpoints").glob("extra_seed_*")):
         data_path = Path("data") / f"{scene_dir.name}.json"
@@ -144,15 +153,20 @@ def main() -> None:
             scene_dir / "no_defective" / "predictions.json",
         ]
         if data_path.exists() and all(path.exists() for path in paths):
-            _, extra_paper_named = evaluate_group(data_path, paths, args.names)
+            _, extra_paper_named = evaluate_group(
+                data_path,
+                paths,
+                ["baseline_dynamic_gs", "splannequin", "splannequin_no_hidden", "splannequin_no_defective"],
+            )
             extra_groups.append(extra_paper_named)
 
     diagnostics = {
         "experiments": {
             "synthetic_freeze_time": {"results": results},
-            "ablation_regularizers": {"results": ablations},
         }
     }
+    if ablations:
+        diagnostics["experiments"]["ablation_regularizers"] = {"results": ablations}
     if extra_groups:
         diagnostics["experiments"]["synthetic_validation_extra_scenes"] = {"results": summarize_groups(extra_groups)}
     Path("scoring/diagnostics.json").write_text(json.dumps(diagnostics, indent=2), encoding="utf-8")

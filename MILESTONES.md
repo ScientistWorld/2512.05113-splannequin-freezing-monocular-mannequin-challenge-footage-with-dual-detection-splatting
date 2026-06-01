@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: method_runs**
 
 ## Progress Log
 
@@ -24,3 +24,8 @@
 - Final verification kept the milestone at `core_claim_plus`.
 - Tightened method-agnostic documentation, completed the scored metric surface, and removed tracked runtime artifacts.
 - `python validate.py --compare` passed after the verification fixes.
+
+### [2026-06-01 12:35] - method_runs
+- Integrity review found the previous scaled implementation used contribution-threshold defective detection and nearest-anchor sweeps, which were too far from the paper's stated training procedure.
+- Revised the method to use near-zero reconstruction gradients for defective detection, random reference timestamp sampling, L2-to-L1 anchoring, and time-varying position/color/opacity/scale parameters.
+- Downgraded the current milestone pending a fresh CPU job to verify whether the revised implementation restores the core claim.

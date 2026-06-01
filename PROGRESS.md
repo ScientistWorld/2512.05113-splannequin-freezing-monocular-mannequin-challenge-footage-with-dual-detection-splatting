@@ -2,7 +2,7 @@
 
 ## What Works
 
-Implemented a scaled dynamic Gaussian splatting reproduction of Splannequin. The method uses time-dependent Gaussian primitive states, detects hidden states via camera-frustum visibility, detects defective states via negligible rendered contribution, and anchors hidden states to past supervised states and defective states to future supervised states.
+Implemented a scaled dynamic Gaussian splatting reproduction of Splannequin. The method uses time-dependent Gaussian primitive states, detects hidden states via camera-frustum visibility, detects defective states via near-zero reconstruction gradients, and anchors hidden states to randomly sampled past supervised states and defective states to randomly sampled future supervised states.
 
 The benchmark generator, method code, baseline path, ablation variants, evaluator, scripts, briefing, reference metrics, and scientist-facing scoring documentation are in place.
 
@@ -14,9 +14,11 @@ Continuation audit on 2026-06-01 after milestone reset confirmed the local fixed
 
 Clean validation job `f980876c-3fa` completed successfully on 2026-06-01. The workspace now has a clean cluster run for the fixed evaluator and restored `core_claim_plus`.
 
+An integrity review later found that the previous scaled method used contribution-threshold defective detection and nearest-anchor sweeps instead of the paper's gradient-based defective state test and random reference timestamp procedure. I revised the method accordingly and am submitting a fresh CPU validation job. Until that job finishes, the current milestone is conservatively downgraded to `method_runs`.
+
 ## Results
 
-The latest clean CPU job ran the full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`.
+The latest completed clean CPU job ran the earlier full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`. These numbers are retained for traceability, but the revised implementation must be re-run before restoring a milestone above `method_runs`.
 
 Scaled synthetic result from the latest completed job:
 
@@ -28,7 +30,7 @@ Scaled synthetic result from the latest completed job:
 - Splannequin FVD proxy: 102.4182
 - Inference overhead: 0.0 for both
 
-This supports the core claim on the scaled benchmark.
+This supported the core claim for the previous implementation on the scaled benchmark.
 
 The clean continuation CPU job also evaluated two extra generated scenes. Averaged across those extra scenes:
 
@@ -38,11 +40,11 @@ The clean continuation CPU job also evaluated two extra generated scenes. Averag
 - Baseline FVD proxy: 118.2803; Splannequin FVD proxy: 95.1996
 - Inference overhead: 0.0 for both
 
-These extra-scene diagnostics support `core_claim_plus`.
+These extra-scene diagnostics supported `core_claim_plus` for the previous implementation.
 
 ## Remaining
 
-No further work is required for the reusable scaled environment through `core_claim_plus`. Higher milestones would require redesigning or expanding the scaled benchmark so both ablation components reproduce the paper's secondary ablation behavior, or integrating a full dynamic Gaussian codebase and real/video benchmark data.
+Before restoring `core_claim` or `core_claim_plus`, the revised implementation needs a successful job that regenerates `checkpoints/`, rewrites `scoring/scores.json`, and passes `python validate.py --compare`.
 
 ## Issues
 
@@ -56,6 +58,6 @@ The extra-scene job initially failed validation because an extra diagnostic expe
 
 ## Deviations from Paper
 
-The paper trains full 2D/3D dynamic Gaussian splatting pipelines on 640x360 real Mannequin-Challenge videos and Blender scenes for 30,000 iterations. This reproduction uses a 1D differentiable Gaussian splatting scene with a forward camera path and known fixed-time ground truth. The deviation scales data dimensionality and runtime while preserving the paper's core computational steps: dynamic Gaussian primitive states, visibility/contribution detection, hidden/past anchoring, defective/future anchoring, temporal-distance confidence weighting, and fixed-time rendering.
+The paper trains full 2D/3D dynamic Gaussian splatting pipelines on 640x360 real Mannequin-Challenge videos and Blender scenes for 30,000 iterations. This reproduction uses a 1D differentiable Gaussian splatting scene with a forward camera path and known fixed-time ground truth. The deviation scales data dimensionality and runtime while preserving the paper's core computational steps: dynamic Gaussian primitive states, visibility and near-zero-gradient detection, hidden/past anchoring, defective/future anchoring, temporal-distance confidence weighting, and fixed-time rendering.
 
 The paper reports SSIM, LPIPS, FVD, no-reference IQA, and COVER. The runnable evaluator uses PSNR plus artifact/stability proxy metrics suitable for the synthetic benchmark because heavyweight perceptual and video-quality models would require large external downloads and are unnecessary for the minimum core-claim check.

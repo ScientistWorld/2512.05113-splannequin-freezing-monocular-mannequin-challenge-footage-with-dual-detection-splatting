@@ -15,8 +15,8 @@
 # This file is read by the system for automated comparison.
 #
 # Example usage:
-#   ./evaluate.sh <method_and_run_name>                             # evaluate with defaults
-#   ./evaluate.sh <method_and_run_name> checkpoints/epoch_10.pt     # evaluate a specific checkpoint
+#   ./evaluate.sh
+#   ./evaluate.sh checkpoints/baseline/predictions.json checkpoints/splannequin/predictions.json
 #
 # Called from run.sh after training, or independently.
 
@@ -26,16 +26,30 @@ cd /home/user
 
 mkdir -p scoring
 
+if [ "$#" -gt 0 ]; then
+  INPUTS=("$@")
+else
+  INPUTS=(
+    checkpoints/baseline/predictions.json
+    checkpoints/splannequin/predictions.json
+  )
+  [ ! -f checkpoints/no_hidden/predictions.json ] || INPUTS+=(checkpoints/no_hidden/predictions.json)
+  [ ! -f checkpoints/no_defective/predictions.json ] || INPUTS+=(checkpoints/no_defective/predictions.json)
+fi
+
+NAMES=()
+for input in "${INPUTS[@]}"; do
+  parent="$(basename "$(dirname "$input")")"
+  case "$parent" in
+    baseline) NAMES+=(baseline_dynamic_gs) ;;
+    no_hidden) NAMES+=(splannequin_no_hidden) ;;
+    no_defective) NAMES+=(splannequin_no_defective) ;;
+    *) NAMES+=("$parent") ;;
+  esac
+done
+
 python eval/evaluate_freeze.py \
   --data data/synthetic_mannequin.json \
-  --inputs \
-    checkpoints/baseline/predictions.json \
-    checkpoints/splannequin/predictions.json \
-    checkpoints/no_hidden/predictions.json \
-    checkpoints/no_defective/predictions.json \
-  --names \
-    baseline_dynamic_gs \
-    splannequin \
-    splannequin_no_hidden \
-    splannequin_no_defective \
+  --inputs "${INPUTS[@]}" \
+  --names "${NAMES[@]}" \
   --out scoring/scores.json

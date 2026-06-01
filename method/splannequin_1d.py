@@ -1,9 +1,10 @@
 """Scaled Splannequin reproduction on differentiable 1D Gaussian splatting.
 
-This preserves the paper's core computation: dynamic Gaussian states are
-trained from monocular diagonal observations; hidden and defective states are
-detected from visibility/contribution and temporally anchored to supervised
-past/future states before fixed-time rendering.
+This preserves the paper's core computation at small scale: dynamic Gaussian
+states are trained from monocular diagonal observations; hidden and defective
+states are detected from visibility and near-zero reconstruction gradients; a
+randomly sampled well-supervised past/future reference anchors ill-supervised
+states before fixed-time rendering.
 """
 
 from __future__ import annotations
@@ -48,19 +49,39 @@ def render(states, colors, opacity_logits, log_scale, cam_z, width):
     return rgb.clamp(0.0, 1.0), visible, contrib
 
 
-def nearest_anchor_masks(well: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-    t_count, k_count = well.shape
-    past = torch.full((t_count, k_count), -1, dtype=torch.long, device=well.device)
-    future = torch.full((t_count, k_count), -1, dtype=torch.long, device=well.device)
-    last = torch.full((k_count,), -1, dtype=torch.long, device=well.device)
-    for t in range(t_count):
-        past[t] = last
-        last = torch.where(well[t], torch.full_like(last, t), last)
-    nxt = torch.full((k_count,), -1, dtype=torch.long, device=well.device)
-    for t in range(t_count - 1, -1, -1):
-        future[t] = nxt
-        nxt = torch.where(well[t], torch.full_like(nxt, t), nxt)
-    return past, future
+def anchored_discrepancy(
+    state: torch.Tensor,
+    color: torch.Tensor,
+    opacity: torch.Tensor,
+    log_scale: torch.Tensor,
+    t: int,
+    ref: int,
+    mask: torch.Tensor,
+    use_l1: bool,
+) -> torch.Tensor:
+    """Discrepancy over the time-varying Gaussian parameters named in the paper."""
+    lhs = torch.cat(
+        [
+            state[t, mask].reshape(-1, 2),
+            color[t, mask].reshape(-1, 3),
+            opacity[t, mask].reshape(-1, 1),
+            log_scale[t, mask].reshape(-1, 1),
+        ],
+        dim=1,
+    )
+    rhs = torch.cat(
+        [
+            state[ref, mask].reshape(-1, 2),
+            color[ref, mask].reshape(-1, 3),
+            opacity[ref, mask].reshape(-1, 1),
+            log_scale[ref, mask].reshape(-1, 1),
+        ],
+        dim=1,
+    )
+    diff = lhs - rhs
+    if use_l1:
+        return diff.abs().mean()
+    return diff.square().mean()
 
 
 def train(args):
@@ -73,47 +94,78 @@ def train(args):
     k_count = base_pos.shape[0]
     device = torch.device("cpu")
     frames, cam_z, base_pos = frames.to(device), cam_z.to(device), base_pos.to(device)
-    state = torch.nn.Parameter(base_pos[None].repeat(t_count, 1, 1) + args.init_noise * torch.randn(t_count, k_count, 2))
-    colors = torch.nn.Parameter(torch.logit(scene["colors"].clamp(1e-3, 0.997).to(device)))
-    opacity = torch.nn.Parameter(torch.logit(scene["opacity"].clamp(1e-3, 0.95).to(device)))
-    log_scale = torch.nn.Parameter(scene["scale"].to(device).log())
-    opt = torch.optim.Adam([state, colors, opacity, log_scale], lr=args.lr)
+    state = torch.nn.Parameter(
+        base_pos[None].repeat(t_count, 1, 1) + args.init_noise * torch.randn(t_count, k_count, 2)
+    )
+    base_color = torch.logit(scene["colors"].clamp(1e-3, 0.997).to(device))
+    base_opacity = torch.logit(scene["opacity"].clamp(1e-3, 0.95).to(device))
+    base_scale = scene["scale"].to(device).log()
+    color_state = torch.nn.Parameter(
+        base_color[None].repeat(t_count, 1, 1) + 0.10 * args.init_noise * torch.randn(t_count, k_count, 3)
+    )
+    opacity_state = torch.nn.Parameter(
+        base_opacity[None].repeat(t_count, 1) + 0.10 * args.init_noise * torch.randn(t_count, k_count)
+    )
+    log_scale_state = torch.nn.Parameter(
+        base_scale[None].repeat(t_count, 1) + 0.10 * args.init_noise * torch.randn(t_count, k_count)
+    )
+    opt = torch.optim.Adam([state, color_state, opacity_state, log_scale_state], lr=args.lr)
+    rng = torch.Generator(device=device)
+    rng.manual_seed(args.seed + 1009)
 
     for step in range(args.steps):
         opt.zero_grad(set_to_none=True)
         recon = torch.zeros((), device=device)
-        visible_rows, contrib_rows = [], []
+        visible_rows, grad_rows = [], []
         for t in range(t_count):
-            img, vis, con = render(state[t], colors, opacity, log_scale, cam_z[t], width)
-            recon = recon + F.mse_loss(img, frames[t])
+            img, vis, _ = render(state[t], color_state[t], opacity_state[t], log_scale_state[t], cam_z[t], width)
+            frame_loss = F.mse_loss(img, frames[t])
+            recon = recon + frame_loss
             visible_rows.append(vis.detach())
-            contrib_rows.append(con.detach())
+            if args.variant != "baseline" and step >= args.reg_start and step % args.reg_interval == 0:
+                grads = torch.autograd.grad(
+                    frame_loss,
+                    (state, color_state, opacity_state, log_scale_state),
+                    retain_graph=True,
+                    allow_unused=True,
+                )
+                grad_norm = grads[0][t].detach().norm(dim=1)
+                grad_norm = grad_norm + grads[1][t].detach().norm(dim=1)
+                grad_norm = grad_norm + grads[2][t].detach().abs()
+                grad_norm = grad_norm + grads[3][t].detach().abs()
+            else:
+                grad_norm = torch.full((k_count,), float("inf"), device=device)
+            grad_rows.append(grad_norm)
         loss = recon / t_count
-        if args.variant != "baseline" and step >= args.reg_start:
+        if args.variant != "baseline" and step >= args.reg_start and step % args.reg_interval == 0:
             visible = torch.stack(visible_rows)
-            contrib = torch.stack(contrib_rows)
-            well = visible & (contrib > args.defective_threshold)
+            grad_norms = torch.stack(grad_rows)
+            well = visible & (grad_norms > args.defective_gradient_threshold)
             hidden = ~visible
             defective = visible & ~well
-            past, future = nearest_anchor_masks(well)
             reg = torch.zeros((), device=device)
             count = torch.zeros((), device=device)
-            for t in range(t_count):
-                if args.variant != "no_hidden":
-                    mask = hidden[t] & (past[t] >= 0)
+            for _ in range(args.anchor_samples):
+                t = int(torch.randint(0, t_count, (1,), generator=rng, device=device).item())
+                ref = int(torch.randint(0, t_count, (1,), generator=rng, device=device).item())
+                use_l1 = step >= args.l1_start
+                if args.variant != "no_hidden" and ref < t:
+                    mask = hidden[t] & well[ref]
                     if mask.any():
-                        idx = past[t, mask]
-                        d = state[t, mask] - state[idx, torch.arange(k_count, device=device)[mask]]
-                        weight = torch.exp(-args.tau * (t - idx).float() / max(1, t_count - 1))[:, None]
-                        reg = reg + (weight * d.abs()).mean()
+                        d = anchored_discrepancy(
+                            state, color_state, opacity_state, log_scale_state, t, ref, mask, use_l1
+                        )
+                        weight = torch.exp(torch.tensor(-args.tau * (t - ref) / max(1, t_count - 1), device=device))
+                        reg = reg + weight * d
                         count = count + 1
-                if args.variant != "no_defective":
-                    mask = defective[t] & (future[t] >= 0)
+                if args.variant != "no_defective" and ref > t:
+                    mask = defective[t] & well[ref]
                     if mask.any():
-                        idx = future[t, mask]
-                        d = state[t, mask] - state[idx, torch.arange(k_count, device=device)[mask]]
-                        weight = torch.exp(-args.tau * (idx - t).float() / max(1, t_count - 1))[:, None]
-                        reg = reg + (weight * d.abs()).mean()
+                        d = anchored_discrepancy(
+                            state, color_state, opacity_state, log_scale_state, t, ref, mask, use_l1
+                        )
+                        weight = torch.exp(torch.tensor(-args.tau * (ref - t) / max(1, t_count - 1), device=device))
+                        reg = reg + weight * d
                         count = count + 1
             if count.item() > 0:
                 loss = loss + args.lambda_reg * reg / count
@@ -124,15 +176,28 @@ def train(args):
     renders = []
     with torch.no_grad():
         for t in range(t_count):
-            img, _, _ = render(state[freeze], colors, opacity, log_scale, cam_z[t], width)
+            img, _, _ = render(
+                state[freeze],
+                color_state[freeze],
+                opacity_state[freeze],
+                log_scale_state[freeze],
+                cam_z[t],
+                width,
+            )
             renders.append(img.cpu())
+    inference_state_values = (
+        state[freeze].numel()
+        + color_state[freeze].numel()
+        + opacity_state[freeze].numel()
+        + log_scale_state[freeze].numel()
+    )
     out = {
         "variant": args.variant,
         "freeze_index": freeze,
         "pred_freeze": torch.stack(renders).tolist(),
         "num_primitives": int(k_count),
-        "trained_state_values": int(state.numel()),
-        "inference_state_values": int(state[freeze].numel() + colors.numel() + opacity.numel() + log_scale.numel()),
+        "trained_state_values": int(state.numel() + color_state.numel() + opacity_state.numel() + log_scale_state.numel()),
+        "inference_state_values": int(inference_state_values),
         "steps": int(args.steps),
     }
     out_path = Path(args.out)
@@ -149,7 +214,10 @@ def main():
     parser.add_argument("--reg-start", type=int, default=250)
     parser.add_argument("--lambda-reg", type=float, default=4.0)
     parser.add_argument("--tau", type=float, default=5.0)
-    parser.add_argument("--defective-threshold", type=float, default=0.25)
+    parser.add_argument("--defective-gradient-threshold", type=float, default=1e-9)
+    parser.add_argument("--anchor-samples", type=int, default=2)
+    parser.add_argument("--reg-interval", type=int, default=10)
+    parser.add_argument("--l1-start", type=int, default=600)
     parser.add_argument("--init-noise", type=float, default=0.13)
     parser.add_argument("--lr", type=float, default=0.035)
     parser.add_argument("--seed", type=int, default=7)

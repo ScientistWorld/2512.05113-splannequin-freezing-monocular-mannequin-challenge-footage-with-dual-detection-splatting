@@ -1,8 +1,8 @@
-# This iteration completed the train/test scoring pass.
+# This iteration submits a revised method validation pass.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: done
+action: submit
 gpus: 0
-test: false
-milestone: core_claim_plus
-notes: "Final verification passed after documentation, scoring, and packaging hygiene fixes."
+test: true
+milestone: method_runs
+notes: "CPU validation job for the revised scaled Splannequin implementation: regenerate data/checkpoints/scores, run train/test eval, and compare against reference."
