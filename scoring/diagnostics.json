@@ -75,6 +75,8 @@
           "ssim": 0.6134049200934812,
           "lpips": 0.10369357839226723,
           "fvd": 124.91701543331146,
+          "foreground_mae": 0.10623080655932426,
+          "edge_mae": 0.03615557961165905,
           "inference_overhead": 0.0
         },
         "4dgaussians_splannequin": {
@@ -82,6 +84,30 @@
           "ssim": 0.7154904503702404,
           "lpips": 0.08689512684941292,
           "fvd": 99.08991679549217,
+          "foreground_mae": 0.10014617443084717,
+          "edge_mae": 0.03449065983295441,
+          "inference_overhead": 0.0
+        }
+      }
+    },
+    "synthetic_validation_scored_aggregate": {
+      "results": {
+        "4dgaussians": {
+          "psnr": 16.693163490515122,
+          "ssim": 0.6551936379416256,
+          "lpips": 0.10203145196040471,
+          "fvd": 122.41047620773315,
+          "foreground_mae": 0.10873597611983617,
+          "edge_mae": 0.03904162968198458,
+          "inference_overhead": 0.0
+        },
+        "4dgaussians_splannequin": {
+          "psnr": 17.65693307672044,
+          "ssim": 0.7055959413904686,
+          "lpips": 0.09157912929852803,
+          "fvd": 102.5034636259079,
+          "foreground_mae": 0.1057149072488149,
+          "edge_mae": 0.035984097669521965,
           "inference_overhead": 0.0
         }
       }
