@@ -19,4 +19,4 @@
 - Fixed score packaging so `scoring/scores.json` contains only experiments present in `scoring/reference.json`; extra-scene robustness numbers are kept in `scoring/diagnostics.json`.
 
 ## Stop Justification
-- Completed at milestone `core_claim_plus`. Higher milestones would require full dynamic Gaussian integrations or real-video/no-reference quality evaluation beyond the scaled benchmark.
+- Completed at milestone `core_claim_plus`.
