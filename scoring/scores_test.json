@@ -1,0 +1,48 @@
+{
+  "experiments": {
+    "synthetic_validation_paper": {
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.038181792944669724,
+          "foreground_mae": 0.10307977348566055,
+          "fvd": 118.41437965631485,
+          "inference_overhead": 0.0,
+          "lpips": 0.089329294860363,
+          "psnr": 17.824042431899155,
+          "ssim": 0.718804865971978
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03640298172831535,
+          "foreground_mae": 0.10227562487125397,
+          "fvd": 120.2700287103653,
+          "inference_overhead": 0.0,
+          "lpips": 0.08837582170963287,
+          "psnr": 17.39302786205149,
+          "ssim": 0.6647498649150339
+        },
+        "no_defective": {
+          "edge_mae": 0.03377393260598183,
+          "foreground_mae": 0.10463650524616241,
+          "fvd": 121.18611484766006,
+          "inference_overhead": 0.0,
+          "lpips": 0.08803897351026535,
+          "psnr": 17.74745436722838,
+          "ssim": 0.7143232672541642
+        },
+        "no_hidden": {
+          "edge_mae": 0.03944524750113487,
+          "foreground_mae": 0.11424148827791214,
+          "fvd": 130.23123145103455,
+          "inference_overhead": 0.0,
+          "lpips": 0.09853215515613556,
+          "psnr": 17.111224959469794,
+          "ssim": 0.6807511582689514
+        }
+      }
+    }
+  },
+  "metadata": {
+    "slice": "test",
+    "split_rule": "views where index mod 4 is 2 or 3"
+  }
+}

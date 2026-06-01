@@ -1,0 +1,48 @@
+{
+  "experiments": {
+    "synthetic_validation_paper": {
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04075286164879799,
+          "foreground_mae": 0.11304539442062378,
+          "fvd": 144.9759006500244,
+          "inference_overhead": 0.0,
+          "lpips": 0.10001970082521439,
+          "psnr": 16.99968174496637,
+          "ssim": 0.6791296298673455
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03457082435488701,
+          "foreground_mae": 0.09902146458625793,
+          "fvd": 106.49631917476654,
+          "inference_overhead": 0.0,
+          "lpips": 0.07928720861673355,
+          "psnr": 18.107881976565793,
+          "ssim": 0.7310211526943943
+        },
+        "no_defective": {
+          "edge_mae": 0.03193996846675873,
+          "foreground_mae": 0.09527242183685303,
+          "fvd": 98.99958223104477,
+          "inference_overhead": 0.0,
+          "lpips": 0.07522383332252502,
+          "psnr": 18.57513609774924,
+          "ssim": 0.7772036330763618
+        },
+        "no_hidden": {
+          "edge_mae": 0.04118736833333969,
+          "foreground_mae": 0.11667071282863617,
+          "fvd": 142.93591678142548,
+          "inference_overhead": 0.0,
+          "lpips": 0.10163772851228714,
+          "psnr": 16.851212872457033,
+          "ssim": 0.6801442131108555
+        }
+      }
+    }
+  },
+  "metadata": {
+    "slice": "train",
+    "split_rule": "views where index mod 4 is 0 or 1"
+  }
+}
