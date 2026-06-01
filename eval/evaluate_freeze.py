@@ -96,12 +96,16 @@ def main() -> None:
             "cover_technical_degradation_pct": -100.0 * (no_defective["ghosting_error"] - full["ghosting_error"]) / max(abs(full["ghosting_error"]), 1e-9),
         },
     }
-    diagnostics = {"experiments": {"synthetic_freeze_time": {"results": results}}}
+    diagnostics = {
+        "experiments": {
+            "synthetic_freeze_time": {"results": results},
+            "ablation_regularizers": {"results": ablations},
+        }
+    }
     Path("scoring/diagnostics.json").write_text(json.dumps(diagnostics, indent=2), encoding="utf-8")
     scores = {
         "experiments": {
-            "synthetic_validation_paper": {"results": paper_named},
-            "ablation_regularizers": {"results": ablations},
+            "synthetic_validation_paper": {"results": paper_named}
         }
     }
     out = Path(args.out)

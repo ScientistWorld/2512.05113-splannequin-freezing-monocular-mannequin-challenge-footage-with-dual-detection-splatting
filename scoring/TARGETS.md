@@ -16,11 +16,3 @@ Tests whether quality improvements are achieved without increasing the state req
 
 - **Metric**: `inference_overhead` (lower is better; proposed and baseline should match)
 - **How to run**: included in `bash scripts/evaluate.sh`.
-
-## Ablation: ablation_regularizers
-
-Tests whether removing either of the two targeted regularization components weakens fixed-time reconstruction quality.
-
-- **Metric**: `cqa_average_degradation_pct` (lower is worse; values below zero indicate degradation)
-- **Metric**: `cover_technical_degradation_pct` (lower is worse; values below zero indicate degradation)
-- **How to run**: included in `bash scripts/method.sh` and `bash scripts/evaluate.sh`.

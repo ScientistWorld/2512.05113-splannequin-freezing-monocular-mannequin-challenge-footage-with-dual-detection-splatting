@@ -35,7 +35,7 @@ The exact paper benchmark videos and full dynamic Gaussian frameworks are not pa
 
 The login node lacks `numpy` and `torch`; dependency installation is therefore left to `environment/setup.sh` and the submitted container job.
 
-The no-defective-loss ablation performed better than full Splannequin on the scaled diagnostic PSNR/ghosting metrics. This means the current reproduction should not be used to claim the paper's secondary ablation result, only the central fixed-time quality improvement with zero inference overhead.
+The no-defective-loss ablation performed better than full Splannequin on the scaled diagnostic PSNR/ghosting metrics. This means the current reproduction does not claim the paper's secondary ablation result. Ablation numbers are kept in `scoring/diagnostics.json` only, not in `scoring/scores.json`.
 
 ## Deviations from Paper
 

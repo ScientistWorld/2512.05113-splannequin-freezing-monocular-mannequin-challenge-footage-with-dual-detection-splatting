@@ -47,6 +47,18 @@
           "inference_overhead": 0.0
         }
       }
+    },
+    "ablation_regularizers": {
+      "results": {
+        "no_hidden_loss": {
+          "cqa_average_degradation_pct": -2.4920465245301853,
+          "cover_technical_degradation_pct": -4.694443374267514
+        },
+        "no_defective_loss": {
+          "cqa_average_degradation_pct": 2.288283077259828,
+          "cover_technical_degradation_pct": 7.411045814571849
+        }
+      }
     }
   }
 }
