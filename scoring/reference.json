@@ -5,11 +5,41 @@
       "weight": 0.45,
       "primary_metric": "psnr",
       "metrics": {
-        "psnr": {"higher_is_better": true, "coefficient": 1.0},
-        "ssim": {"higher_is_better": true, "coefficient": 0.5},
-        "lpips": {"higher_is_better": false, "coefficient": -0.5},
-        "fvd": {"higher_is_better": false, "coefficient": -0.4},
-        "inference_overhead": {"higher_is_better": false, "coefficient": -0.2}
+        "psnr": {
+          "higher_is_better": true,
+          "coefficient": 1.0,
+          "description": "Measures fixed-time reconstruction fidelity against the synthetic freeze target."
+        },
+        "ssim": {
+          "higher_is_better": true,
+          "coefficient": 0.5,
+          "description": "Measures structural agreement with the fixed-time target."
+        },
+        "lpips": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Proxy perceptual reconstruction error from mean absolute RGB residual."
+        },
+        "fvd": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "Proxy temporal video error from mismatch in cross-view frame derivatives."
+        },
+        "foreground_mae": {
+          "higher_is_better": false,
+          "coefficient": -0.35,
+          "description": "Residual on non-background target pixels, reducing the reward for background-only shortcuts."
+        },
+        "edge_mae": {
+          "higher_is_better": false,
+          "coefficient": -0.3,
+          "description": "High-frequency residual along the image axis, penalizing blur and double-contour artifacts."
+        },
+        "inference_overhead": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Relative increase in inference-time state values compared with the baseline renderer."
+        }
       },
       "results": {
         "4dgaussians": {"type": "baseline", "psnr": 28.03, "ssim": 0.81, "lpips": 0.09, "fvd": 98.93, "inference_overhead": 0.0},
@@ -21,9 +51,21 @@
       "weight": 0.35,
       "primary_metric": "cqa_average_improvement_pct",
       "metrics": {
-        "cqa_average_improvement_pct": {"higher_is_better": true, "coefficient": 1.0},
-        "cover_technical_improvement_pct": {"higher_is_better": true, "coefficient": 0.8},
-        "inference_overhead": {"higher_is_better": false, "coefficient": -0.2}
+        "cqa_average_improvement_pct": {
+          "higher_is_better": true,
+          "coefficient": 1.0,
+          "description": "No-reference quality improvement percentage reported for real-world reconstructions."
+        },
+        "cover_technical_improvement_pct": {
+          "higher_is_better": true,
+          "coefficient": 0.8,
+          "description": "Technical-quality improvement percentage for real-world reconstructions."
+        },
+        "inference_overhead": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Relative increase in inference-time state values compared with the baseline renderer."
+        }
       },
       "results": {
         "d3dgs_splannequin": {"type": "proposed", "cqa_average_improvement_pct": 243.8, "cover_technical_improvement_pct": 339.85, "inference_overhead": 0.0}
@@ -34,8 +76,16 @@
       "weight": 0.2,
       "primary_metric": "cqa_average_degradation_pct",
       "metrics": {
-        "cqa_average_degradation_pct": {"higher_is_better": true, "coefficient": 1.0},
-        "cover_technical_degradation_pct": {"higher_is_better": true, "coefficient": 0.8}
+        "cqa_average_degradation_pct": {
+          "higher_is_better": true,
+          "coefficient": 1.0,
+          "description": "Quality degradation when an anchoring component is removed."
+        },
+        "cover_technical_degradation_pct": {
+          "higher_is_better": true,
+          "coefficient": 0.8,
+          "description": "Technical-quality degradation when an anchoring component is removed."
+        }
       },
       "results": {
         "no_hidden_loss": {"type": "proposed", "cqa_average_degradation_pct": -162.23, "cover_technical_degradation_pct": -94.22},

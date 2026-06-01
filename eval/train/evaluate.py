@@ -9,7 +9,20 @@ import numpy as np
 
 
 EXPERIMENT = "synthetic_validation_paper"
-METRICS = ("psnr", "ssim", "lpips", "fvd", "inference_overhead")
+SLICE = "train"
+METHOD_ALIASES = {
+    "baseline": "4dgaussians",
+    "splannequin": "4dgaussians_splannequin",
+}
+METRICS = (
+    "psnr",
+    "ssim",
+    "lpips",
+    "fvd",
+    "foreground_mae",
+    "edge_mae",
+    "inference_overhead",
+)
 
 
 def psnr(pred: np.ndarray, target: np.ndarray) -> float:
@@ -38,10 +51,23 @@ def fvd_proxy(pred: np.ndarray, target: np.ndarray) -> float:
     return 1000.0 * float(np.mean(np.abs(np.diff(pred, axis=0) - np.diff(target, axis=0))))
 
 
+def foreground_mae(pred: np.ndarray, target: np.ndarray) -> float:
+    mask = np.max(target, axis=-1) > 0.04
+    if not np.any(mask):
+        return lpips_proxy(pred, target)
+    return float(np.mean(np.abs(pred[mask] - target[mask])))
+
+
+def edge_mae(pred: np.ndarray, target: np.ndarray) -> float:
+    pred_edges = np.diff(pred, axis=1)
+    target_edges = np.diff(target, axis=1)
+    return float(np.mean(np.abs(pred_edges - target_edges)))
+
+
 def discover_prediction_files(checkpoints_dir: Path) -> dict[str, Path]:
     predictions = {}
     for path in sorted(checkpoints_dir.glob("*/predictions.json")):
-        method_name = path.parent.name
+        method_name = METHOD_ALIASES.get(path.parent.name, path.parent.name)
         predictions[method_name] = path
     if not predictions:
         raise SystemExit(f"No method predictions found under {checkpoints_dir}/*/predictions.json")
@@ -49,7 +75,8 @@ def discover_prediction_files(checkpoints_dir: Path) -> dict[str, Path]:
 
 
 def load_train_indices(num_views: int) -> np.ndarray:
-    indices = np.arange(0, num_views, 2, dtype=np.int64)
+    all_indices = np.arange(num_views, dtype=np.int64)
+    indices = all_indices[(all_indices % 4 == 0) | (all_indices % 4 == 1)]
     if indices.size == 0:
         raise SystemExit("Train split is empty; prediction tensors must contain at least one view")
     return indices
@@ -67,12 +94,14 @@ def evaluate_prediction(path: Path, target: np.ndarray, indices: np.ndarray) -> 
         "ssim": ssim_global(pred_slice, target_slice),
         "lpips": lpips_proxy(pred_slice, target_slice),
         "fvd": fvd_proxy(pred_slice, target_slice),
+        "foreground_mae": foreground_mae(pred_slice, target_slice),
+        "edge_mae": edge_mae(pred_slice, target_slice),
     }
     return metrics, float(raw["inference_state_values"])
 
 
 def attach_inference_overhead(results: dict[str, dict[str, float]], state_values: dict[str, float]) -> None:
-    baseline_key = "baseline" if "baseline" in state_values else sorted(state_values)[0]
+    baseline_key = "4dgaussians" if "4dgaussians" in state_values else sorted(state_values)[0]
     baseline_state = state_values[baseline_key]
     if baseline_state <= 0.0:
         raise SystemExit(f"Baseline inference_state_values for {baseline_key} must be positive")
@@ -100,7 +129,10 @@ def main() -> None:
         state_values[name] = state_value
     attach_inference_overhead(results, state_values)
 
-    scores = {"experiments": {EXPERIMENT: {"results": results}}}
+    scores = {
+        "metadata": {"slice": SLICE, "split_rule": "views where index mod 4 is 0 or 1"},
+        "experiments": {EXPERIMENT: {"results": results}},
+    }
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(scores, indent=2, sort_keys=True), encoding="utf-8")
