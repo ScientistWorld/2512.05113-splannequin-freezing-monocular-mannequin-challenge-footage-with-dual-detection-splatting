@@ -2,33 +2,29 @@
 
 ## Initial Assessment
 
-The workspace started at `core_claim_plus`. The claimed milestone was broadly justified: the scaled method had completed a clean CPU job, `scores.json` showed the proposed fixed-time reconstruction improving over the dynamic baseline on the primary synthetic benchmark, and `python validate.py --compare` passed.
+The workspace had previously claimed `core_claim_plus`, but an implementation-integrity review found genuine method-procedure issues: defective states were detected by rendered contribution rather than near-zero reconstruction gradient, and temporal anchors were selected by nearest-anchor sweeps rather than random reference timestamp sampling. Because the method code has now been revised, the old `scores.json` artifacts are stale and should not be used to restore `core_claim_plus` until a fresh job completes.
 
 ## Issues Found
 
-- **Critical:** Strict method-agnostic documentation leaked representation and algorithm details in `briefing/evaluation.md` and `scoring/EXPERIMENTS.md`.
-- **High:** `scores.json` omitted `foreground_mae` and `edge_mae` even though they were weighted in `reference.json`.
-- **High:** `scripts/run.sh` assumed ignored checkpoint artifacts were already present.
-- **High:** Tracked scheduler logs and trajectory traces were stale runtime artifacts.
-- **Medium:** Train/test evaluators defaulted to the method keys already present in `scores.json`, which could ignore future checkpoint subdirectories.
-- **Medium:** The ablation degradation metrics in `reference.json` had an inconsistent direction for negative degradation values.
-- **Known limitation:** The held-out test split is public and derives from the same synthetic file, so it is useful as a consistency check but not as a secure hidden benchmark.
+- **Critical:** The previous scaled method did not match two key computational steps from the paper: gradient-based defective-state detection and random reference timestamp anchoring.
+- **High:** The previous standard evaluator was too coupled to Splannequin ablation artifact names. It needed to accept any compatible prediction files and keep ablations optional.
+- **High:** Stale scheduler artifacts under `jobs/` were still tracked by git.
+- **Medium:** Current `scores.json`, `scores_train.json`, and `scores_test.json` were produced by the earlier implementation, not by the revised method.
+- **Known limitation:** The benchmark is a scaled synthetic 1D environment rather than the paper's full real-video and Blender benchmark.
 
 ## Fixes Applied
 
-- Rewrote method-agnostic and method-safe documentation to describe the task and scoring without leaking the paper's internal mechanism.
-- Added `foreground_mae` and `edge_mae` to the standalone evaluator output and to `scoring/scores.json`.
-- Updated `scripts/run.sh` to call `scripts/reproduce.sh` before train/test scoring.
-- Removed tracked `jobs/` and `trajectory/` artifacts from the git index; they remain ignored runtime files.
-- Updated train/test discovery so future methods with compatible `checkpoints/*/predictions.json` outputs are scored instead of silently ignored.
-- Corrected ablation metric direction metadata for negative degradation values.
-- Re-ran `python validate.py --compare`; all checks passed.
+- Revised `method/splannequin_1d.py` to use near-zero reconstruction gradients for defective detection, random reference timestamp sampling, staged L2-to-L1 anchoring, and time-varying position/color/opacity/scale parameters.
+- Updated `eval/evaluate_freeze.py` and `scripts/evaluate.sh` so the standalone evaluator can score arbitrary compatible prediction files while keeping optional ablation diagnostics out of `scores.json`.
+- Downgraded `MILESTONES.md` and `action.yaml` to `method_runs` pending a fresh validation run.
+- Removed tracked `jobs/` scheduler artifacts and added `jobs/` to `.gitignore`.
+- Re-ran lightweight local checks: Python syntax compilation, shell syntax checks, and `python validate.py --compare` on the stale pre-revision artifacts.
 
 ## Final Judgment
 
-This workspace is ready for gym use at the claimed milestone. From-scratch agents can use the method-agnostic problem, data, eval, and scoring docs without seeing the paper's internal algorithm. Improve-mode agents can inspect the included scaled implementation and compare against the stored baseline scores.
+The workspace is not ready to signal final `done` in this turn because the revised implementation has not yet regenerated scored artifacts. The correct next step is the already configured CPU test submission, which will run `scripts/run.sh`, regenerate data/checkpoints/scores, run train/test evaluation, and validate the revised method.
 
-- Milestone: core_claim_plus
-- Ready for gym use: yes
+- Milestone: method_runs
+- Ready for gym use: partial
 - Confidence: medium
-- Key limitation: the reproduction uses a scaled public synthetic benchmark rather than the paper's full real-video benchmark, and the train/test split is not a private anti-cheat split.
+- Key limitation: the revised method needs a fresh CPU validation job before any milestone above `method_runs` is justified.
