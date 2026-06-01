@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: done
-gpus: 0
+action: pending
+gpus: 1
 test: false
-milestone: core_claim_plus
-notes: "Reached core_claim_plus. The audited Splannequin implementation improves the core synthetic fixed-time benchmark and also improves averaged diagnostics on two extra generated scenes with zero inference overhead. Validation passes after keeping extra-scene robustness in diagnostics rather than reference-scored scores.json."
+milestone: core_claim
+notes: ""

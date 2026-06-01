@@ -162,7 +162,7 @@ Train on the full monocular sequence, then render all input camera poses at a si
 
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: core_claim**
 
 ## Stop Justification
-- Completed at milestone `core_claim_plus`.
+- Completed at milestone `core_claim`.
