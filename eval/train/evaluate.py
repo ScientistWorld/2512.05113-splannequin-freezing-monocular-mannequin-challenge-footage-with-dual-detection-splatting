@@ -74,6 +74,22 @@ def discover_prediction_files(checkpoints_dir: Path) -> dict[str, Path]:
     return predictions
 
 
+def method_names_from_source(source_path: Path, prediction_files: dict[str, Path]) -> list[str]:
+    if not source_path.exists():
+        return sorted(prediction_files)
+    source = json.loads(source_path.read_text(encoding="utf-8"))
+    try:
+        names = sorted(source["experiments"][EXPERIMENT]["results"])
+    except KeyError as exc:
+        raise SystemExit(f"{source_path} does not contain {EXPERIMENT} results") from exc
+    if not names:
+        raise SystemExit(f"{source_path} contains no method results for {EXPERIMENT}")
+    missing = [name for name in names if name not in prediction_files]
+    if missing:
+        raise SystemExit(f"Missing prediction files for scored methods: {', '.join(missing)}")
+    return names
+
+
 def load_train_indices(num_views: int) -> np.ndarray:
     all_indices = np.arange(num_views, dtype=np.int64)
     indices = all_indices[(all_indices % 4 == 0) | (all_indices % 4 == 1)]
@@ -113,6 +129,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", default="data/synthetic_mannequin.json")
     parser.add_argument("--checkpoints", default="checkpoints")
+    parser.add_argument("--method-source", default="scoring/scores.json")
     parser.add_argument("--out", default="scoring/scores_train.json")
     args = parser.parse_args()
 
@@ -120,11 +137,12 @@ def main() -> None:
     target = np.asarray(scene["gt_freeze"], dtype=np.float32)
     indices = load_train_indices(target.shape[0])
     prediction_files = discover_prediction_files(Path(args.checkpoints))
+    method_names = method_names_from_source(Path(args.method_source), prediction_files)
 
     results = {}
     state_values = {}
-    for name, path in prediction_files.items():
-        metrics, state_value = evaluate_prediction(path, target, indices)
+    for name in method_names:
+        metrics, state_value = evaluate_prediction(prediction_files[name], target, indices)
         results[name] = {metric: metrics[metric] for metric in METRICS if metric in metrics}
         state_values[name] = state_value
     attach_inference_overhead(results, state_values)

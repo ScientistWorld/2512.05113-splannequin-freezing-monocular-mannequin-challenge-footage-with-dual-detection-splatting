@@ -74,9 +74,24 @@ def discover_prediction_files(checkpoints_dir: Path) -> dict[str, Path]:
     return predictions
 
 
-def method_names_from_train_scores(train_scores_path: Path, checkpoints_dir: Path) -> list[str]:
+def method_names_from_source(source_path: Path, prediction_files: dict[str, Path]) -> list[str]:
+    if not source_path.exists():
+        return sorted(prediction_files)
+    source = json.loads(source_path.read_text(encoding="utf-8"))
+    try:
+        names = sorted(source["experiments"][EXPERIMENT]["results"])
+    except KeyError as exc:
+        raise SystemExit(f"{source_path} does not contain {EXPERIMENT} results") from exc
+    if not names:
+        raise SystemExit(f"{source_path} contains no method results for {EXPERIMENT}")
+    return names
+
+
+def method_names_from_train_scores(
+    train_scores_path: Path, method_source_path: Path, prediction_files: dict[str, Path]
+) -> list[str]:
     if not train_scores_path.exists():
-        return sorted(discover_prediction_files(checkpoints_dir))
+        return method_names_from_source(method_source_path, prediction_files)
     train_scores = json.loads(train_scores_path.read_text(encoding="utf-8"))
     try:
         names = sorted(train_scores["experiments"][EXPERIMENT]["results"])
@@ -127,12 +142,15 @@ def main() -> None:
     parser.add_argument("--data", default="data/synthetic_mannequin.json")
     parser.add_argument("--checkpoints", default="checkpoints")
     parser.add_argument("--train-scores", default="scoring/scores_train.json")
+    parser.add_argument("--method-source", default="scoring/scores.json")
     parser.add_argument("--out", default="scoring/scores_test.json")
     args = parser.parse_args()
 
     checkpoints_dir = Path(args.checkpoints)
     prediction_files = discover_prediction_files(checkpoints_dir)
-    method_names = method_names_from_train_scores(Path(args.train_scores), checkpoints_dir)
+    method_names = method_names_from_train_scores(
+        Path(args.train_scores), Path(args.method_source), prediction_files
+    )
     missing = [name for name in method_names if name not in prediction_files]
     if missing:
         raise SystemExit(f"Missing prediction files for train-scored methods: {', '.join(missing)}")

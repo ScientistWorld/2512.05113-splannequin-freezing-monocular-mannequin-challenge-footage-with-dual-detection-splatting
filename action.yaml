@@ -5,4 +5,4 @@ action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Blockwise view split; 28 train metric values, 28 test metric values across 4 methods. Scores are non-identical across splits; proposed improves train fidelity, test is mixed vs baseline/no_defective. Constraint overhead is 0.0 for all shipped methods because inference state counts match."
+notes: "Blockwise view split; 14 train metric values, 14 test metric values across the 2 synthetic-validation methods listed in scores.json/reference.json. Scores are non-identical across splits; proposed improves train fidelity, test is mixed vs baseline. Constraint overhead is 0.0 because inference state counts match."
