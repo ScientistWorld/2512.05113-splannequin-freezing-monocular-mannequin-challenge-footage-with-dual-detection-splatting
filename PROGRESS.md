@@ -10,13 +10,23 @@ Continuation audit on 2026-06-01 found that the workspace had no reproduced scor
 
 ## Results
 
-No reproduced scores yet. The next submitted CPU job will install dependencies in the container overlay, run baseline/Splannequin/ablations, write `scoring/scores.json`, and run `python validate.py --compare`.
+The first CPU job ran the full scaled benchmark and wrote real outputs. It failed only because `scores.json` included an extra diagnostic experiment not listed in `reference.json`; the score contract has been fixed for the next submission.
 
-Paper reference numbers have been recorded in `scoring/reference.json`.
+Scaled synthetic result from the completed job:
+
+- Baseline dynamic Gaussian fixed-time PSNR: 17.3923
+- Splannequin fixed-time PSNR: 17.7358
+- Baseline LPIPS proxy: 0.0947
+- Splannequin LPIPS proxy: 0.0838
+- Baseline FVD proxy: 127.3078
+- Splannequin FVD proxy: 102.4182
+- Inference overhead: 0.0 for both
+
+This supports the core claim on the scaled benchmark, but I am resubmitting after the score-format fix before marking `core_claim`.
 
 ## Remaining
 
-Run the packaged reproduction job and inspect whether Splannequin improves fixed-time PSNR and artifact metrics over the unregularized dynamic Gaussian baseline. If the effect is weak, tune only scale-preserving hyperparameters and resubmit.
+Resubmit the packaged reproduction job with the corrected score contract. If validation passes and the same improvement is reproduced, update to `core_claim`.
 
 ## Issues
 

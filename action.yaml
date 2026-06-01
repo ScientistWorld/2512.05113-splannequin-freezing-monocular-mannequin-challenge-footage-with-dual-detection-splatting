@@ -4,5 +4,5 @@
 action: submit
 gpus: 0
 test: true
-milestone: none
-notes: "CPU smoke job after audit fixes: run the complete scaled Splannequin reproduction, write paper-named scores, and validate comparison."
+milestone: method_runs
+notes: "Rerun after fixing scores.json contract: train baseline/Splannequin/ablations, write only reference-matched scores plus diagnostics, and validate comparison."
