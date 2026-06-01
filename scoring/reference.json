@@ -1,0 +1,46 @@
+{
+  "experiments": {
+    "synthetic_validation_paper": {
+      "description": "Paper Table 1 synthetic validation of Splannequin added to 4DGaussians. Parameter/inference overhead is a constraint: the regularizer should not add inference state.",
+      "weight": 0.45,
+      "primary_metric": "psnr",
+      "metrics": {
+        "psnr": {"higher_is_better": true, "coefficient": 1.0},
+        "ssim": {"higher_is_better": true, "coefficient": 0.5},
+        "lpips": {"higher_is_better": false, "coefficient": -0.5},
+        "fvd": {"higher_is_better": false, "coefficient": -0.4},
+        "inference_overhead": {"higher_is_better": false, "coefficient": -0.2}
+      },
+      "results": {
+        "4dgaussians": {"type": "baseline", "psnr": 28.03, "ssim": 0.81, "lpips": 0.09, "fvd": 98.93, "inference_overhead": 0.0},
+        "4dgaussians_splannequin": {"type": "proposed", "psnr": 28.85, "ssim": 0.83, "lpips": 0.08, "fvd": 82.73, "inference_overhead": 0.0}
+      }
+    },
+    "real_world_quality_improvement": {
+      "description": "Paper Table 2 real-world no-reference quality improvement when Splannequin is added to D-3DGS.",
+      "weight": 0.35,
+      "primary_metric": "cqa_average_improvement_pct",
+      "metrics": {
+        "cqa_average_improvement_pct": {"higher_is_better": true, "coefficient": 1.0},
+        "cover_technical_improvement_pct": {"higher_is_better": true, "coefficient": 0.8},
+        "inference_overhead": {"higher_is_better": false, "coefficient": -0.2}
+      },
+      "results": {
+        "d3dgs_splannequin": {"type": "proposed", "cqa_average_improvement_pct": 243.8, "cover_technical_improvement_pct": 339.85, "inference_overhead": 0.0}
+      }
+    },
+    "ablation_regularizers": {
+      "description": "Paper Table 3 ablation: removing hidden or defective anchoring degrades quality.",
+      "weight": 0.2,
+      "primary_metric": "cqa_average_degradation_pct",
+      "metrics": {
+        "cqa_average_degradation_pct": {"higher_is_better": false, "coefficient": -1.0},
+        "cover_technical_degradation_pct": {"higher_is_better": false, "coefficient": -0.8}
+      },
+      "results": {
+        "no_hidden_loss": {"type": "proposed", "cqa_average_degradation_pct": -162.23, "cover_technical_degradation_pct": -94.22},
+        "no_defective_loss": {"type": "proposed", "cqa_average_degradation_pct": -779.13, "cover_technical_degradation_pct": -197.87}
+      }
+    }
+  }
+}

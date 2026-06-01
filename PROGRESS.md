@@ -2,36 +2,28 @@
 
 ## What Works
 
-<!-- What has been successfully reproduced so far. -->
+Implemented a scaled dynamic Gaussian splatting reproduction of Splannequin. The method uses time-dependent Gaussian primitive states, detects hidden states via camera-frustum visibility, detects defective states via negligible rendered contribution, and anchors hidden states to past supervised states and defective states to future supervised states.
+
+The benchmark generator, method code, baseline path, ablation variants, evaluator, scripts, briefing, reference metrics, and scientist-facing scoring documentation are in place.
 
 ## Results
 
-<!-- Reproduced numbers compared to the paper's reported numbers. -->
+No reproduced scores yet. The next submitted CPU job will install dependencies in the container overlay, run baseline/Splannequin/ablations, write `scoring/scores.json`, and run `python validate.py --compare`.
+
+Paper reference numbers have been recorded in `scoring/reference.json`.
 
 ## Remaining
 
-<!-- What still needs to be done to reach higher milestones. -->
+Run the packaged reproduction job and inspect whether Splannequin improves fixed-time PSNR and artifact metrics over the unregularized dynamic Gaussian baseline. If the effect is weak, tune only scale-preserving hyperparameters and resubmit.
 
 ## Issues
 
-<!-- Blockers, bugs, or difficulties encountered. -->
+The exact paper benchmark videos and full dynamic Gaussian frameworks are not packaged here. The reproduction uses a controlled synthetic benchmark to keep the algorithm runnable within the available environment.
+
+The login node lacks `numpy` and `torch`; dependency installation is therefore left to `environment/setup.sh` and the submitted container job.
 
 ## Deviations from Paper
 
-<!-- Do not edit this section unless you deviated from the paper's original setup.
-     For each deviation, document: what the paper used, what you substituted, and why.
+The paper trains full 2D/3D dynamic Gaussian splatting pipelines on 640x360 real Mannequin-Challenge videos and Blender scenes for 30,000 iterations. This reproduction uses a 1D differentiable Gaussian splatting scene with a forward camera path and known fixed-time ground truth. The deviation scales data dimensionality and runtime while preserving the paper's core computational steps: dynamic Gaussian primitive states, visibility/contribution detection, hidden/past anchoring, defective/future anchoring, temporal-distance confidence weighting, and fixed-time rendering.
 
-     ACCEPTABLE deviations (data/resource/scale substitutions — milestones still valid):
-       - Replaced a proprietary dataset with a public one
-       - Used a smaller model of the same architecture
-       - Scaled down training (fewer epochs, smaller batch)
-       - Used a different library for the same algorithm
-
-     UNACCEPTABLE deviations (algorithm substitutions — milestones above 'none' are void):
-       - Replaced the paper's algorithm with a fundamentally different one
-       - Wrote a generic model trained to approximate the method's outputs
-         instead of implementing the method's computational steps
-
-     The test: could someone reading your code identify which algorithm from
-     the paper you implemented? If not, you replaced the method. -->
-
+The paper reports SSIM, LPIPS, FVD, no-reference IQA, and COVER. The runnable evaluator uses PSNR plus artifact/stability proxy metrics suitable for the synthetic benchmark because heavyweight perceptual and video-quality models would require large external downloads and are unnecessary for the minimum core-claim check.

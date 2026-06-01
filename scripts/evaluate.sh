@@ -26,5 +26,16 @@ cd /home/user
 
 mkdir -p scoring
 
-# TODO: implement evaluation using code in eval/
-# Must write scoring/scores.json at the end
+python eval/evaluate_freeze.py \
+  --data data/synthetic_mannequin.json \
+  --inputs \
+    checkpoints/baseline/predictions.json \
+    checkpoints/splannequin/predictions.json \
+    checkpoints/no_hidden/predictions.json \
+    checkpoints/no_defective/predictions.json \
+  --names \
+    baseline_dynamic_gs \
+    splannequin \
+    splannequin_no_hidden \
+    splannequin_no_defective \
+  --out scoring/scores.json

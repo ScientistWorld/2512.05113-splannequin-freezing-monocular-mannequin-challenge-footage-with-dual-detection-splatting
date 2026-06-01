@@ -1,17 +1,15 @@
 # Problem Definition
 
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
-
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
-
 ## Research Question
 
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
+How can a system reconstruct a convincing fixed-time scene from a monocular video in which the camera moves through an almost-frozen environment but people or objects still undergo small unintended motion?
+
+The desired output is a sequence rendered from the input camera poses while holding the scene at one chosen timestamp. A successful system should remove ghosting, blur, double contours, and temporal instability caused by sparse monocular observations.
 
 ## Why It Matters
 
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
+Consumer Mannequin-Challenge-style footage is cheap to capture but imperfect. A reliable fixed-time reconstruction would enable bullet-time and free-viewpoint visual effects without a multi-camera rig.
 
 ## Success Criteria
 
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+A solution should render fixed-time views that are closer to a static target than a dynamic reconstruction used naively, reduce ghosting artifacts, remain stable across the camera path, and avoid adding inference-time model state or runtime requirements.

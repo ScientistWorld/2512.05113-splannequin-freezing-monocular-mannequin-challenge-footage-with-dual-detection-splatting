@@ -17,4 +17,9 @@ set -e
 
 cd /home/user
 
-# TODO: run baseline
+python data/synthetic_mannequin.py --out data/synthetic_mannequin.json
+python method/splannequin_1d.py \
+  --variant baseline \
+  --data data/synthetic_mannequin.json \
+  --out checkpoints/baseline/predictions.json \
+  --steps "${STEPS:-900}"
