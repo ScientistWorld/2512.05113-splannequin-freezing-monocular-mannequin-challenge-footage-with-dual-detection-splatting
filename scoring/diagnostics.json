@@ -3,55 +3,55 @@
     "synthetic_freeze_time": {
       "results": {
         "baseline_dynamic_gs": {
-          "freeze_psnr": 17.272896369429375,
-          "ghosting_error": 0.030009591951966286,
-          "temporal_error": 0.01110280305147171,
+          "freeze_psnr": 18.146405185716173,
+          "ghosting_error": 0.028174126520752907,
+          "temporal_error": 0.00824826955795288,
           "inference_state_values": 238.0,
-          "psnr": 17.272896369429375,
-          "ssim": 0.7282906800165547,
-          "lpips": 0.09501577913761139,
-          "fvd": 117.1671450138092,
-          "foreground_mae": 0.10957547277212143,
-          "edge_mae": 0.030009591951966286,
+          "psnr": 18.146405185716173,
+          "ssim": 0.7589494869406669,
+          "lpips": 0.08260752260684967,
+          "fvd": 114.93843048810959,
+          "foreground_mae": 0.09443576633930206,
+          "edge_mae": 0.028174126520752907,
           "inference_overhead": 0.0
         },
         "splannequin": {
-          "freeze_psnr": 17.272896369429375,
-          "ghosting_error": 0.030009591951966286,
-          "temporal_error": 0.01110280305147171,
+          "freeze_psnr": 15.652863087623272,
+          "ghosting_error": 0.05261898785829544,
+          "temporal_error": 0.008183911442756653,
           "inference_state_values": 238.0,
-          "psnr": 17.272896369429375,
-          "ssim": 0.7282906800165547,
-          "lpips": 0.09501577913761139,
-          "fvd": 117.1671450138092,
-          "foreground_mae": 0.10957547277212143,
-          "edge_mae": 0.030009591951966286,
+          "psnr": 15.652863087623272,
+          "ssim": 0.5838804316263008,
+          "lpips": 0.12114357203245163,
+          "fvd": 137.33351230621338,
+          "foreground_mae": 0.13041852414608002,
+          "edge_mae": 0.05261898785829544,
           "inference_overhead": 0.0
         },
         "splannequin_no_hidden": {
-          "freeze_psnr": 17.272896369429375,
-          "ghosting_error": 0.030009591951966286,
-          "temporal_error": 0.01110280305147171,
+          "freeze_psnr": 18.146405185716173,
+          "ghosting_error": 0.028174126520752907,
+          "temporal_error": 0.00824826955795288,
           "inference_state_values": 238.0,
-          "psnr": 17.272896369429375,
-          "ssim": 0.7282906800165547,
-          "lpips": 0.09501577913761139,
-          "fvd": 117.1671450138092,
-          "foreground_mae": 0.10957547277212143,
-          "edge_mae": 0.030009591951966286,
+          "psnr": 18.146405185716173,
+          "ssim": 0.7589494869406669,
+          "lpips": 0.08260752260684967,
+          "fvd": 114.93843048810959,
+          "foreground_mae": 0.09443576633930206,
+          "edge_mae": 0.028174126520752907,
           "inference_overhead": 0.0
         },
         "splannequin_no_defective": {
-          "freeze_psnr": 17.272896369429375,
-          "ghosting_error": 0.030009591951966286,
-          "temporal_error": 0.01110280305147171,
+          "freeze_psnr": 16.272971891362552,
+          "ghosting_error": 0.055037908256053925,
+          "temporal_error": 0.015763945877552032,
           "inference_state_values": 238.0,
-          "psnr": 17.272896369429375,
-          "ssim": 0.7282906800165547,
-          "lpips": 0.09501577913761139,
-          "fvd": 117.1671450138092,
-          "foreground_mae": 0.10957547277212143,
-          "edge_mae": 0.030009591951966286,
+          "psnr": 16.272971891362552,
+          "ssim": 0.6501878737411755,
+          "lpips": 0.10873886197805405,
+          "fvd": 129.14617359638214,
+          "foreground_mae": 0.12797433137893677,
+          "edge_mae": 0.055037908256053925,
           "inference_overhead": 0.0
         }
       }
@@ -59,29 +59,29 @@
     "ablation_regularizers": {
       "results": {
         "no_hidden_loss": {
-          "cqa_average_degradation_pct": 0.0,
-          "cover_technical_degradation_pct": -0.0
+          "cqa_average_degradation_pct": 15.930261985518456,
+          "cover_technical_degradation_pct": 46.4563503261851
         },
         "no_defective_loss": {
-          "cqa_average_degradation_pct": 0.0,
-          "cover_technical_degradation_pct": -0.0
+          "cqa_average_degradation_pct": 3.9616318130936703,
+          "cover_technical_degradation_pct": -4.597048510839302
         }
       }
     },
     "synthetic_validation_extra_scenes": {
       "results": {
         "4dgaussians": {
-          "psnr": 17.152427111076477,
-          "ssim": 0.6410990249876558,
-          "lpips": 0.09567368030548096,
-          "fvd": 115.14975130558014,
+          "psnr": 17.466840928928505,
+          "ssim": 0.6706027008621979,
+          "lpips": 0.08997126296162605,
+          "fvd": 109.12688821554184,
           "inference_overhead": 0.0
         },
         "4dgaussians_splannequin": {
-          "psnr": 17.152427111076477,
-          "ssim": 0.6410990249876558,
-          "lpips": 0.09567368030548096,
-          "fvd": 115.14975130558014,
+          "psnr": 16.64937502046186,
+          "ssim": 0.5426163102830974,
+          "lpips": 0.10515939816832542,
+          "fvd": 114.97034505009651,
           "inference_overhead": 0.0
         }
       }
