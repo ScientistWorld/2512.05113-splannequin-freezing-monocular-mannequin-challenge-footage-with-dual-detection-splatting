@@ -34,3 +34,8 @@
 - CPU validation job `44b9aebb-ab0` completed successfully at the process level but did not support the core claim: the revised Splannequin and baseline metrics tied on the primary synthetic experiment.
 - `python validate.py --compare` also found stale train/test ablation keys outside `reference.json`.
 - Updated the procedural benchmark and evaluator again; the current milestone remains `method_runs` until a new validation job produces discriminative scores.
+
+### [2026-06-01 13:43] - method_runs
+- CPU validation job `e91b9a4f-7de` completed with exit code 0 and all structural validation checks passed.
+- The job still did not support the core claim: Splannequin scored below the baseline on the synthetic benchmark, so the milestone remains `method_runs`.
+- Adjusted the scaled training schedule to warm up longer, reduce regularization strength, and use a noisier initialization so hidden-state recovery can be tested without the anchor loss overwhelming reconstruction.

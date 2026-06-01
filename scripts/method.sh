@@ -16,25 +16,34 @@ python method/splannequin_1d.py \
   --data data/synthetic_mannequin.json \
   --out checkpoints/splannequin/predictions.json \
   --steps "${STEPS:-900}" \
-  --lambda-reg "${LAMBDA_REG:-8.0}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-8}" \
-  --reg-interval "${REG_INTERVAL:-5}"
+  --reg-start "${REG_START:-550}" \
+  --lambda-reg "${LAMBDA_REG:-0.75}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+  --reg-interval "${REG_INTERVAL:-10}" \
+  --l1-start "${L1_START:-750}" \
+  --init-noise "${INIT_NOISE:-0.25}"
 python method/splannequin_1d.py \
   --variant no_hidden \
   --data data/synthetic_mannequin.json \
   --out checkpoints/no_hidden/predictions.json \
   --steps "${STEPS:-900}" \
-  --lambda-reg "${LAMBDA_REG:-8.0}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-8}" \
-  --reg-interval "${REG_INTERVAL:-5}"
+  --reg-start "${REG_START:-550}" \
+  --lambda-reg "${LAMBDA_REG:-0.75}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+  --reg-interval "${REG_INTERVAL:-10}" \
+  --l1-start "${L1_START:-750}" \
+  --init-noise "${INIT_NOISE:-0.25}"
 python method/splannequin_1d.py \
   --variant no_defective \
   --data data/synthetic_mannequin.json \
   --out checkpoints/no_defective/predictions.json \
   --steps "${STEPS:-900}" \
-  --lambda-reg "${LAMBDA_REG:-8.0}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-8}" \
-  --reg-interval "${REG_INTERVAL:-5}"
+  --reg-start "${REG_START:-550}" \
+  --lambda-reg "${LAMBDA_REG:-0.75}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+  --reg-interval "${REG_INTERVAL:-10}" \
+  --l1-start "${L1_START:-750}" \
+  --init-noise "${INIT_NOISE:-0.25}"
 
 for seed in 11 29; do
   scene="extra_seed_${seed}"
@@ -48,25 +57,34 @@ for seed in 11 29; do
     --data "data/${scene}.json" \
     --out "checkpoints/${scene}/splannequin/predictions.json" \
     --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
-    --lambda-reg "${LAMBDA_REG:-8.0}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-8}" \
-    --reg-interval "${REG_INTERVAL:-5}"
+    --reg-start "${REG_START:-550}" \
+    --lambda-reg "${LAMBDA_REG:-0.75}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+    --reg-interval "${REG_INTERVAL:-10}" \
+    --l1-start "${L1_START:-750}" \
+    --init-noise "${INIT_NOISE:-0.25}"
   python method/splannequin_1d.py \
     --variant no_hidden \
     --data "data/${scene}.json" \
     --out "checkpoints/${scene}/no_hidden/predictions.json" \
     --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
-    --lambda-reg "${LAMBDA_REG:-8.0}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-8}" \
-    --reg-interval "${REG_INTERVAL:-5}"
+    --reg-start "${REG_START:-550}" \
+    --lambda-reg "${LAMBDA_REG:-0.75}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+    --reg-interval "${REG_INTERVAL:-10}" \
+    --l1-start "${L1_START:-750}" \
+    --init-noise "${INIT_NOISE:-0.25}"
   python method/splannequin_1d.py \
     --variant no_defective \
     --data "data/${scene}.json" \
     --out "checkpoints/${scene}/no_defective/predictions.json" \
     --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
-    --lambda-reg "${LAMBDA_REG:-8.0}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-8}" \
-    --reg-interval "${REG_INTERVAL:-5}"
+    --reg-start "${REG_START:-550}" \
+    --lambda-reg "${LAMBDA_REG:-0.75}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+    --reg-interval "${REG_INTERVAL:-10}" \
+    --l1-start "${L1_START:-750}" \
+    --init-noise "${INIT_NOISE:-0.25}"
 done
 
 bash scripts/evaluate.sh
