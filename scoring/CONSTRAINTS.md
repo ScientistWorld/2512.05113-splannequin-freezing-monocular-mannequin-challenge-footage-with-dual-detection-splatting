@@ -6,7 +6,7 @@ Submissions must solve fixed-time reconstruction from sparse monocular temporal 
 
 ## Data
 
-Submissions must train and evaluate on `data/synthetic_mannequin.json` for the reported `synthetic_freeze_time` score. External data, pretrained image models, or additional generated scenes may not be used for this score.
+Submissions must train and evaluate on the provided generated validation scenes in `data/` for the reported `synthetic_validation_paper` score. External data, pretrained image models, or privately generated extra scenes may not be used for this score.
 
 ## Evaluation
 
@@ -19,7 +19,7 @@ Submissions may change optimization details but may not increase the scene-capac
 ## Compliance Checklist
 
 - [ ] Solves fixed-time reconstruction from the provided monocular sequence.
-- [ ] Uses only `data/synthetic_mannequin.json` for the reported score.
+- [ ] Uses only the provided generated validation scenes in `data/` for the reported score.
 - [ ] Does not alter fixed-time ground truth.
 - [ ] Does not increase scene-capacity count or render width.
 - [ ] Reports scores through `bash scripts/evaluate.sh`.

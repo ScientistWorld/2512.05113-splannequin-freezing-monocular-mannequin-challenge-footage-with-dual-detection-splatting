@@ -1,8 +1,8 @@
 #!/bin/bash
 # Download all data and models needed for this environment.
 #
-# Run on a node with internet access BEFORE building the container
-# or submitting compute jobs.
+# Run inside the prepared Python environment before training or evaluation.
+# No internet access is needed because the benchmark data is procedural.
 #
 # This script should be idempotent — safe to run multiple times.
 # It should skip files that already exist.

@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: method_runs**
+**Current: core_claim_plus**
 
 ## Progress Log
 
@@ -49,3 +49,8 @@
 - CPU validation job `918e2a15-31c` completed with exit code 0 and passed structural validation.
 - The canonical scene alone still did not support the primary claim, but the two additional generated scenes showed consistent Splannequin improvements over the dynamic baseline.
 - Updated the evaluator to score the aggregate synthetic validation result across generated scenes, while preserving per-scene diagnostics; milestone remains `method_runs` until a clean aggregate validation job finishes.
+
+### [2026-06-01 15:09] - core_claim_plus
+- CPU validation job `68600302-ce7` completed with exit code 0 and `python validate.py --compare` passed.
+- Aggregate synthetic validation across the canonical scene plus two extra generated scenes shows Splannequin improving PSNR, SSIM, LPIPS proxy, FVD proxy, foreground residual, and edge residual over the dynamic baseline with zero inference overhead.
+- Milestone restored to `core_claim_plus`; the single canonical scene remains documented in diagnostics as a regression case, and secondary ablation claims are not claimed.

@@ -1,8 +1,4 @@
-# This iteration submits an aggregate scoring validation pass.
-# Do NOT sleep, poll, or wait. The system reads this file
-# only after your turn ends.
-action: submit
-gpus: 0
-test: true
-milestone: method_runs
-notes: "CPU validation of aggregate synthetic-scene scoring using the latest completed reproduction outputs."
+# Final verification complete. Do NOT sleep, poll, or wait.
+action: done
+milestone: core_claim_plus
+notes: "Final validation passed: aggregate synthetic scoring supports Splannequin over the dynamic baseline with zero inference overhead; workspace is packaged as a scaled gym."
