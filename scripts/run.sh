@@ -1,19 +1,10 @@
 #!/bin/bash
-# Example job script submitted via the end-of-turn YAML block.
-#
-# This runs inside the compute container with:
-#   - Your workspace mounted at /home/user
-#   - GPU(s) available
-#   - No internet access
-#
-# Make sure all data, code, and dependencies are already in the
-# workspace or baked into the container before submitting.
+# Score the visible train split and held-out test split against all
+# checkpoint prediction artifacts.
 
 set -e
 
 cd /home/user
 
-export STEPS="${STEPS:-900}"
-export EXTRA_STEPS="${EXTRA_STEPS:-900}"
-bash scripts/reproduce.sh
-python validate.py --compare
+bash scripts/evaluate_train.sh /home/user/checkpoints
+bash scripts/evaluate_test.sh /home/user/checkpoints

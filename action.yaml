@@ -1,9 +1,8 @@
-# This iteration writes files only — do NOT submit compute jobs.
-# Once you set action to 'done', STOP immediately.
+# This iteration submits the train/test scoring job.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: done
+action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Improvements: blockwise train/test view split, foreground and edge residual metrics, slice metadata, reference metric descriptions, method-name alignment. Notes: see DESIGN_NOTES.md for runtime concerns."
+notes: "Run evaluate_{train,test}.sh over all checkpoint prediction artifacts; populate scores_train.json and scores_test.json for result inspection."

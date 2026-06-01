@@ -8,10 +8,12 @@ set -e
 
 cd /home/user
 
+CHECKPOINTS_DIR="${1:-/home/user/checkpoints}"
+
 mkdir -p scoring
 
 python eval/test/evaluate.py \
   --data data/synthetic_mannequin.json \
-  --checkpoints checkpoints \
+  --checkpoints "$CHECKPOINTS_DIR" \
   --train-scores scoring/scores_train.json \
   --out scoring/scores_test.json
