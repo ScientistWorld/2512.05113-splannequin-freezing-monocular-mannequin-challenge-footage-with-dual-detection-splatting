@@ -33,15 +33,19 @@ def render(states, colors, opacity_logits, log_scale, cam_z, width):
     visible = (dz > 0.18) & (px > -0.15 * width) & (px < 1.15 * width)
     sigma = (log_scale.exp() * width / dz.clamp_min(0.35)).clamp(0.8, 7.5)[:, None]
     opacity = torch.sigmoid(opacity_logits)
-    # Soft depth attenuation approximates alpha-composited splatting while keeping
-    # the renderer compact and differentiable for CPU test jobs.
-    depth_weight = torch.sigmoid(4.0 * (dz - 0.18))[:, None]
     gauss = torch.exp(-0.5 * ((x - px[:, None]) / sigma) ** 2) * visible[:, None].float()
-    alpha = (opacity[:, None] * gauss * depth_weight).clamp(0.0, 0.95)
-    contrib = alpha.sum(dim=1)
-    rgb = 0.02 + alpha.transpose(0, 1) @ torch.sigmoid(colors)
-    norm = 1.0 + alpha.sum(dim=0, keepdim=True).transpose(0, 1)
-    return (rgb / norm).clamp(0.0, 1.0), visible, contrib
+    raw_alpha = (opacity[:, None] * gauss).clamp(0.0, 0.97)
+    order = torch.argsort(dz, descending=True)
+    trans = torch.ones((width,), device=device)
+    rgb = torch.full((width, 3), 0.02, device=device)
+    contrib = torch.zeros((states.shape[0],), device=device)
+    color = torch.sigmoid(colors)
+    for k in order:
+        alpha = raw_alpha[k] * trans
+        contrib[k] = alpha.sum()
+        rgb = rgb + alpha[:, None] * color[k]
+        trans = trans * (1.0 - alpha).clamp_min(0.0)
+    return rgb.clamp(0.0, 1.0), visible, contrib
 
 
 def nearest_anchor_masks(well: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:

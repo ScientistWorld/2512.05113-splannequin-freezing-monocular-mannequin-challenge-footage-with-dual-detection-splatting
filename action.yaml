@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: true
 milestone: none
-notes: "CPU smoke job: install numpy/torch, generate synthetic benchmark, train baseline/Splannequin/ablations, evaluate scores, and validate comparison."
+notes: "CPU smoke job after audit fixes: run the complete scaled Splannequin reproduction, write paper-named scores, and validate comparison."

@@ -6,6 +6,8 @@ Implemented a scaled dynamic Gaussian splatting reproduction of Splannequin. The
 
 The benchmark generator, method code, baseline path, ablation variants, evaluator, scripts, briefing, reference metrics, and scientist-facing scoring documentation are in place.
 
+Continuation audit on 2026-06-01 found that the workspace had no reproduced scores yet. The evaluator and method were adjusted before submission: the method renderer now matches the alpha-composited synthetic data renderer, and the evaluator now writes paper-named score groups in addition to scaled diagnostic metrics.
+
 ## Results
 
 No reproduced scores yet. The next submitted CPU job will install dependencies in the container overlay, run baseline/Splannequin/ablations, write `scoring/scores.json`, and run `python validate.py --compare`.

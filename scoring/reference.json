@@ -34,8 +34,8 @@
       "weight": 0.2,
       "primary_metric": "cqa_average_degradation_pct",
       "metrics": {
-        "cqa_average_degradation_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "cover_technical_degradation_pct": {"higher_is_better": false, "coefficient": -0.8}
+        "cqa_average_degradation_pct": {"higher_is_better": true, "coefficient": 1.0},
+        "cover_technical_degradation_pct": {"higher_is_better": true, "coefficient": 0.8}
       },
       "results": {
         "no_hidden_loss": {"type": "proposed", "cqa_average_degradation_pct": -162.23, "cover_technical_degradation_pct": -94.22},
