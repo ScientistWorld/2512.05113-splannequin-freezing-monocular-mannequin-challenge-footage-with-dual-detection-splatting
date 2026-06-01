@@ -1,0 +1,82 @@
+{
+  "experiments": {
+    "synthetic_validation_paper": {
+      "results": {
+        "4dgaussians": {
+          "psnr": 17.39233199145256,
+          "ssim": 0.6984830769126676,
+          "lpips": 0.0946744978427887,
+          "fvd": 127.30777263641357,
+          "inference_overhead": 0.0
+        },
+        "4dgaussians_splannequin": {
+          "psnr": 17.73576313896075,
+          "ssim": 0.6988339826542782,
+          "lpips": 0.08383151143789291,
+          "fvd": 102.41818428039551,
+          "inference_overhead": 0.0
+        }
+      }
+    },
+    "ablation_regularizers": {
+      "results": {
+        "no_hidden_loss": {
+          "cqa_average_degradation_pct": -2.4920465245301853,
+          "cover_technical_degradation_pct": -4.694443374267514
+        },
+        "no_defective_loss": {
+          "cqa_average_degradation_pct": 2.288283077259828,
+          "cover_technical_degradation_pct": 7.411045814571849
+        }
+      }
+    },
+    "synthetic_freeze_time": {
+      "results": {
+        "baseline_dynamic_gs": {
+          "freeze_psnr": 17.39233199145256,
+          "ghosting_error": 0.039467331022024155,
+          "temporal_error": 0.007636807858943939,
+          "inference_state_values": 238.0,
+          "psnr": 17.39233199145256,
+          "ssim": 0.6984830769126676,
+          "lpips": 0.0946744978427887,
+          "fvd": 127.30777263641357,
+          "inference_overhead": 0.0
+        },
+        "splannequin": {
+          "freeze_psnr": 17.73576313896075,
+          "ghosting_error": 0.03548690304160118,
+          "temporal_error": 0.017513670027256012,
+          "inference_state_values": 238.0,
+          "psnr": 17.73576313896075,
+          "ssim": 0.6988339826542782,
+          "lpips": 0.08383151143789291,
+          "fvd": 102.41818428039551,
+          "inference_overhead": 0.0
+        },
+        "splannequin_no_hidden": {
+          "freeze_psnr": 17.293779670057372,
+          "ghosting_error": 0.037152815610170364,
+          "temporal_error": 0.013355404138565063,
+          "inference_state_values": 238.0,
+          "psnr": 17.293779670057372,
+          "ssim": 0.7060716129071389,
+          "lpips": 0.09599263221025467,
+          "fvd": 122.87228554487228,
+          "inference_overhead": 0.0
+        },
+        "splannequin_no_defective": {
+          "freeze_psnr": 18.141607605492474,
+          "ghosting_error": 0.03285695239901543,
+          "temporal_error": 0.024011924862861633,
+          "inference_state_values": 238.0,
+          "psnr": 18.141607605492474,
+          "ssim": 0.746765806868836,
+          "lpips": 0.08163141459226608,
+          "fvd": 106.26421868801117,
+          "inference_overhead": 0.0
+        }
+      }
+    }
+  }
+}
