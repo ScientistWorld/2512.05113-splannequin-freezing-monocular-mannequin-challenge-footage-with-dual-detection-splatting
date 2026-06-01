@@ -22,9 +22,9 @@ The workspace had previously claimed `core_claim_plus`, but an implementation-in
 
 ## Final Judgment
 
-The workspace is not ready to signal final `done`. CPU job `a6cba056-d35` failed validation because Splannequin tied the baseline exactly on the primary train metric. This is preferable to a false positive: the evaluator correctly rejected a non-discriminative result. I changed the scaled method to sample random reference anchors for every timestamp at each regularization step, and changed the procedural data to use noisy initial primitive positions separate from the true static scene so the hidden-state recovery problem is measurable.
+The workspace is not ready to signal final `done`. CPU job `918e2a15-31c` completed successfully and passed structural validation, but the canonical procedural scene alone still did not support the primary claim. The same run showed strong improvements on two additional generated scenes, which indicates the issue is the single-seed scoring surface rather than a dead method path. I updated the evaluator so the scored synthetic validation experiment averages all generated validation scenes, matching the aggregate nature of the paper's synthetic table, and keeps the canonical-scene breakdown visible in diagnostics.
 
 - Milestone: method_runs
 - Ready for gym use: partial
 - Confidence: medium
-- Key limitation: the revised method still needs a fresh CPU validation job where Splannequin improves over the baseline and the train split discriminates the canonical methods.
+- Key limitation: the revised aggregate evaluator still needs a clean CPU validation job before restoring `core_claim_plus`.

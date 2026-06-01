@@ -1,8 +1,8 @@
-# This iteration submits an all-timestamp anchoring validation pass.
+# This iteration submits an aggregate scoring validation pass.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
 action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "CPU validation after making random reference anchoring cover every timestamp and adding noisy primitive initialization to the synthetic freeze-time benchmark."
+notes: "CPU validation of aggregate synthetic-scene scoring using the latest completed reproduction outputs."

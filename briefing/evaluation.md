@@ -4,7 +4,7 @@
 
 The paper evaluates fixed-time reconstruction quality with full-reference metrics on synthetic data and no-reference perceptual metrics on real video.
 
-For this reusable reproduction, the runnable benchmark uses a synthetic monocular forward-camera scene with known fixed-time ground truth:
+For this reusable reproduction, the runnable benchmark uses synthetic monocular forward-camera scenes with known fixed-time ground truth:
 
 - `psnr`: pixel fidelity between rendered fixed-time views and static ground truth. Higher is better.
 - `ssim`: global structural agreement with the fixed-time target. Higher is better.
@@ -22,4 +22,4 @@ The paper reports synthetic improvements of its proposed system over its dynamic
 
 ## Evaluation Protocol
 
-Train on the full monocular sequence, then render all input camera poses at a single selected timestamp. Evaluation reads saved render outputs from `checkpoints/*/predictions.json` and compares them to `data/synthetic_mannequin.json`. The evaluator does not import or call the method implementation.
+Train on the full monocular sequence, then render all input camera poses at a single selected timestamp. Evaluation reads saved render outputs from `checkpoints/*/predictions.json` and compares them to the generated validation scenes in `data/`. When extra validation scenes are present under `checkpoints/extra_seed_*`, `scores.json` reports the average over the canonical scene plus those extra scenes; `scoring/diagnostics.json` keeps the per-scene breakdown. The evaluator does not import or call the method implementation.

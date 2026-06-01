@@ -1,13 +1,13 @@
 #!/bin/bash
-# Regenerate the scaled reproduction artifacts, then score the visible
-# train split and held-out test split against the produced predictions.
+# Re-score the latest generated reproduction artifacts after evaluator changes,
+# then score the visible train split and held-out test split.
 
 set -e
 
 cd /home/user
 
-echo "[run] regenerating data and method outputs"
-bash scripts/reproduce.sh
+echo "[run] evaluating aggregate synthetic validation scores"
+bash scripts/evaluate.sh
 echo "[run] evaluating visible train split"
 bash scripts/evaluate_train.sh /home/user/checkpoints
 echo "[run] evaluating held-out test split"

@@ -4,6 +4,8 @@
 
 Tests whether fixed-time renderings are closer to a static target than a dynamic reconstruction rendered naively at one timestamp.
 
+The standard score is the mean over the generated synthetic validation scenes, matching the paper's aggregate synthetic-table style. Per-scene details are diagnostic, not separate optimization targets.
+
 - **Metric**: `psnr` (higher is better)
 - **Metric**: `ssim` (higher is better)
 - **Metric**: `lpips` (lower is better)

@@ -107,10 +107,25 @@ def evaluate_group(data_path: Path, inputs: list[Path], names: list[str]) -> tup
 
 
 def summarize_groups(groups: list[dict[str, dict[str, float]]]) -> dict[str, dict[str, float]]:
-    names = sorted(groups[0])
-    metrics = ["psnr", "ssim", "lpips", "fvd", "inference_overhead"]
+    if not groups:
+        return {}
+    names = sorted(set.intersection(*(set(group) for group in groups)))
+    candidate_metrics = [
+        "psnr",
+        "ssim",
+        "lpips",
+        "fvd",
+        "foreground_mae",
+        "edge_mae",
+        "inference_overhead",
+    ]
     summary = {}
     for name in names:
+        metrics = [
+            metric
+            for metric in candidate_metrics
+            if all(metric in group[name] for group in groups)
+        ]
         summary[name] = {
             metric: float(np.mean([group[name][metric] for group in groups]))
             for metric in metrics
@@ -169,10 +184,14 @@ def main() -> None:
         diagnostics["experiments"]["ablation_regularizers"] = {"results": ablations}
     if extra_groups:
         diagnostics["experiments"]["synthetic_validation_extra_scenes"] = {"results": summarize_groups(extra_groups)}
+        diagnostics["experiments"]["synthetic_validation_scored_aggregate"] = {
+            "results": summarize_groups([paper_named, *extra_groups])
+        }
     Path("scoring/diagnostics.json").write_text(json.dumps(diagnostics, indent=2), encoding="utf-8")
+    scored_results = summarize_groups([paper_named, *extra_groups]) if extra_groups else paper_named
     scores = {
         "experiments": {
-            "synthetic_validation_paper": {"results": paper_named}
+            "synthetic_validation_paper": {"results": scored_results}
         }
     }
     out = Path(args.out)

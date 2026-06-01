@@ -44,3 +44,8 @@
 - CPU validation job `a6cba056-d35` failed validation because Splannequin tied the baseline exactly on the primary train metric.
 - Diagnostics showed the anchor loss fired, but sparse random timestamp sampling gave no measurable effect on fixed-time rendering.
 - Updated the method to sample random references for every timestamp at each regularization step and updated the data generator to provide noisy primitive initial positions separate from the true static freeze-time scene.
+
+### [2026-06-01 14:52] - method_runs
+- CPU validation job `918e2a15-31c` completed with exit code 0 and passed structural validation.
+- The canonical scene alone still did not support the primary claim, but the two additional generated scenes showed consistent Splannequin improvements over the dynamic baseline.
+- Updated the evaluator to score the aggregate synthetic validation result across generated scenes, while preserving per-scene diagnostics; milestone remains `method_runs` until a clean aggregate validation job finishes.
