@@ -26,3 +26,4 @@
 - Secondary ablation behavior was only partially reproduced, so the milestone remains `core_claim`.
 
 ## Stop Justification
+- Completed at milestone `core_claim`.
