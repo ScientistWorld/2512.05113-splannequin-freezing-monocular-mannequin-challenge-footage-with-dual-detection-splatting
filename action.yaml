@@ -1,8 +1,8 @@
-# This iteration submits a revised method validation pass.
+# This iteration submits a follow-up revised method validation pass.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
 action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "CPU validation job for the revised scaled Splannequin implementation: regenerate data/checkpoints/scores, run train/test eval, and compare against reference."
+notes: "CPU validation for the stricter static freeze-time synthetic benchmark; regenerate data/checkpoints/scores, run train/test eval, and require validate.py --compare to pass."

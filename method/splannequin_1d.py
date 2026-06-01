@@ -112,6 +112,14 @@ def train(args):
     opt = torch.optim.Adam([state, color_state, opacity_state, log_scale_state], lr=args.lr)
     rng = torch.Generator(device=device)
     rng.manual_seed(args.seed + 1009)
+    summary = {
+        "regularization_updates": 0,
+        "hidden_anchor_terms": 0,
+        "defective_anchor_terms": 0,
+        "hidden_anchor_items": 0,
+        "defective_anchor_items": 0,
+        "regularization_loss_sum": 0.0,
+    }
 
     for step in range(args.steps):
         opt.zero_grad(set_to_none=True)
@@ -158,6 +166,8 @@ def train(args):
                         weight = torch.exp(torch.tensor(-args.tau * (t - ref) / max(1, t_count - 1), device=device))
                         reg = reg + weight * d
                         count = count + 1
+                        summary["hidden_anchor_terms"] += 1
+                        summary["hidden_anchor_items"] += int(mask.sum().item())
                 if args.variant != "no_defective" and ref > t:
                     mask = defective[t] & well[ref]
                     if mask.any():
@@ -167,7 +177,11 @@ def train(args):
                         weight = torch.exp(torch.tensor(-args.tau * (ref - t) / max(1, t_count - 1), device=device))
                         reg = reg + weight * d
                         count = count + 1
+                        summary["defective_anchor_terms"] += 1
+                        summary["defective_anchor_items"] += int(mask.sum().item())
             if count.item() > 0:
+                summary["regularization_updates"] += 1
+                summary["regularization_loss_sum"] += float((reg / count).detach().item())
                 loss = loss + args.lambda_reg * reg / count
         loss.backward()
         opt.step()
@@ -199,6 +213,7 @@ def train(args):
         "trained_state_values": int(state.numel() + color_state.numel() + opacity_state.numel() + log_scale_state.numel()),
         "inference_state_values": int(inference_state_values),
         "steps": int(args.steps),
+        "training_summary": summary,
     }
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)

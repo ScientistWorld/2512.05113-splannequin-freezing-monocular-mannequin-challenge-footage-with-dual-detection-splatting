@@ -2,6 +2,9 @@
 
 The generator is method-agnostic: it defines a small dynamic Gaussian
 scene, observed along a forward camera path, plus fixed-time ground truth.
+The scene itself is a freeze-time capture: object geometry is static while
+the camera advances, so a method must infer poorly observed fixed-time
+primitive states from other views.
 """
 
 from __future__ import annotations
@@ -57,19 +60,8 @@ def create_scene(seed: int = 3, num_points: int = 34, num_frames: int = 24, widt
     colors = rng.uniform(0.15, 0.95, size=(num_points, 3)).astype(np.float32)
     opacity = rng.uniform(0.22, 0.62, size=num_points).astype(np.float32)
     scale = rng.uniform(0.018, 0.04, size=num_points).astype(np.float32)
-    moving = rng.choice(num_points, size=max(6, num_points // 4), replace=False)
-    amp = np.zeros(num_points, dtype=np.float32)
-    amp[moving] = rng.uniform(0.035, 0.105, size=len(moving))
-    phase = rng.uniform(0.0, 2 * np.pi, size=num_points).astype(np.float32)
-    times = np.linspace(0.0, 1.0, num_frames, dtype=np.float32)
     cam_z = np.linspace(-0.15, 5.6, num_frames, dtype=np.float32)
-    states = []
-    for t in times:
-        pos = base_pos.copy()
-        pos[:, 0] += amp * np.sin(2 * np.pi * (1.15 * t) + phase)
-        pos[:, 1] += 0.018 * amp * np.cos(2 * np.pi * t + phase)
-        states.append(pos)
-    states = np.stack(states, axis=0).astype(np.float32)
+    states = np.repeat(base_pos[None, :, :], num_frames, axis=0).astype(np.float32)
 
     frames, masks, contribs = [], [], []
     for i in range(num_frames):

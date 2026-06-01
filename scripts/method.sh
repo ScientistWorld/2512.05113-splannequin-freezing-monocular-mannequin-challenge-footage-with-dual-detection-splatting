@@ -15,17 +15,26 @@ python method/splannequin_1d.py \
   --variant splannequin \
   --data data/synthetic_mannequin.json \
   --out checkpoints/splannequin/predictions.json \
-  --steps "${STEPS:-900}"
+  --steps "${STEPS:-900}" \
+  --lambda-reg "${LAMBDA_REG:-8.0}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-8}" \
+  --reg-interval "${REG_INTERVAL:-5}"
 python method/splannequin_1d.py \
   --variant no_hidden \
   --data data/synthetic_mannequin.json \
   --out checkpoints/no_hidden/predictions.json \
-  --steps "${STEPS:-900}"
+  --steps "${STEPS:-900}" \
+  --lambda-reg "${LAMBDA_REG:-8.0}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-8}" \
+  --reg-interval "${REG_INTERVAL:-5}"
 python method/splannequin_1d.py \
   --variant no_defective \
   --data data/synthetic_mannequin.json \
   --out checkpoints/no_defective/predictions.json \
-  --steps "${STEPS:-900}"
+  --steps "${STEPS:-900}" \
+  --lambda-reg "${LAMBDA_REG:-8.0}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-8}" \
+  --reg-interval "${REG_INTERVAL:-5}"
 
 for seed in 11 29; do
   scene="extra_seed_${seed}"
@@ -38,17 +47,26 @@ for seed in 11 29; do
     --variant splannequin \
     --data "data/${scene}.json" \
     --out "checkpoints/${scene}/splannequin/predictions.json" \
-    --steps "${EXTRA_STEPS:-${STEPS:-900}}"
+    --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
+    --lambda-reg "${LAMBDA_REG:-8.0}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-8}" \
+    --reg-interval "${REG_INTERVAL:-5}"
   python method/splannequin_1d.py \
     --variant no_hidden \
     --data "data/${scene}.json" \
     --out "checkpoints/${scene}/no_hidden/predictions.json" \
-    --steps "${EXTRA_STEPS:-${STEPS:-900}}"
+    --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
+    --lambda-reg "${LAMBDA_REG:-8.0}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-8}" \
+    --reg-interval "${REG_INTERVAL:-5}"
   python method/splannequin_1d.py \
     --variant no_defective \
     --data "data/${scene}.json" \
     --out "checkpoints/${scene}/no_defective/predictions.json" \
-    --steps "${EXTRA_STEPS:-${STEPS:-900}}"
+    --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
+    --lambda-reg "${LAMBDA_REG:-8.0}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-8}" \
+    --reg-interval "${REG_INTERVAL:-5}"
 done
 
 bash scripts/evaluate.sh

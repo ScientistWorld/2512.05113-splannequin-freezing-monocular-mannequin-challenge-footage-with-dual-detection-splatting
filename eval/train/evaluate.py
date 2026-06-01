@@ -84,7 +84,7 @@ def method_names_from_source(source_path: Path, prediction_files: dict[str, Path
         raise SystemExit(f"{source_path} does not contain {EXPERIMENT} results") from exc
     if not canonical:
         raise SystemExit(f"{source_path} contains no method results for {EXPERIMENT}")
-    names = sorted(prediction_files)
+    names = sorted(canonical)
     missing = [name for name in canonical if name not in prediction_files]
     if missing:
         raise SystemExit(f"Missing prediction files for reference methods: {', '.join(sorted(missing))}")

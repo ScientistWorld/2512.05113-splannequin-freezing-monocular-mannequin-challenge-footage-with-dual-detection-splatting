@@ -29,3 +29,8 @@
 - Integrity review found the previous scaled implementation used contribution-threshold defective detection and nearest-anchor sweeps, which were too far from the paper's stated training procedure.
 - Revised the method to use near-zero reconstruction gradients for defective detection, random reference timestamp sampling, L2-to-L1 anchoring, and time-varying position/color/opacity/scale parameters.
 - Downgraded the current milestone pending a fresh CPU job to verify whether the revised implementation restores the core claim.
+
+### [2026-06-01 13:07] - method_runs
+- CPU validation job `44b9aebb-ab0` completed successfully at the process level but did not support the core claim: the revised Splannequin and baseline metrics tied on the primary synthetic experiment.
+- `python validate.py --compare` also found stale train/test ablation keys outside `reference.json`.
+- Updated the procedural benchmark and evaluator again; the current milestone remains `method_runs` until a new validation job produces discriminative scores.

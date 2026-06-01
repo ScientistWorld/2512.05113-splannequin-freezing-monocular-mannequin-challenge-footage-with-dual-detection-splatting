@@ -22,9 +22,9 @@ The workspace had previously claimed `core_claim_plus`, but an implementation-in
 
 ## Final Judgment
 
-The workspace is not ready to signal final `done` in this turn because the revised implementation has not yet regenerated scored artifacts. The correct next step is the already configured CPU test submission, which will run `scripts/run.sh`, regenerate data/checkpoints/scores, run train/test evaluation, and validate the revised method.
+The workspace is not ready to signal final `done`. CPU job `44b9aebb-ab0` completed cleanly, but the revised implementation tied the baseline on the scored primary metrics and therefore did not justify restoring `core_claim` or `core_claim_plus`. I applied a follow-up fix that makes the synthetic benchmark a stricter static freeze-time scene, records anchoring diagnostics in method outputs, filters train/test scoring to canonical methods from `scores.json`, and makes `scripts/run.sh` fail if `validate.py --compare` fails. A new CPU validation job is required.
 
 - Milestone: method_runs
 - Ready for gym use: partial
 - Confidence: medium
-- Key limitation: the revised method needs a fresh CPU validation job before any milestone above `method_runs` is justified.
+- Key limitation: the revised method still needs a fresh CPU validation job with discriminative Splannequin-vs-baseline scores before any milestone above `method_runs` is justified.

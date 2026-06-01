@@ -16,6 +16,8 @@ Clean validation job `f980876c-3fa` completed successfully on 2026-06-01. The wo
 
 An integrity review later found that the previous scaled method used contribution-threshold defective detection and nearest-anchor sweeps instead of the paper's gradient-based defective state test and random reference timestamp procedure. I revised the method accordingly and am submitting a fresh CPU validation job. Until that job finishes, the current milestone is conservatively downgraded to `method_runs`.
 
+CPU validation job `44b9aebb-ab0` completed with exit code 0, but the regenerated scores did not restore the core claim. The revised Splannequin and baseline outputs differed as artifacts, yet the evaluator measured identical primary scores for the canonical methods; train/test validation also included diagnostic ablation method keys that were not present in `reference.json`. I fixed the train/test method filtering and made the synthetic freeze-time benchmark stricter by generating static scene geometry under a moving camera, which better matches the paper's mannequin setting and gives hidden-state anchoring a meaningful target.
+
 ## Results
 
 The latest completed clean CPU job ran the earlier full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`. These numbers are retained for traceability, but the revised implementation must be re-run before restoring a milestone above `method_runs`.
@@ -46,6 +48,8 @@ These extra-scene diagnostics supported `core_claim_plus` for the previous imple
 
 Before restoring `core_claim` or `core_claim_plus`, the revised implementation needs a successful job that regenerates `checkpoints/`, rewrites `scoring/scores.json`, and passes `python validate.py --compare`.
 
+The next job must also show a nonzero metric spread between `4dgaussians` and `4dgaussians_splannequin`; otherwise the milestone stays at `method_runs`.
+
 ## Issues
 
 The exact paper benchmark videos and full dynamic Gaussian frameworks are not packaged here. The reproduction uses a controlled synthetic benchmark to keep the algorithm runnable within the available environment.
@@ -55,6 +59,8 @@ The login node lacks `numpy` and `torch`; dependency installation is therefore l
 The no-defective-loss ablation performed better than full Splannequin on the scaled diagnostic PSNR/ghosting metrics. This means the current reproduction does not claim the paper's secondary ablation result. Ablation numbers are kept in `scoring/diagnostics.json` only, not in `scoring/scores.json`.
 
 The extra-scene job initially failed validation because an extra diagnostic experiment was written into `scoring/scores.json` without a paper-reference entry. The evaluator now keeps that robustness result in `scoring/diagnostics.json` only, and `python validate.py --compare` passes.
+
+Job `44b9aebb-ab0` exposed two follow-up issues: the revised method produced no measurable improvement over baseline on the previous moving-object synthetic data, and `scores_train.json` / `scores_test.json` included no-hidden and no-defective diagnostic variants as if they were canonical scored methods. The train/test evaluator now uses the canonical method set from `scoring/scores.json`, and the procedural data generator now models the freeze-time assumption directly.
 
 ## Deviations from Paper
 
