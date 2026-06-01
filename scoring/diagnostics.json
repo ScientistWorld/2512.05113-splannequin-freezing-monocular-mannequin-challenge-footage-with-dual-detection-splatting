@@ -14,25 +14,25 @@
           "inference_overhead": 0.0
         },
         "splannequin": {
-          "freeze_psnr": 17.915690025735156,
-          "ghosting_error": 0.03336269408464432,
-          "temporal_error": 0.016276925802230835,
+          "freeze_psnr": 17.73576313896075,
+          "ghosting_error": 0.03548690304160118,
+          "temporal_error": 0.017513670027256012,
           "inference_state_values": 238.0,
-          "psnr": 17.915690025735156,
-          "ssim": 0.7259920084513505,
-          "lpips": 0.08550290763378143,
-          "fvd": 106.7250445485115,
+          "psnr": 17.73576313896075,
+          "ssim": 0.6988339826542782,
+          "lpips": 0.08383151143789291,
+          "fvd": 102.41818428039551,
           "inference_overhead": 0.0
         },
         "splannequin_no_hidden": {
-          "freeze_psnr": 17.293779670057372,
-          "ghosting_error": 0.037152815610170364,
-          "temporal_error": 0.013355404138565063,
+          "freeze_psnr": 16.979273744696947,
+          "ghosting_error": 0.04031630977988243,
+          "temporal_error": 0.012774653732776642,
           "inference_state_values": 238.0,
-          "psnr": 17.293779670057372,
-          "ssim": 0.7060716129071389,
-          "lpips": 0.09599263221025467,
-          "fvd": 122.87228554487228,
+          "psnr": 16.979273744696947,
+          "ssim": 0.6805082418102434,
+          "lpips": 0.10008493810892105,
+          "fvd": 130.28454780578613,
           "inference_overhead": 0.0
         },
         "splannequin_no_defective": {
@@ -51,12 +51,12 @@
     "ablation_regularizers": {
       "results": {
         "no_hidden_loss": {
-          "cqa_average_degradation_pct": -3.4713167887166785,
-          "cover_technical_degradation_pct": -11.36035811709375
+          "cqa_average_degradation_pct": -4.265333204647938,
+          "cover_technical_degradation_pct": -13.608983383587326
         },
         "no_defective_loss": {
-          "cqa_average_degradation_pct": 1.2610040664512343,
-          "cover_technical_degradation_pct": 1.5158898269599463
+          "cqa_average_degradation_pct": 2.288283077259828,
+          "cover_technical_degradation_pct": 7.411045814571849
         }
       }
     },
