@@ -3,47 +3,55 @@
     "synthetic_freeze_time": {
       "results": {
         "baseline_dynamic_gs": {
-          "freeze_psnr": 17.39233199145256,
-          "ghosting_error": 0.039467331022024155,
-          "temporal_error": 0.007636807858943939,
+          "freeze_psnr": 17.272896369429375,
+          "ghosting_error": 0.030009591951966286,
+          "temporal_error": 0.01110280305147171,
           "inference_state_values": 238.0,
-          "psnr": 17.39233199145256,
-          "ssim": 0.6984830769126676,
-          "lpips": 0.0946744978427887,
-          "fvd": 127.30777263641357,
+          "psnr": 17.272896369429375,
+          "ssim": 0.7282906800165547,
+          "lpips": 0.09501577913761139,
+          "fvd": 117.1671450138092,
+          "foreground_mae": 0.10957547277212143,
+          "edge_mae": 0.030009591951966286,
           "inference_overhead": 0.0
         },
         "splannequin": {
-          "freeze_psnr": 17.73576313896075,
-          "ghosting_error": 0.03548690304160118,
-          "temporal_error": 0.017513670027256012,
+          "freeze_psnr": 17.272896369429375,
+          "ghosting_error": 0.030009591951966286,
+          "temporal_error": 0.01110280305147171,
           "inference_state_values": 238.0,
-          "psnr": 17.73576313896075,
-          "ssim": 0.6988339826542782,
-          "lpips": 0.08383151143789291,
-          "fvd": 102.41818428039551,
+          "psnr": 17.272896369429375,
+          "ssim": 0.7282906800165547,
+          "lpips": 0.09501577913761139,
+          "fvd": 117.1671450138092,
+          "foreground_mae": 0.10957547277212143,
+          "edge_mae": 0.030009591951966286,
           "inference_overhead": 0.0
         },
         "splannequin_no_hidden": {
-          "freeze_psnr": 16.979273744696947,
-          "ghosting_error": 0.04031630977988243,
-          "temporal_error": 0.012774653732776642,
+          "freeze_psnr": 17.272896369429375,
+          "ghosting_error": 0.030009591951966286,
+          "temporal_error": 0.01110280305147171,
           "inference_state_values": 238.0,
-          "psnr": 16.979273744696947,
-          "ssim": 0.6805082418102434,
-          "lpips": 0.10008493810892105,
-          "fvd": 130.28454780578613,
+          "psnr": 17.272896369429375,
+          "ssim": 0.7282906800165547,
+          "lpips": 0.09501577913761139,
+          "fvd": 117.1671450138092,
+          "foreground_mae": 0.10957547277212143,
+          "edge_mae": 0.030009591951966286,
           "inference_overhead": 0.0
         },
         "splannequin_no_defective": {
-          "freeze_psnr": 18.141607605492474,
-          "ghosting_error": 0.03285695239901543,
-          "temporal_error": 0.024011924862861633,
+          "freeze_psnr": 17.272896369429375,
+          "ghosting_error": 0.030009591951966286,
+          "temporal_error": 0.01110280305147171,
           "inference_state_values": 238.0,
-          "psnr": 18.141607605492474,
-          "ssim": 0.746765806868836,
-          "lpips": 0.08163141459226608,
-          "fvd": 106.26421868801117,
+          "psnr": 17.272896369429375,
+          "ssim": 0.7282906800165547,
+          "lpips": 0.09501577913761139,
+          "fvd": 117.1671450138092,
+          "foreground_mae": 0.10957547277212143,
+          "edge_mae": 0.030009591951966286,
           "inference_overhead": 0.0
         }
       }
@@ -51,29 +59,29 @@
     "ablation_regularizers": {
       "results": {
         "no_hidden_loss": {
-          "cqa_average_degradation_pct": -4.265333204647938,
-          "cover_technical_degradation_pct": -13.608983383587326
+          "cqa_average_degradation_pct": 0.0,
+          "cover_technical_degradation_pct": -0.0
         },
         "no_defective_loss": {
-          "cqa_average_degradation_pct": 2.288283077259828,
-          "cover_technical_degradation_pct": 7.411045814571849
+          "cqa_average_degradation_pct": 0.0,
+          "cover_technical_degradation_pct": -0.0
         }
       }
     },
     "synthetic_validation_extra_scenes": {
       "results": {
         "4dgaussians": {
-          "psnr": 17.196579957437287,
-          "ssim": 0.6316466198013164,
-          "lpips": 0.09586044028401375,
-          "fvd": 118.2803176343441,
+          "psnr": 17.152427111076477,
+          "ssim": 0.6410990249876558,
+          "lpips": 0.09567368030548096,
+          "fvd": 115.14975130558014,
           "inference_overhead": 0.0
         },
         "4dgaussians_splannequin": {
-          "psnr": 18.116280592020317,
-          "ssim": 0.6915332227318413,
-          "lpips": 0.08492821082472801,
-          "fvd": 95.19962221384048,
+          "psnr": 17.152427111076477,
+          "ssim": 0.6410990249876558,
+          "lpips": 0.09567368030548096,
+          "fvd": 115.14975130558014,
           "inference_overhead": 0.0
         }
       }
