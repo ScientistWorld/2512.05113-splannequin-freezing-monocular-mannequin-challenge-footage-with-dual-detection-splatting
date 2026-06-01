@@ -10,7 +10,7 @@ Continuation audit on 2026-06-01 found that the workspace had no reproduced scor
 
 ## Results
 
-The first CPU job ran the full scaled benchmark and wrote real outputs. It failed only because `scores.json` included an extra diagnostic experiment not listed in `reference.json`; the score contract has been fixed for the next submission.
+The second CPU job ran the full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`.
 
 Scaled synthetic result from the completed job:
 
@@ -23,16 +23,19 @@ Scaled synthetic result from the completed job:
 - Inference overhead: 0.0 for both
 
 This supports the core claim on the scaled benchmark, but I am resubmitting after the score-format fix before marking `core_claim`.
+This supports the core claim on the scaled benchmark.
 
 ## Remaining
 
-Resubmit the packaged reproduction job with the corrected score contract. If validation passes and the same improvement is reproduced, update to `core_claim`.
+No further work is required for the minimum reusable environment. Higher milestones would require tuning or expanding the synthetic benchmark so both ablation components reproduce the paper's secondary ablation behavior, or integrating a full dynamic Gaussian codebase and real/video benchmark data.
 
 ## Issues
 
 The exact paper benchmark videos and full dynamic Gaussian frameworks are not packaged here. The reproduction uses a controlled synthetic benchmark to keep the algorithm runnable within the available environment.
 
 The login node lacks `numpy` and `torch`; dependency installation is therefore left to `environment/setup.sh` and the submitted container job.
+
+The no-defective-loss ablation performed better than full Splannequin on the scaled diagnostic PSNR/ghosting metrics. This means the current reproduction should not be used to claim the paper's secondary ablation result, only the central fixed-time quality improvement with zero inference overhead.
 
 ## Deviations from Paper
 

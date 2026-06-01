@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: method_runs**
+**Current: core_claim**
 
 ## Progress Log
 
@@ -18,5 +18,11 @@
 - CPU job ran baseline, Splannequin, and ablation variants end-to-end and wrote real prediction artifacts and scores.
 - Splannequin improved fixed-time PSNR and artifact proxy metrics over the unregularized dynamic Gaussian baseline.
 - Job failed only at validation because an extra diagnostic score group was not present in `reference.json`; fixed the score contract and resubmitting.
+
+### [2026-06-01 10:35] - core_claim
+- CPU test job completed successfully and `python validate.py --compare` passed.
+- On the scaled synthetic fixed-time benchmark, Splannequin improved PSNR, LPIPS proxy, FVD proxy, and ghosting error over the unregularized dynamic Gaussian baseline.
+- Inference overhead remained zero, matching the paper's constraint claim.
+- Secondary ablation behavior was only partially reproduced, so the milestone remains `core_claim`.
 
 ## Stop Justification
