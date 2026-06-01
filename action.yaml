@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
+action: done
 gpus: 0
 test: true
-milestone: core_claim
-notes: "Continuation audit found the package locally valid and core_claim sound. This CPU test reruns the fixed evaluator/package end-to-end so the extra-scene diagnostics can support restoring core_claim_plus after a clean validate.py --compare pass."
+milestone: core_claim_plus
+notes: "Clean validation job f980876c-3fa passed. Restored core_claim_plus: primary scaled Splannequin result improves over the dynamic Gaussian baseline with zero inference overhead, and extra-scene diagnostics show the same effect. Secondary ablation claim is not reproduced, so stopping here."

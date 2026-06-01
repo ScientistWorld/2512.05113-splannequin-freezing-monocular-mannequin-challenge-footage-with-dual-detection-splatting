@@ -12,23 +12,25 @@ Continuation audit on 2026-06-01 verified that the existing implementation is a 
 
 Continuation audit on 2026-06-01 after milestone reset confirmed the local fixed evaluator passes `python validate.py --compare`, and the last successful cluster job supports `core_claim`. Because the extra-scene evidence came from a job that failed only at validation output structure, I am submitting a clean CPU validation job before restoring `core_claim_plus`.
 
+Clean validation job `f980876c-3fa` completed successfully on 2026-06-01. The workspace now has a clean cluster run for the fixed evaluator and restored `core_claim_plus`.
+
 ## Results
 
-The second CPU job ran the full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`.
+The latest clean CPU job ran the full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`.
 
-Scaled synthetic result from the completed job:
+Scaled synthetic result from the latest completed job:
 
 - Baseline dynamic Gaussian fixed-time PSNR: 17.3923
-- Splannequin fixed-time PSNR: 17.9157
+- Splannequin fixed-time PSNR: 17.7358
 - Baseline LPIPS proxy: 0.0947
-- Splannequin LPIPS proxy: 0.0855
+- Splannequin LPIPS proxy: 0.0838
 - Baseline FVD proxy: 127.3078
-- Splannequin FVD proxy: 106.7250
+- Splannequin FVD proxy: 102.4182
 - Inference overhead: 0.0 for both
 
 This supports the core claim on the scaled benchmark.
 
-The continuation CPU job added two extra generated scenes. Averaged across those extra scenes:
+The clean continuation CPU job also evaluated two extra generated scenes. Averaged across those extra scenes:
 
 - Baseline PSNR: 17.1966; Splannequin PSNR: 18.1163
 - Baseline SSIM proxy: 0.6316; Splannequin SSIM proxy: 0.6915
@@ -40,7 +42,7 @@ These extra-scene diagnostics support `core_claim_plus`.
 
 ## Remaining
 
-No further work is required for the reusable scaled environment through `core_claim_plus`. Higher milestones would require tuning or expanding the synthetic benchmark so both ablation components reproduce the paper's secondary ablation behavior, or integrating a full dynamic Gaussian codebase and real/video benchmark data.
+No further work is required for the reusable scaled environment through `core_claim_plus`. Higher milestones would require redesigning or expanding the scaled benchmark so both ablation components reproduce the paper's secondary ablation behavior, or integrating a full dynamic Gaussian codebase and real/video benchmark data.
 
 ## Issues
 
