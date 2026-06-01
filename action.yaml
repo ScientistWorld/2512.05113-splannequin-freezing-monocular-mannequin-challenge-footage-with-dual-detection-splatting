@@ -1,8 +1,8 @@
-# This iteration submits the train/test scoring job.
+# This iteration completed the train/test scoring pass.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: submit
+action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Run evaluate_{train,test}.sh over all checkpoint prediction artifacts; populate scores_train.json and scores_test.json for result inspection."
+notes: "Blockwise view split; 28 train metric values, 28 test metric values across 4 methods. Scores are non-identical across splits; proposed improves train fidelity, test is mixed vs baseline/no_defective. Constraint overhead is 0.0 for all shipped methods because inference state counts match."
