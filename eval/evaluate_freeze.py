@@ -140,8 +140,6 @@ def main() -> None:
             "synthetic_validation_paper": {"results": paper_named}
         }
     }
-    if extra_groups:
-        scores["experiments"]["synthetic_validation_extra_scenes"] = {"results": summarize_groups(extra_groups)}
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(scores, indent=2), encoding="utf-8")

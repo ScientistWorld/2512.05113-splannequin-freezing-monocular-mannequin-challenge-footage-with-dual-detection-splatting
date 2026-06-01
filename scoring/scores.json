@@ -17,24 +17,6 @@
           "inference_overhead": 0.0
         }
       }
-    },
-    "synthetic_validation_extra_scenes": {
-      "results": {
-        "4dgaussians": {
-          "psnr": 17.196579957437287,
-          "ssim": 0.6316466198013164,
-          "lpips": 0.09586044028401375,
-          "fvd": 118.2803176343441,
-          "inference_overhead": 0.0
-        },
-        "4dgaussians_splannequin": {
-          "psnr": 18.116280592020317,
-          "ssim": 0.6915332227318413,
-          "lpips": 0.08492821082472801,
-          "fvd": 95.19962221384048,
-          "inference_overhead": 0.0
-        }
-      }
     }
   }
 }

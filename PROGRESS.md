@@ -17,19 +17,28 @@ The second CPU job ran the full scaled benchmark, regenerated outputs, and passe
 Scaled synthetic result from the completed job:
 
 - Baseline dynamic Gaussian fixed-time PSNR: 17.3923
-- Splannequin fixed-time PSNR: 17.7358
+- Splannequin fixed-time PSNR: 17.9157
 - Baseline LPIPS proxy: 0.0947
-- Splannequin LPIPS proxy: 0.0838
+- Splannequin LPIPS proxy: 0.0855
 - Baseline FVD proxy: 127.3078
-- Splannequin FVD proxy: 102.4182
+- Splannequin FVD proxy: 106.7250
 - Inference overhead: 0.0 for both
 
-This supports the core claim on the scaled benchmark, but I am resubmitting after the score-format fix before marking `core_claim`.
 This supports the core claim on the scaled benchmark.
+
+The continuation CPU job added two extra generated scenes. Averaged across those extra scenes:
+
+- Baseline PSNR: 17.1966; Splannequin PSNR: 18.1163
+- Baseline SSIM proxy: 0.6316; Splannequin SSIM proxy: 0.6915
+- Baseline LPIPS proxy: 0.0959; Splannequin LPIPS proxy: 0.0849
+- Baseline FVD proxy: 118.2803; Splannequin FVD proxy: 95.1996
+- Inference overhead: 0.0 for both
+
+These extra-scene diagnostics support `core_claim_plus`.
 
 ## Remaining
 
-The pending CPU job regenerates all results and adds two extra synthetic scenes. If the averaged extra-scene scores improve over the baseline while preserving zero inference overhead, the reproduction can be advanced to `core_claim_plus`. Higher milestones would require tuning or expanding the synthetic benchmark so both ablation components reproduce the paper's secondary ablation behavior, or integrating a full dynamic Gaussian codebase and real/video benchmark data.
+No further work is required for the reusable scaled environment through `core_claim_plus`. Higher milestones would require tuning or expanding the synthetic benchmark so both ablation components reproduce the paper's secondary ablation behavior, or integrating a full dynamic Gaussian codebase and real/video benchmark data.
 
 ## Issues
 
@@ -38,6 +47,8 @@ The exact paper benchmark videos and full dynamic Gaussian frameworks are not pa
 The login node lacks `numpy` and `torch`; dependency installation is therefore left to `environment/setup.sh` and the submitted container job.
 
 The no-defective-loss ablation performed better than full Splannequin on the scaled diagnostic PSNR/ghosting metrics. This means the current reproduction does not claim the paper's secondary ablation result. Ablation numbers are kept in `scoring/diagnostics.json` only, not in `scoring/scores.json`.
+
+The extra-scene job initially failed validation because an extra diagnostic experiment was written into `scoring/scores.json` without a paper-reference entry. The evaluator now keeps that robustness result in `scoring/diagnostics.json` only, and `python validate.py --compare` passes.
 
 ## Deviations from Paper
 

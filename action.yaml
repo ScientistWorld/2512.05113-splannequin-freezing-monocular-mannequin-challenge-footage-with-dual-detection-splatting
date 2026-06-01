@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
+action: done
 gpus: 0
-test: true
-milestone: core_claim
-notes: "CPU test job to regenerate the audited core-claim result and add two extra synthetic scenes. If the extra-scene average also improves over baseline with zero inference overhead, advance to core_claim_plus."
+test: false
+milestone: core_claim_plus
+notes: "Reached core_claim_plus. The audited Splannequin implementation improves the core synthetic fixed-time benchmark and also improves averaged diagnostics on two extra generated scenes with zero inference overhead. Validation passes after keeping extra-scene robustness in diagnostics rather than reference-scored scores.json."
