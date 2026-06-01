@@ -44,6 +44,19 @@ def fvd_proxy(pred: np.ndarray, target: np.ndarray) -> float:
     return 1000.0 * float(np.mean(np.abs(np.diff(pred, axis=0) - np.diff(target, axis=0))))
 
 
+def foreground_mae(pred: np.ndarray, target: np.ndarray) -> float:
+    mask = np.max(target, axis=-1) > 0.04
+    if not np.any(mask):
+        return lpips_proxy(pred, target)
+    return float(np.mean(np.abs(pred[mask] - target[mask])))
+
+
+def edge_mae(pred: np.ndarray, target: np.ndarray) -> float:
+    pred_edge = np.diff(pred, axis=1)
+    target_edge = np.diff(target, axis=1)
+    return float(np.mean(np.abs(pred_edge - target_edge)))
+
+
 def evaluate_one(path: Path, gt: np.ndarray) -> dict[str, float]:
     raw = json.loads(path.read_text(encoding="utf-8"))
     pred = np.asarray(raw["pred_freeze"], dtype=np.float32)
@@ -56,6 +69,8 @@ def evaluate_one(path: Path, gt: np.ndarray) -> dict[str, float]:
         "ssim": ssim_global(pred, gt),
         "lpips": lpips_proxy(pred, gt),
         "fvd": fvd_proxy(pred, gt),
+        "foreground_mae": foreground_mae(pred, gt),
+        "edge_mae": edge_mae(pred, gt),
         "_raw_inference_state_values": float(raw["inference_state_values"]),
     }
 
@@ -72,8 +87,14 @@ def evaluate_group(data_path: Path, inputs: list[Path], names: list[str]) -> tup
         del metrics["_raw_inference_state_values"]
 
     paper_named = {
-        "4dgaussians": {k: results["baseline_dynamic_gs"][k] for k in ["psnr", "ssim", "lpips", "fvd", "inference_overhead"]},
-        "4dgaussians_splannequin": {k: results["splannequin"][k] for k in ["psnr", "ssim", "lpips", "fvd", "inference_overhead"]},
+        "4dgaussians": {
+            k: results["baseline_dynamic_gs"][k]
+            for k in ["psnr", "ssim", "lpips", "fvd", "foreground_mae", "edge_mae", "inference_overhead"]
+        },
+        "4dgaussians_splannequin": {
+            k: results["splannequin"][k]
+            for k in ["psnr", "ssim", "lpips", "fvd", "foreground_mae", "edge_mae", "inference_overhead"]
+        },
     }
     return results, paper_named
 

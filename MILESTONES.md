@@ -19,3 +19,8 @@
 - `python validate.py --compare` passed with method/eval separation checks and `scores.json` restricted to the referenced primary experiment.
 - The primary scaled synthetic experiment reproduces the central claim, and extra-scene diagnostics show the same benefit on two additional generated scenes.
 - Stopped at `core_claim_plus` because the no-defective-loss diagnostic still outperforms the full method on this scaled benchmark, so the paper's secondary ablation claim is not reproduced.
+
+### [2026-06-01 12:28] - core_claim_plus
+- Final verification kept the milestone at `core_claim_plus`.
+- Tightened method-agnostic documentation, completed the scored metric surface, and removed tracked runtime artifacts.
+- `python validate.py --compare` passed after the verification fixes.

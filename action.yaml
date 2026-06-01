@@ -5,4 +5,4 @@ action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Packager audit passed: synthetic data is tracked/regenerated, no external or shared artifacts are required, and download/path checks validate."
+notes: "Final verification passed after documentation, scoring, and packaging hygiene fixes."

@@ -28,12 +28,12 @@
         "foreground_mae": {
           "higher_is_better": false,
           "coefficient": -0.35,
-          "description": "Residual on non-background target pixels, reducing the reward for background-only shortcuts."
+          "description": "Residual on non-background target pixels, reducing the reward for background-only shortcuts. This gym metric is not reported in the paper table."
         },
         "edge_mae": {
           "higher_is_better": false,
           "coefficient": -0.3,
-          "description": "High-frequency residual along the image axis, penalizing blur and double-contour artifacts."
+          "description": "High-frequency residual along the image axis, penalizing blur and double-contour artifacts. This gym metric is not reported in the paper table."
         },
         "inference_overhead": {
           "higher_is_better": false,
@@ -77,14 +77,14 @@
       "primary_metric": "cqa_average_degradation_pct",
       "metrics": {
         "cqa_average_degradation_pct": {
-          "higher_is_better": true,
-          "coefficient": 1.0,
-          "description": "Quality degradation when an anchoring component is removed."
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Quality change when a component is removed; more negative means stronger degradation and better support for the component's necessity."
         },
         "cover_technical_degradation_pct": {
-          "higher_is_better": true,
-          "coefficient": 0.8,
-          "description": "Technical-quality degradation when an anchoring component is removed."
+          "higher_is_better": false,
+          "coefficient": -0.8,
+          "description": "Technical-quality change when a component is removed; more negative means stronger degradation and better support for the component's necessity."
         }
       },
       "results": {

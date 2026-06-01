@@ -8,6 +8,8 @@ Tests whether fixed-time renderings are closer to a static target than a dynamic
 - **Metric**: `ssim` (higher is better)
 - **Metric**: `lpips` (lower is better)
 - **Metric**: `fvd` (lower is better)
+- **Metric**: `foreground_mae` (lower is better)
+- **Metric**: `edge_mae` (lower is better)
 - **How to run**: `bash scripts/reproduce.sh` or `bash scripts/evaluate.sh` after writing compatible prediction files.
 
 ## Constraint: zero_inference_overhead
