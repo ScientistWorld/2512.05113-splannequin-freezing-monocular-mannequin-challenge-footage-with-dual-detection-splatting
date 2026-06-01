@@ -60,20 +60,12 @@ def evaluate_one(path: Path, gt: np.ndarray) -> dict[str, float]:
     }
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--data", default="data/synthetic_mannequin.json")
-    parser.add_argument("--inputs", nargs="+", required=True)
-    parser.add_argument("--names", nargs="+", required=True)
-    parser.add_argument("--out", default="scoring/scores.json")
-    args = parser.parse_args()
-    if len(args.inputs) != len(args.names):
-        raise SystemExit("--inputs and --names must have the same length")
-    scene = json.loads(Path(args.data).read_text(encoding="utf-8"))
+def evaluate_group(data_path: Path, inputs: list[Path], names: list[str]) -> tuple[dict[str, dict[str, float]], dict[str, dict[str, float]]]:
+    scene = json.loads(data_path.read_text(encoding="utf-8"))
     gt = np.asarray(scene["gt_freeze"], dtype=np.float32)
     results = {}
-    for name, input_path in zip(args.names, args.inputs):
-        results[name] = evaluate_one(Path(input_path), gt)
+    for name, input_path in zip(names, inputs):
+        results[name] = evaluate_one(input_path, gt)
     baseline_state = results["baseline_dynamic_gs"]["_raw_inference_state_values"]
     for metrics in results.values():
         metrics["inference_overhead"] = metrics["_raw_inference_state_values"] / baseline_state - 1.0
@@ -83,6 +75,31 @@ def main() -> None:
         "4dgaussians": {k: results["baseline_dynamic_gs"][k] for k in ["psnr", "ssim", "lpips", "fvd", "inference_overhead"]},
         "4dgaussians_splannequin": {k: results["splannequin"][k] for k in ["psnr", "ssim", "lpips", "fvd", "inference_overhead"]},
     }
+    return results, paper_named
+
+
+def summarize_groups(groups: list[dict[str, dict[str, float]]]) -> dict[str, dict[str, float]]:
+    names = sorted(groups[0])
+    metrics = ["psnr", "ssim", "lpips", "fvd", "inference_overhead"]
+    summary = {}
+    for name in names:
+        summary[name] = {
+            metric: float(np.mean([group[name][metric] for group in groups]))
+            for metric in metrics
+        }
+    return summary
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data", default="data/synthetic_mannequin.json")
+    parser.add_argument("--inputs", nargs="+", required=True)
+    parser.add_argument("--names", nargs="+", required=True)
+    parser.add_argument("--out", default="scoring/scores.json")
+    args = parser.parse_args()
+    if len(args.inputs) != len(args.names):
+        raise SystemExit("--inputs and --names must have the same length")
+    results, paper_named = evaluate_group(Path(args.data), [Path(p) for p in args.inputs], args.names)
     full = results["splannequin"]
     no_hidden = results["splannequin_no_hidden"]
     no_defective = results["splannequin_no_defective"]
@@ -96,18 +113,35 @@ def main() -> None:
             "cover_technical_degradation_pct": -100.0 * (no_defective["ghosting_error"] - full["ghosting_error"]) / max(abs(full["ghosting_error"]), 1e-9),
         },
     }
+    extra_groups = []
+    for scene_dir in sorted(Path("checkpoints").glob("extra_seed_*")):
+        data_path = Path("data") / f"{scene_dir.name}.json"
+        paths = [
+            scene_dir / "baseline" / "predictions.json",
+            scene_dir / "splannequin" / "predictions.json",
+            scene_dir / "no_hidden" / "predictions.json",
+            scene_dir / "no_defective" / "predictions.json",
+        ]
+        if data_path.exists() and all(path.exists() for path in paths):
+            _, extra_paper_named = evaluate_group(data_path, paths, args.names)
+            extra_groups.append(extra_paper_named)
+
     diagnostics = {
         "experiments": {
             "synthetic_freeze_time": {"results": results},
             "ablation_regularizers": {"results": ablations},
         }
     }
+    if extra_groups:
+        diagnostics["experiments"]["synthetic_validation_extra_scenes"] = {"results": summarize_groups(extra_groups)}
     Path("scoring/diagnostics.json").write_text(json.dumps(diagnostics, indent=2), encoding="utf-8")
     scores = {
         "experiments": {
             "synthetic_validation_paper": {"results": paper_named}
         }
     }
+    if extra_groups:
+        scores["experiments"]["synthetic_validation_extra_scenes"] = {"results": summarize_groups(extra_groups)}
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(scores, indent=2), encoding="utf-8")

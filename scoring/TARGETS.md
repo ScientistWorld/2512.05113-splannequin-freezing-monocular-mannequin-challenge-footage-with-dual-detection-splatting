@@ -16,3 +16,12 @@ Tests whether quality improvements are achieved without increasing the state req
 
 - **Metric**: `inference_overhead` (lower is better; proposed and baseline should match)
 - **How to run**: included in `bash scripts/evaluate.sh`.
+
+## Robustness: synthetic_validation_extra_scenes
+
+Tests whether the same fixed-time reconstruction effect holds on additional procedurally generated forward-camera scenes.
+
+- **Metric**: average `psnr` across extra scenes (higher is better)
+- **Metric**: average `lpips` and `fvd` across extra scenes (lower is better)
+- **Constraint Metric**: average `inference_overhead` (lower is better; proposed and baseline should match)
+- **How to run**: `bash scripts/reproduce.sh`; the evaluator includes this target when `checkpoints/extra_seed_*` outputs exist.

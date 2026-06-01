@@ -8,6 +8,8 @@ The benchmark generator, method code, baseline path, ablation variants, evaluato
 
 Continuation audit on 2026-06-01 found that the workspace had no reproduced scores yet. The evaluator and method were adjusted before submission: the method renderer now matches the alpha-composited synthetic data renderer, and the evaluator now writes paper-named score groups in addition to scaled diagnostic metrics.
 
+Continuation audit on 2026-06-01 verified that the existing implementation is a scaled implementation of the paper's computational steps rather than a surrogate. I added an extra-scene evaluation axis so the next job can test whether the core effect holds beyond the original single generated scene.
+
 ## Results
 
 The second CPU job ran the full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`.
@@ -27,7 +29,7 @@ This supports the core claim on the scaled benchmark.
 
 ## Remaining
 
-No further work is required for the minimum reusable environment. Higher milestones would require tuning or expanding the synthetic benchmark so both ablation components reproduce the paper's secondary ablation behavior, or integrating a full dynamic Gaussian codebase and real/video benchmark data.
+The pending CPU job regenerates all results and adds two extra synthetic scenes. If the averaged extra-scene scores improve over the baseline while preserving zero inference overhead, the reproduction can be advanced to `core_claim_plus`. Higher milestones would require tuning or expanding the synthetic benchmark so both ablation components reproduce the paper's secondary ablation behavior, or integrating a full dynamic Gaussian codebase and real/video benchmark data.
 
 ## Issues
 

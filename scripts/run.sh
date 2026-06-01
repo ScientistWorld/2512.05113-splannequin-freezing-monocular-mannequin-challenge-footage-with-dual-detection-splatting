@@ -14,5 +14,6 @@ set -e
 cd /home/user
 
 export STEPS="${STEPS:-900}"
+export EXTRA_STEPS="${EXTRA_STEPS:-900}"
 bash scripts/reproduce.sh
 python validate.py --compare

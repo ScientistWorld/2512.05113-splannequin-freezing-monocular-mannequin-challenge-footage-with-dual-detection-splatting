@@ -19,4 +19,6 @@ set -e
 
 cd /home/user
 
-python data/synthetic_mannequin.py --out data/synthetic_mannequin.json
+python data/synthetic_mannequin.py --seed 3 --out data/synthetic_mannequin.json
+python data/synthetic_mannequin.py --seed 11 --out data/extra_seed_11.json
+python data/synthetic_mannequin.py --seed 29 --out data/extra_seed_29.json
