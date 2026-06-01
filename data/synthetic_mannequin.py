@@ -56,12 +56,15 @@ def create_scene(seed: int = 3, num_points: int = 34, num_frames: int = 24, widt
     rng = np.random.default_rng(seed)
     z = np.linspace(1.0, 7.2, num_points)
     x = rng.uniform(-0.55, 0.55, size=num_points) + 0.12 * np.sin(2.4 * z)
-    base_pos = np.stack([x, z], axis=1).astype(np.float32)
+    true_pos = np.stack([x, z], axis=1).astype(np.float32)
+    init_pos = true_pos.copy()
+    init_pos[:, 0] += rng.normal(0.0, 0.10, size=num_points).astype(np.float32)
+    init_pos[:, 1] += rng.normal(0.0, 0.06, size=num_points).astype(np.float32)
     colors = rng.uniform(0.15, 0.95, size=(num_points, 3)).astype(np.float32)
     opacity = rng.uniform(0.22, 0.62, size=num_points).astype(np.float32)
     scale = rng.uniform(0.018, 0.04, size=num_points).astype(np.float32)
     cam_z = np.linspace(-0.15, 5.6, num_frames, dtype=np.float32)
-    states = np.repeat(base_pos[None, :, :], num_frames, axis=0).astype(np.float32)
+    states = np.repeat(true_pos[None, :, :], num_frames, axis=0).astype(np.float32)
 
     frames, masks, contribs = [], [], []
     for i in range(num_frames):
@@ -84,7 +87,7 @@ def create_scene(seed: int = 3, num_points: int = 34, num_frames: int = 24, widt
         "cam_z": cam_z.tolist(),
         "frames": np.stack(frames).tolist(),
         "gt_freeze": np.stack(gt_freeze).tolist(),
-        "base_positions": base_pos.tolist(),
+        "base_positions": init_pos.tolist(),
         "true_states": states.tolist(),
         "colors": colors.tolist(),
         "opacity": opacity.tolist(),

@@ -39,3 +39,8 @@
 - CPU validation job `e91b9a4f-7de` completed with exit code 0 and all structural validation checks passed.
 - The job still did not support the core claim: Splannequin scored below the baseline on the synthetic benchmark, so the milestone remains `method_runs`.
 - Adjusted the scaled training schedule to warm up longer, reduce regularization strength, and use a noisier initialization so hidden-state recovery can be tested without the anchor loss overwhelming reconstruction.
+
+### [2026-06-01 14:18] - method_runs
+- CPU validation job `a6cba056-d35` failed validation because Splannequin tied the baseline exactly on the primary train metric.
+- Diagnostics showed the anchor loss fired, but sparse random timestamp sampling gave no measurable effect on fixed-time rendering.
+- Updated the method to sample random references for every timestamp at each regularization step and updated the data generator to provide noisy primitive initial positions separate from the true static freeze-time scene.

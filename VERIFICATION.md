@@ -22,9 +22,9 @@ The workspace had previously claimed `core_claim_plus`, but an implementation-in
 
 ## Final Judgment
 
-The workspace is not ready to signal final `done`. CPU job `e91b9a4f-7de` completed cleanly and passed the structural validation suite, but the proposed method underperformed the baseline on the scored synthetic benchmark. The method is active, as shown by hidden-anchor diagnostics, but the scaled schedule was too aggressive for this benchmark. I reduced the regularization strength, delayed anchoring, and increased initialization noise before submitting another CPU validation pass.
+The workspace is not ready to signal final `done`. CPU job `a6cba056-d35` failed validation because Splannequin tied the baseline exactly on the primary train metric. This is preferable to a false positive: the evaluator correctly rejected a non-discriminative result. I changed the scaled method to sample random reference anchors for every timestamp at each regularization step, and changed the procedural data to use noisy initial primitive positions separate from the true static scene so the hidden-state recovery problem is measurable.
 
 - Milestone: method_runs
 - Ready for gym use: partial
 - Confidence: medium
-- Key limitation: the revised method still needs a fresh CPU validation job where Splannequin improves over the baseline before any milestone above `method_runs` is justified.
+- Key limitation: the revised method still needs a fresh CPU validation job where Splannequin improves over the baseline and the train split discriminates the canonical methods.

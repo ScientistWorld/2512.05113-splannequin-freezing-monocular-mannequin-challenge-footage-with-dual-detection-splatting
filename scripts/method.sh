@@ -18,7 +18,7 @@ python method/splannequin_1d.py \
   --steps "${STEPS:-900}" \
   --reg-start "${REG_START:-550}" \
   --lambda-reg "${LAMBDA_REG:-0.75}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-1}" \
   --reg-interval "${REG_INTERVAL:-10}" \
   --l1-start "${L1_START:-750}" \
   --init-noise "${INIT_NOISE:-0.25}"
@@ -29,7 +29,7 @@ python method/splannequin_1d.py \
   --steps "${STEPS:-900}" \
   --reg-start "${REG_START:-550}" \
   --lambda-reg "${LAMBDA_REG:-0.75}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-1}" \
   --reg-interval "${REG_INTERVAL:-10}" \
   --l1-start "${L1_START:-750}" \
   --init-noise "${INIT_NOISE:-0.25}"
@@ -40,7 +40,7 @@ python method/splannequin_1d.py \
   --steps "${STEPS:-900}" \
   --reg-start "${REG_START:-550}" \
   --lambda-reg "${LAMBDA_REG:-0.75}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+  --anchor-samples "${ANCHOR_SAMPLES:-1}" \
   --reg-interval "${REG_INTERVAL:-10}" \
   --l1-start "${L1_START:-750}" \
   --init-noise "${INIT_NOISE:-0.25}"
@@ -59,7 +59,7 @@ for seed in 11 29; do
     --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
     --reg-start "${REG_START:-550}" \
     --lambda-reg "${LAMBDA_REG:-0.75}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-1}" \
     --reg-interval "${REG_INTERVAL:-10}" \
     --l1-start "${L1_START:-750}" \
     --init-noise "${INIT_NOISE:-0.25}"
@@ -70,7 +70,7 @@ for seed in 11 29; do
     --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
     --reg-start "${REG_START:-550}" \
     --lambda-reg "${LAMBDA_REG:-0.75}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-1}" \
     --reg-interval "${REG_INTERVAL:-10}" \
     --l1-start "${L1_START:-750}" \
     --init-noise "${INIT_NOISE:-0.25}"
@@ -81,7 +81,7 @@ for seed in 11 29; do
     --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
     --reg-start "${REG_START:-550}" \
     --lambda-reg "${LAMBDA_REG:-0.75}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-4}" \
+    --anchor-samples "${ANCHOR_SAMPLES:-1}" \
     --reg-interval "${REG_INTERVAL:-10}" \
     --l1-start "${L1_START:-750}" \
     --init-noise "${INIT_NOISE:-0.25}"

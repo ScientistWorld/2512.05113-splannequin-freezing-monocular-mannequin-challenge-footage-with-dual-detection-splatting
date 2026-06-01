@@ -153,32 +153,32 @@ def train(args):
             defective = visible & ~well
             reg = torch.zeros((), device=device)
             count = torch.zeros((), device=device)
-            for _ in range(args.anchor_samples):
-                t = int(torch.randint(0, t_count, (1,), generator=rng, device=device).item())
-                ref = int(torch.randint(0, t_count, (1,), generator=rng, device=device).item())
-                use_l1 = step >= args.l1_start
-                if args.variant != "no_hidden" and ref < t:
-                    mask = hidden[t] & well[ref]
-                    if mask.any():
-                        d = anchored_discrepancy(
-                            state, color_state, opacity_state, log_scale_state, t, ref, mask, use_l1
-                        )
-                        weight = torch.exp(torch.tensor(-args.tau * (t - ref) / max(1, t_count - 1), device=device))
-                        reg = reg + weight * d
-                        count = count + 1
-                        summary["hidden_anchor_terms"] += 1
-                        summary["hidden_anchor_items"] += int(mask.sum().item())
-                if args.variant != "no_defective" and ref > t:
-                    mask = defective[t] & well[ref]
-                    if mask.any():
-                        d = anchored_discrepancy(
-                            state, color_state, opacity_state, log_scale_state, t, ref, mask, use_l1
-                        )
-                        weight = torch.exp(torch.tensor(-args.tau * (ref - t) / max(1, t_count - 1), device=device))
-                        reg = reg + weight * d
-                        count = count + 1
-                        summary["defective_anchor_terms"] += 1
-                        summary["defective_anchor_items"] += int(mask.sum().item())
+            use_l1 = step >= args.l1_start
+            for t in range(t_count):
+                for _ in range(args.anchor_samples):
+                    ref = int(torch.randint(0, t_count, (1,), generator=rng, device=device).item())
+                    if args.variant != "no_hidden" and ref < t:
+                        mask = hidden[t] & well[ref]
+                        if mask.any():
+                            d = anchored_discrepancy(
+                                state, color_state, opacity_state, log_scale_state, t, ref, mask, use_l1
+                            )
+                            weight = torch.exp(torch.tensor(-args.tau * (t - ref) / max(1, t_count - 1), device=device))
+                            reg = reg + weight * d
+                            count = count + 1
+                            summary["hidden_anchor_terms"] += 1
+                            summary["hidden_anchor_items"] += int(mask.sum().item())
+                    if args.variant != "no_defective" and ref > t:
+                        mask = defective[t] & well[ref]
+                        if mask.any():
+                            d = anchored_discrepancy(
+                                state, color_state, opacity_state, log_scale_state, t, ref, mask, use_l1
+                            )
+                            weight = torch.exp(torch.tensor(-args.tau * (ref - t) / max(1, t_count - 1), device=device))
+                            reg = reg + weight * d
+                            count = count + 1
+                            summary["defective_anchor_terms"] += 1
+                            summary["defective_anchor_items"] += int(mask.sum().item())
             if count.item() > 0:
                 summary["regularization_updates"] += 1
                 summary["regularization_loss_sum"] += float((reg / count).detach().item())
@@ -230,7 +230,7 @@ def main():
     parser.add_argument("--lambda-reg", type=float, default=0.75)
     parser.add_argument("--tau", type=float, default=5.0)
     parser.add_argument("--defective-gradient-threshold", type=float, default=1e-9)
-    parser.add_argument("--anchor-samples", type=int, default=4)
+    parser.add_argument("--anchor-samples", type=int, default=1)
     parser.add_argument("--reg-interval", type=int, default=10)
     parser.add_argument("--l1-start", type=int, default=750)
     parser.add_argument("--init-noise", type=float, default=0.25)

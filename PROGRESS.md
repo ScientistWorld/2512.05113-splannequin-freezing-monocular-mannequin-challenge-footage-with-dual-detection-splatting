@@ -20,6 +20,8 @@ CPU validation job `44b9aebb-ab0` completed with exit code 0, but the regenerate
 
 CPU validation job `e91b9a4f-7de` completed with exit code 0 and `python validate.py --compare` passed, including train/test structural checks. Scientifically, however, the run failed: baseline PSNR was 18.146 while Splannequin PSNR was 15.653, with worse SSIM, LPIPS proxy, and FVD proxy. Diagnostics showed hundreds of hidden-anchor terms firing, so the implementation was active but the scaled regularization schedule was too aggressive. I reduced the scaled regularization strength, delayed anchoring until after a longer reconstruction warmup, and increased initialization noise to make hidden-state recovery a meaningful part of the benchmark.
 
+CPU validation job `a6cba056-d35` moved the result from degradation to an exact tie: both baseline and Splannequin scored 16.891 PSNR on the primary synthetic experiment, so validation correctly failed because the train split could not rank methods. Diagnostics showed a small number of anchor updates but no measurable effect on the rendered fixed-time outputs. I changed the regularizer loop so every timestamp receives randomly sampled reference anchors at each regularization step, rather than sampling only a few timestamp/reference pairs globally. I also changed the procedural data to expose noisy initial primitive positions while keeping the rendered scene truly static, which makes hidden fixed-time primitive recovery an explicit part of the benchmark.
+
 ## Results
 
 The latest completed clean CPU job ran the earlier full scaled benchmark, regenerated outputs, and passed `python validate.py --compare`. These numbers are retained for traceability, but the revised implementation must be re-run before restoring a milestone above `method_runs`.
@@ -54,6 +56,8 @@ The next job must also show a nonzero metric spread between `4dgaussians` and `4
 
 The next job must show the spread in the right direction: Splannequin should improve the primary synthetic metrics over `4dgaussians` while keeping zero inference overhead.
 
+The next job also needs the train split to discriminate the canonical methods without relying on diagnostic ablation variants.
+
 ## Issues
 
 The exact paper benchmark videos and full dynamic Gaussian frameworks are not packaged here. The reproduction uses a controlled synthetic benchmark to keep the algorithm runnable within the available environment.
@@ -67,6 +71,8 @@ The extra-scene job initially failed validation because an extra diagnostic expe
 Job `44b9aebb-ab0` exposed two follow-up issues: the revised method produced no measurable improvement over baseline on the previous moving-object synthetic data, and `scores_train.json` / `scores_test.json` included no-hidden and no-defective diagnostic variants as if they were canonical scored methods. The train/test evaluator now uses the canonical method set from `scoring/scores.json`, and the procedural data generator now models the freeze-time assumption directly.
 
 Job `e91b9a4f-7de` proved the structure is now valid but exposed an optimization issue: the hidden anchor loss degraded reconstruction when started too early and weighted too heavily in the 1D scaled benchmark. The current hyperparameters are adjusted for another CPU validation pass.
+
+Job `a6cba056-d35` showed the adjusted schedule became too weak/sparse. The current implementation keeps the random-reference procedure but applies it across all timestamps so the evaluated freeze timestamp is consistently regularized.
 
 ## Deviations from Paper
 
