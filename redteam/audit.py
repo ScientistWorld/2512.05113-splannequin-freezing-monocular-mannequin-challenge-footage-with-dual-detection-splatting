@@ -43,7 +43,11 @@ def restore():
         shutil.copyfile(ORIGINAL / name, ROOT / name)
     checkpoint_dir = ROOT / 'checkpoints'
     shutil.rmtree(checkpoint_dir)
-    shutil.copytree(ORIGINAL / 'checkpoints', checkpoint_dir)
+    checkpoint_dir.mkdir()
+    for source in (ORIGINAL / 'artifacts').rglob('render_output.json'):
+        destination = checkpoint_dir / source.relative_to(ORIGINAL / 'artifacts').parent / 'predictions.json'
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
     (ROOT / 'method/audit_submission.py').unlink(missing_ok=True)
 
 
