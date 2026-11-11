@@ -1,30 +1,36 @@
 {
   "experiments": {
+    "synthetic_large_motion": {
+      "results": {
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.017426692597334228,
+          "fvd": 53.4019259230785,
+          "lpips": 0.07162067364000156,
+          "motion_preservation_error": 0.08464349021924038,
+          "psnr": 17.674210342878652,
+          "ssim": 0.6969335805502362
+        }
+      }
+    },
     "synthetic_validation_paper": {
       "results": {
-        "4dgaussians": {
-          "edge_mae": 0.043670717626810074,
-          "foreground_mae": 0.1102282777428627,
-          "fvd": 127.26713716983795,
-          "inference_overhead": 0.0,
-          "lpips": 0.09275665879249573,
-          "psnr": 17.2397383767226,
-          "ssim": 0.7508788947035134
-        },
         "4dgaussians_splannequin": {
-          "edge_mae": 0.03849161043763161,
-          "foreground_mae": 0.10852862894535065,
-          "fvd": 127.35490500926971,
-          "inference_overhead": 0.0,
-          "lpips": 0.09350766241550446,
-          "psnr": 17.34979013546811,
-          "ssim": 0.7119801116770792
+          "edge_mae": 0.011571149848137834,
+          "fvd": 34.77718484490267,
+          "lpips": 0.03660991671213711,
+          "motion_preservation_error": 0.03120392356898931,
+          "psnr": 22.154659389751135,
+          "ssim": 0.8498391354274363
         }
       }
     }
   },
   "metadata": {
-    "slice": "train",
-    "split_rule": "views where index mod 4 is 0 or 1"
+    "failed_methods": {},
+    "scenes_per_experiment": {
+      "synthetic_large_motion": 4,
+      "synthetic_validation_paper": 4
+    },
+    "slice": "train"
   }
 }

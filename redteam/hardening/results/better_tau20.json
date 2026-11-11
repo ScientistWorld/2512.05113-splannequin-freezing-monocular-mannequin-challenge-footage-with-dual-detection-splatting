@@ -1,0 +1,44 @@
+{
+ "case": "better_tau20",
+ "hidden_returncode": 0,
+ "hidden_seconds": 8.13,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01727973673400593,
+      "fvd": 50.066939331149364,
+      "lpips": 0.06255556053370315,
+      "motion_preservation_error": 0.0795259279814965,
+      "psnr": 18.451079468544346,
+      "ssim": 0.734907024924334
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012249474964018474,
+      "fvd": 36.426010301954335,
+      "lpips": 0.039949208788734224,
+      "motion_preservation_error": 0.039493613717914294,
+      "psnr": 21.753782937180944,
+      "ssim": 0.8271115792093536
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 8,
+    "synthetic_validation_paper": 8
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/better_tau20/scores_test.json for 1 method slot(s)\n"
+}

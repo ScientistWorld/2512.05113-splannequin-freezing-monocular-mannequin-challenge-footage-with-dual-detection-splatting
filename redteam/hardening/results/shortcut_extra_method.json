@@ -1,0 +1,115 @@
+{
+ "case": "shortcut_extra_method",
+ "hidden_returncode": 0,
+ "hidden_seconds": 20.17,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01744197371597535,
+      "fvd": 50.702816808588715,
+      "lpips": 0.06488856238947872,
+      "motion_preservation_error": 0.08009380642857114,
+      "psnr": 18.25513189419572,
+      "ssim": 0.7308967873084941
+     },
+     "junk_method": {
+      "edge_mae": 0.02339346483073713,
+      "fvd": 64.10963219257081,
+      "lpips": 0.33255266114307364,
+      "motion_preservation_error": 0.0733365997690165,
+      "psnr": 7.859368792379566,
+      "ssim": 0.08733967307489944
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012779932920630446,
+      "fvd": 36.207602853093874,
+      "lpips": 0.040658534728262204,
+      "motion_preservation_error": 0.039440475825296334,
+      "psnr": 21.734078352897495,
+      "ssim": 0.8234317999214946
+     },
+     "junk_method": {
+      "edge_mae": 0.022308848577803422,
+      "fvd": 64.16236025728833,
+      "lpips": 0.33205361059290284,
+      "motion_preservation_error": 0.024937926305674638,
+      "psnr": 7.747940747510339,
+      "ssim": 0.08564979179263144
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 8,
+    "synthetic_validation_paper": 8
+   },
+   "slice": "test"
+  }
+ },
+ "scores_train": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.017426692597334228,
+      "fvd": 53.4019259230785,
+      "lpips": 0.07162067364000156,
+      "motion_preservation_error": 0.08464349021924038,
+      "psnr": 17.674210342878652,
+      "ssim": 0.6969335805502362
+     },
+     "junk_method": {
+      "edge_mae": 2.0,
+      "fvd": 2000.0,
+      "lpips": 1.0,
+      "motion_preservation_error": 2.0,
+      "psnr": 0.0,
+      "ssim": -1.0
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.011571149848137834,
+      "fvd": 34.77718484490267,
+      "lpips": 0.03660991671213711,
+      "motion_preservation_error": 0.03120392356898931,
+      "psnr": 22.154659389751135,
+      "ssim": 0.8498391354274363
+     },
+     "junk_method": {
+      "edge_mae": 2.0,
+      "fvd": 2000.0,
+      "lpips": 1.0,
+      "motion_preservation_error": 2.0,
+      "psnr": 0.0,
+      "ssim": -1.0
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {
+    "junk_method": "SubmissionError: missing prediction file /home/user/tmp/hardening/cases/shortcut_extra_method/ckpt/junk_method/predictions/synthetic_validation_paper/synthetic_validation_paper_101.json"
+   },
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 4,
+    "synthetic_validation_paper": 4
+   },
+   "slice": "train"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/shortcut_extra_method/scores_test.json for 2 method slot(s)\n",
+ "train_returncode": 0
+}

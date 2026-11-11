@@ -1,0 +1,127 @@
+{
+ "case": "shortcut_bruteforce_public_seeds",
+ "hidden_returncode": 0,
+ "hidden_seconds": 10.98,
+ "notes": {
+  "bruteforce": {
+   "synthetic_large_motion_test_00": {
+    "best_seed": 207,
+    "frame_mse": 0.051599264624549696,
+    "median_mse": 0.08370403139562446
+   },
+   "synthetic_large_motion_test_01": {
+    "best_seed": 160,
+    "frame_mse": 0.04162600775861003,
+    "median_mse": 0.06344541412132433
+   },
+   "synthetic_large_motion_test_02": {
+    "best_seed": 166,
+    "frame_mse": 0.04646805618077257,
+    "median_mse": 0.06822078087892795
+   },
+   "synthetic_large_motion_test_03": {
+    "best_seed": 309,
+    "frame_mse": 0.047700550443809685,
+    "median_mse": 0.0766990895523546
+   },
+   "synthetic_large_motion_test_04": {
+    "best_seed": 153,
+    "frame_mse": 0.039633375510302736,
+    "median_mse": 0.0644411981623915
+   },
+   "synthetic_large_motion_test_05": {
+    "best_seed": 50,
+    "frame_mse": 0.04546011288732639,
+    "median_mse": 0.07528563796715765
+   },
+   "synthetic_large_motion_test_06": {
+    "best_seed": 182,
+    "frame_mse": 0.05433928847440321,
+    "median_mse": 0.07421014386065267
+   },
+   "synthetic_large_motion_test_07": {
+    "best_seed": 141,
+    "frame_mse": 0.043293563863216145,
+    "median_mse": 0.0679465238027398
+   },
+   "synthetic_validation_paper_test_00": {
+    "best_seed": 150,
+    "frame_mse": 0.036932930803119574,
+    "median_mse": 0.06454495777642144
+   },
+   "synthetic_validation_paper_test_01": {
+    "best_seed": 8,
+    "frame_mse": 0.04896180678011611,
+    "median_mse": 0.07414902435831977
+   },
+   "synthetic_validation_paper_test_02": {
+    "best_seed": 310,
+    "frame_mse": 0.039370230811138246,
+    "median_mse": 0.06365502894951713
+   },
+   "synthetic_validation_paper_test_03": {
+    "best_seed": 25,
+    "frame_mse": 0.04374792694439019,
+    "median_mse": 0.07227071498784994
+   },
+   "synthetic_validation_paper_test_04": {
+    "best_seed": 286,
+    "frame_mse": 0.041816145553027345,
+    "median_mse": 0.07317691254526096
+   },
+   "synthetic_validation_paper_test_05": {
+    "best_seed": 147,
+    "frame_mse": 0.03910346855977105,
+    "median_mse": 0.06526372996563856
+   },
+   "synthetic_validation_paper_test_06": {
+    "best_seed": 487,
+    "frame_mse": 0.048910735950390624,
+    "median_mse": 0.06904668840895453
+   },
+   "synthetic_validation_paper_test_07": {
+    "best_seed": 9,
+    "frame_mse": 0.04967913745448676,
+    "median_mse": 0.07672131132084418
+   }
+  }
+ },
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.03340309666041199,
+      "fvd": 93.20041377523144,
+      "lpips": 0.16507500678148257,
+      "motion_preservation_error": 0.11332860537558775,
+      "psnr": 12.889213179889174,
+      "ssim": 0.3339588931558408
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.03171142451417846,
+      "fvd": 89.937533543463,
+      "lpips": 0.1600775261557682,
+      "motion_preservation_error": 0.0408805213109732,
+      "psnr": 13.176233987399598,
+      "ssim": 0.3594737297536507
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 8,
+    "synthetic_validation_paper": 8
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/shortcut_bruteforce_public_seeds/scores_test.json for 1 method slot(s)\n"
+}

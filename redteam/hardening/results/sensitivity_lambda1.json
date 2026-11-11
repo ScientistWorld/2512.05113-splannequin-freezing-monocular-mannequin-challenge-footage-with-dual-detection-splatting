@@ -1,0 +1,44 @@
+{
+ "case": "sensitivity_lambda1",
+ "hidden_returncode": 0,
+ "hidden_seconds": 7.07,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.0170436416927727,
+      "fvd": 49.84067616788452,
+      "lpips": 0.06291660545224044,
+      "motion_preservation_error": 0.07897216563428652,
+      "psnr": 18.372798620351777,
+      "ssim": 0.7386544332040166
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01202273717207672,
+      "fvd": 35.726077983082604,
+      "lpips": 0.03953130333233502,
+      "motion_preservation_error": 0.03887509739437896,
+      "psnr": 21.771226117077973,
+      "ssim": 0.8308101609856727
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 8,
+    "synthetic_validation_paper": 8
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/sensitivity_lambda1/scores_test.json for 1 method slot(s)\n"
+}

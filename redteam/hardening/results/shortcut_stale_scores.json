@@ -1,0 +1,81 @@
+{
+ "case": "shortcut_stale_scores",
+ "hidden_returncode": 0,
+ "hidden_seconds": 9.91,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01744197371597535,
+      "fvd": 50.702816808588715,
+      "lpips": 0.06488856238947872,
+      "motion_preservation_error": 0.08009380642857114,
+      "psnr": 18.25513189419572,
+      "ssim": 0.7308967873084941
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012779932920630446,
+      "fvd": 36.207602853093874,
+      "lpips": 0.040658534728262204,
+      "motion_preservation_error": 0.039440475825296334,
+      "psnr": 21.734078352897495,
+      "ssim": 0.8234317999214946
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 8,
+    "synthetic_validation_paper": 8
+   },
+   "slice": "test"
+  }
+ },
+ "scores_train": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.017426692597334228,
+      "fvd": 53.4019259230785,
+      "lpips": 0.07162067364000156,
+      "motion_preservation_error": 0.08464349021924038,
+      "psnr": 17.674210342878652,
+      "ssim": 0.6969335805502362
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.011571149848137834,
+      "fvd": 34.77718484490267,
+      "lpips": 0.03660991671213711,
+      "motion_preservation_error": 0.03120392356898931,
+      "psnr": 22.154659389751135,
+      "ssim": 0.8498391354274363
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 4,
+    "synthetic_validation_paper": 4
+   },
+   "slice": "train"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/shortcut_stale_scores/scores_test.json for 1 method slot(s)\n",
+ "train_returncode": 0
+}

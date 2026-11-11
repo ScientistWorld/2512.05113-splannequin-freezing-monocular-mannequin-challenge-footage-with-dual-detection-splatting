@@ -1,0 +1,81 @@
+{
+ "case": "shortcut_static_reconstruction",
+ "hidden_returncode": 0,
+ "hidden_seconds": 8.04,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016840623395183406,
+      "fvd": 48.02544525296753,
+      "lpips": 0.0719911689671773,
+      "motion_preservation_error": 0.0733365997690165,
+      "psnr": 16.97859471910431,
+      "ssim": 0.7215283018543378
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.010970380236165882,
+      "fvd": 32.057171777013906,
+      "lpips": 0.035018303956211194,
+      "motion_preservation_error": 0.024937926305674638,
+      "psnr": 21.92395887137341,
+      "ssim": 0.8585981322536997
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 8,
+    "synthetic_validation_paper": 8
+   },
+   "slice": "test"
+  }
+ },
+ "scores_train": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01594640887220688,
+      "fvd": 50.97151297849964,
+      "lpips": 0.07371516317315292,
+      "motion_preservation_error": 0.07434693148909069,
+      "psnr": 16.969863024593476,
+      "ssim": 0.7077166902013602
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.011516768968464581,
+      "fvd": 30.672415777517404,
+      "lpips": 0.03680175747923279,
+      "motion_preservation_error": 0.024474260992102422,
+      "psnr": 21.14282231516749,
+      "ssim": 0.8536811019909071
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 4,
+    "synthetic_validation_paper": 4
+   },
+   "slice": "train"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/shortcut_static_reconstruction/scores_test.json for 1 method slot(s)\n",
+ "train_returncode": 0
+}

@@ -1,0 +1,81 @@
+{
+ "case": "baseline_nearest_anchor_snap",
+ "hidden_returncode": 0,
+ "hidden_seconds": 9.0,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.017783421858376187,
+      "fvd": 51.76529286547915,
+      "lpips": 0.06340591962162466,
+      "motion_preservation_error": 0.07592127575477717,
+      "psnr": 18.417048948365736,
+      "ssim": 0.7222991806254718
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012938650501605808,
+      "fvd": 38.65793457609488,
+      "lpips": 0.0415882132709928,
+      "motion_preservation_error": 0.037095814823807624,
+      "psnr": 21.485537157521822,
+      "ssim": 0.8133170277237003
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 8,
+    "synthetic_validation_paper": 8
+   },
+   "slice": "test"
+  }
+ },
+ "scores_train": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01802743608995192,
+      "fvd": 55.83147844564041,
+      "lpips": 0.07183348316895356,
+      "motion_preservation_error": 0.08146513796350771,
+      "psnr": 17.617185193149336,
+      "ssim": 0.6889562095670492
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012275215266343363,
+      "fvd": 35.508842377786024,
+      "lpips": 0.03806875483148187,
+      "motion_preservation_error": 0.03045979219927916,
+      "psnr": 22.043357746015378,
+      "ssim": 0.8299150686796916
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 4,
+    "synthetic_validation_paper": 4
+   },
+   "slice": "train"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/baseline_nearest_anchor_snap/scores_test.json for 1 method slot(s)\n",
+ "train_returncode": 0
+}
