@@ -23,6 +23,9 @@ def git(*args):
 def main():
     start = (BASE / 'original/start_commit.txt').read_text().strip()
     summary = read(BASE / 'summary.json')
+    visibility = read(BASE / 'visibility_result.json')
+    assert visibility == {'shortcut_cases_rerun': 21, 'changed_score_files': [],
+                          'all_shortcuts_explicitly_create_visible_method_list': True}
     metadata_paths = sorted(BASE.glob('*/run_metadata.json'))
     assert len(metadata_paths) == 30
     assert len([p for p in metadata_paths if p.parent.name.startswith('shortcut_')]) == 21
@@ -86,6 +89,8 @@ def main():
     output = {
         'starting_commit': start,
         'completed_cases': len(metadata_paths), 'shortcut_cases': 21,
+        'total_hidden_test_invocations_including_visibility_rerun': 51,
+        'visibility_rerun': visibility,
         'successful_hidden_test_exits': len(metadata_paths) - len(failures),
         'failed_hidden_test_cases': failures, 'nonfinite_success_cases': nonfinite,
         'all_case_evaluators_match_starting_git_files': True,

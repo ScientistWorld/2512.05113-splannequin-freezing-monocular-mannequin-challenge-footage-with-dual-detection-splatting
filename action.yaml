@@ -1,4 +1,8 @@
-action: submit
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
 gpus: 0
 test: false
-notes: "Final audit visibility check: rerun 21 shortcuts with explicitly authored minimal method lists, compare all hidden score artifacts, then restore data and method."
+milestone: core_claim_plus
+notes: ""

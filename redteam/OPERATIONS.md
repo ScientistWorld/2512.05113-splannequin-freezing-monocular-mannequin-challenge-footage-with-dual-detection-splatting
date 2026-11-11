@@ -25,6 +25,10 @@ not receive that file; they can create it using names exposed by `eval/train/`.
 It contains two empty method objects, no reference metrics. This checks that
 method selection does not depend on a hidden starting scoring artifact.
 Use `python redteam/audit.py --shortcuts` to repeat that check.
+Job `7198077a-285` completed that check in 300 seconds: all 21 shortcut
+score artifacts were unchanged, including expected failed/nonfinite outcomes.
+There are 30 distinct cases and 51 hidden-test invocations across completed
+cases and the final rerun. `visibility_result.json` records the comparison.
 
 The population of future ranked attempts is unknown. `summary.json` records all
 raw metrics and two explicitly illustrative normalized deltas, using the given
