@@ -130,12 +130,11 @@ def _xavier(gens, fan_in, fan_out):
 
 
 class HexPlaneDeformation(torch.nn.Module):
-    def __init__(self, gens, lo, hi, num_frames, feat_dim=16, base_res=32, multires=(1, 2), hidden=64):
+    def __init__(self, gens, lo, hi, time_res=25, feat_dim=16, base_res=32, multires=(1, 2), hidden=64):
         super().__init__()
         b = len(gens)
         self.register_buffer("lo", lo)
         self.register_buffer("hi", hi)
-        time_res = max(2, num_frames // 2)
         self.xz = torch.nn.ParameterList()
         self.xt = torch.nn.ParameterList()
         self.zt = torch.nn.ParameterList()
@@ -200,7 +199,7 @@ class DynamicGaussians(torch.nn.Module):
         hi = init_pos.max(dim=1).values
         margin = 0.1 * (hi - lo) + 1e-3
         self.field = HexPlaneDeformation(
-            gens, lo - margin, hi + margin, times.numel(), args.feat_dim, args.base_res, (1, 2), args.hidden
+            gens, lo - margin, hi + margin, args.time_res, args.feat_dim, args.base_res, (1, 2), args.hidden
         )
 
     def state(self, t_idx, deform):
@@ -464,6 +463,7 @@ def main():
     p.add_argument("--feat-dim", type=int, default=16)
     p.add_argument("--base-res", type=int, default=32)
     p.add_argument("--hidden", type=int, default=64)
+    p.add_argument("--time-res", type=int, default=25, help="time-axis resolution of the HexPlane (4DGaussians default 25)")
     p.add_argument("--plane-tv-weight", type=float, default=1e-4)
     p.add_argument("--time-smoothness-weight", type=float, default=1e-2)
     p.add_argument("--l1-time-planes", type=float, default=1e-4)

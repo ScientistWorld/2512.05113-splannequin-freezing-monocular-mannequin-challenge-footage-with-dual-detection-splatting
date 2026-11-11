@@ -8,7 +8,7 @@
         "psnr": {
           "higher_is_better": true,
           "coefficient": 1.0,
-          "description": "Peak signal-to-noise ratio (dB) of each freeze-time video (every camera pose rendered at one freeze instant) against the true scene state at that instant; averaged over freeze instants and scenes. Capped monotonically at 100 dB (MSE floor 1e-10)."
+          "description": "Peak signal-to-noise ratio (dB) of each rendered view of a freeze-time video (every camera pose rendered at one freeze instant) against the true scene state at that instant, averaged over views, freeze instants and scenes. Per-view value capped monotonically at 100 dB (MSE floor 1e-10)."
         },
         "ssim": {
           "higher_is_better": true,
@@ -30,10 +30,10 @@
           "coefficient": -0.3,
           "description": "Mean absolute error of image-axis gradients; penalises blur, ghosting and double contours. Gym metric, not reported in the paper."
         },
-        "motion_preservation_error": {
-          "higher_is_better": false,
-          "coefficient": -0.5,
-          "description": "Constraint metric for user-selectable freeze instants: mean absolute error between the rendered change and the true change of the freeze-time video from one evaluated freeze instant to the next. A reconstruction that drops timestamp control (one static scene for every instant) scores the full true change."
+        "instant_selectivity": {
+          "higher_is_better": true,
+          "coefficient": 1.0,
+          "description": "Constraint metric for user-selectable freeze instants (the capability the paper claims over static 3DGS): fraction of the true instant-specific appearance change recovered, sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|) over the evaluated freeze instants j of a scene, averaged over scenes. Range [-1, 1]; 1 = true freeze-time videos, 0 = the same render for every instant (no timestamp control); pixels that never change contribute nothing."
         }
       },
       "results": {
@@ -62,14 +62,14 @@
       "_paper_results_note": "Paper Table 1 (synthetic Blender scenes, 4DGaussians vs 4DGaussians + Splannequin, 2D images, true LPIPS/FVD). Not on this gym's scale (1D image lines, proxy LPIPS/FVD); kept for reference only."
     },
     "synthetic_large_motion": {
-      "description": "Stress test from the paper's stated limitation (Sec. 7: the method assumes nearly static scenes and degrades under larger motion; motion thresholds left for future work). Same protocol, validity gate and metrics as synthetic_validation_paper, but subject motion is about 2.7x larger and decorrelates about 2x faster. No paper numbers exist for this setting; results are this gym's hidden-test reference values.",
+      "description": "Stress test from the paper's stated limitation (Sec. 7: the method assumes nearly static scenes and degrades under larger motion; motion thresholds left for future work). Same protocol, validity gate and metrics as synthetic_validation_paper, but subject motion is about 2x larger and decorrelates about 2x faster. No paper numbers exist for this setting; results are this gym's hidden-test reference values.",
       "weight": 0.3,
       "primary_metric": "psnr",
       "metrics": {
         "psnr": {
           "higher_is_better": true,
           "coefficient": 1.0,
-          "description": "Peak signal-to-noise ratio (dB) of each freeze-time video (every camera pose rendered at one freeze instant) against the true scene state at that instant; averaged over freeze instants and scenes. Capped monotonically at 100 dB (MSE floor 1e-10)."
+          "description": "Peak signal-to-noise ratio (dB) of each rendered view of a freeze-time video (every camera pose rendered at one freeze instant) against the true scene state at that instant, averaged over views, freeze instants and scenes. Per-view value capped monotonically at 100 dB (MSE floor 1e-10)."
         },
         "ssim": {
           "higher_is_better": true,
@@ -91,10 +91,10 @@
           "coefficient": -0.3,
           "description": "Mean absolute error of image-axis gradients; penalises blur, ghosting and double contours. Gym metric, not reported in the paper."
         },
-        "motion_preservation_error": {
-          "higher_is_better": false,
-          "coefficient": -0.5,
-          "description": "Constraint metric for user-selectable freeze instants: mean absolute error between the rendered change and the true change of the freeze-time video from one evaluated freeze instant to the next. A reconstruction that drops timestamp control (one static scene for every instant) scores the full true change."
+        "instant_selectivity": {
+          "higher_is_better": true,
+          "coefficient": 1.0,
+          "description": "Constraint metric for user-selectable freeze instants (the capability the paper claims over static 3DGS): fraction of the true instant-specific appearance change recovered, sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|) over the evaluated freeze instants j of a scene, averaged over scenes. Range [-1, 1]; 1 = true freeze-time videos, 0 = the same render for every instant (no timestamp control); pixels that never change contribute nothing."
         }
       },
       "results": {

@@ -30,14 +30,14 @@ EXPERIMENTS = ("synthetic_validation_paper", "synthetic_large_motion")
 REQUIRED_SLOTS = ("4dgaussians_splannequin",)
 SLOT_ALIASES = {"splannequin": "4dgaussians_splannequin", "baseline": "4dgaussians"}
 PRIMITIVE_BUDGET = 64
-METRICS = ("psnr", "ssim", "lpips", "fvd", "edge_mae", "motion_preservation_error")
+METRICS = ("psnr", "ssim", "lpips", "fvd", "edge_mae", "instant_selectivity")
 WORST = {
     "psnr": 0.0,
     "ssim": -1.0,
     "lpips": 1.0,
     "fvd": 2000.0,
     "edge_mae": 2.0,
-    "motion_preservation_error": 2.0,
+    "instant_selectivity": -1.0,
 }
 PSNR_CAP = 100.0
 
@@ -89,8 +89,9 @@ def render_views(positions, scale, opacity, color, cam_x, cam_z, width=WIDTH):
 
 
 def psnr(pred, gt):
-    mse = float(np.mean((pred - gt) ** 2))
-    return float(min(PSNR_CAP, -10.0 * math.log10(max(mse, 1e-10))))
+    # Mean over views of per-image PSNR, monotone cap at PSNR_CAP (MSE floor 1e-10).
+    mse = np.mean((pred - gt) ** 2, axis=(1, 2))
+    return float(np.mean(np.minimum(PSNR_CAP, -10.0 * np.log10(np.maximum(mse, 1e-10)))))
 
 
 def _gauss_window(sigma=1.5, radius=5):
@@ -143,9 +144,21 @@ def edge_mae(pred, gt):
     return float(np.mean(np.abs(np.diff(pred, axis=1) - np.diff(gt, axis=1))))
 
 
-def motion_preservation_error(renders, targets):
-    # renders/targets [F, N, W, C] for consecutive freeze instants.
-    return float(np.mean(np.abs(np.diff(renders, axis=0) - np.diff(targets, axis=0))))
+def instant_selectivity(renders, targets):
+    """Fraction of the instant-specific appearance change that a reconstruction recovers.
+
+    renders/targets [F, N, W, C] for the F evaluated freeze instants of one scene.
+    sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|), in [-1, 1]:
+    1 for the true freeze-time videos, 0 for any reconstruction that renders the
+    same image for every instant (no timestamp control), and pixels that do not
+    change between instants contribute nothing.
+    """
+    mean_t = targets.mean(axis=0, keepdims=True)
+    denom = float(np.abs(targets - mean_t).sum())
+    if denom <= 1e-12:
+        return 0.0
+    gain = np.abs(renders - mean_t) - np.abs(renders - targets)
+    return float(gain.sum() / denom)
 
 
 # ---------------------------------------------------------------- scenes
@@ -246,8 +259,8 @@ def evaluate_experiment(method_dir: Path, experiment: str, scenes: list, details
             scene_vals["lpips"].append(lpips_proxy(r, g))
             scene_vals["fvd"].append(fvd_proxy(r, g))
             scene_vals["edge_mae"].append(edge_mae(r, g))
-        mp = motion_preservation_error(renders, scene["targets"])
-        motion.append(mp)
+        sel = instant_selectivity(renders, scene["targets"])
+        motion.append(sel)
         for m in per_video:
             per_video[m].extend(scene_vals[m])
         if details is not None:
@@ -257,11 +270,11 @@ def evaluate_experiment(method_dir: Path, experiment: str, scenes: list, details
                     "scene_id": scene["scene_id"],
                     "per_freeze_psnr": scene_vals["psnr"],
                     **{m: float(np.mean(v)) for m, v in scene_vals.items()},
-                    "motion_preservation_error": mp,
+                    "instant_selectivity": sel,
                 }
             )
     out = {m: float(np.mean(v)) for m, v in per_video.items()}
-    out["motion_preservation_error"] = float(np.mean(motion))
+    out["instant_selectivity"] = float(np.mean(motion))
     return out
 
 

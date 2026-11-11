@@ -28,7 +28,7 @@ from pathlib import Path
 import numpy as np
 
 WIDTH = 128
-NUM_FRAMES = 48
+NUM_FRAMES = 96
 FOCAL = 0.78
 NEAR = 0.2
 ALPHA_MIN = 1.0 / 255.0
@@ -49,14 +49,14 @@ NUM_PRIMITIVES = NUM_CLUSTERS * PRIMS_PER_CLUSTER + NUM_WALL + NUM_BACKDROP  # 6
 # Two motion regimes: the paper's near-static setting, and the larger/faster
 # subject motion the paper lists as a limitation.
 REGIMES = {
-    "synthetic_validation_paper": {"amplitude": (0.03, 0.06), "lengthscale": 0.22},
+    "synthetic_validation_paper": {"amplitude": (0.04, 0.08), "lengthscale": 0.22},
     "synthetic_large_motion": {"amplitude": (0.09, 0.16), "lengthscale": 0.12},
 }
 
 # Public training scenes. Test scenes use private seeds held by the evaluator.
 TRAIN_SEEDS = {
-    "synthetic_validation_paper": [101, 102, 103, 104],
-    "synthetic_large_motion": [201, 202, 203, 204],
+    "synthetic_validation_paper": [101, 102, 103, 104, 105, 106],
+    "synthetic_large_motion": [201, 202, 203, 204, 205, 206],
 }
 
 
@@ -205,7 +205,7 @@ def make_scene(seed: int, experiment: str, num_frames: int = NUM_FRAMES, width: 
         "timestamps": np.round(times, 8).tolist(),
         "cam_x": cam_x.tolist(),
         "cam_z": cam_z.tolist(),
-        "frames": np.round(frames, 5).tolist(),
+        "frames": np.round(frames, 4).tolist(),
         "init_points": {
             "positions": np.round(init_pos[perm], 6).tolist(),
             "colors": np.round(init_col[perm], 6).tolist(),

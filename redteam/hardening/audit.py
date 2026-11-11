@@ -46,19 +46,21 @@ def scene_set(split, experiment):
 def tasks():
     t = []
 
-    def add(name, variant, seed, extra, split, out_dir, snap_dir=None):
+    def add(name, variant, seed, extra, split, out_dir, snap_dir=None, chunk=8):
         for exp, tag in (("synthetic_validation_paper", "paper"), ("synthetic_large_motion", "large")):
-            t.append(
-                {
-                    "name": f"{name}_{split}_{tag}",
-                    "variant": variant,
-                    "seed": seed,
-                    "extra": extra,
-                    "scenes": [str(p) for p in scene_set(split, exp)],
-                    "out_dir": str(out_dir),
-                    "snap_dir": str(snap_dir) if snap_dir else None,
-                }
-            )
+            scenes = [str(p) for p in scene_set(split, exp)]
+            for ci in range(0, len(scenes), chunk):
+                t.append(
+                    {
+                        "name": f"{name}_{split}_{tag}_{ci // chunk}",
+                        "variant": variant,
+                        "seed": seed,
+                        "extra": extra,
+                        "scenes": scenes[ci : ci + chunk],
+                        "out_dir": str(out_dir),
+                        "snap_dir": str(snap_dir) if snap_dir else None,
+                    }
+                )
 
     add("reference", "splannequin", 0, [], "test", REF_DIR, METHODS / "splannequin_snap")
     add("baseline", "baseline", 0, [], "test", METHODS / "baseline", METHODS / "baseline_snap")
@@ -67,9 +69,8 @@ def tasks():
     add("seed1", "splannequin", 1, [], "test", METHODS / "splannequin_seed1")
     add("seed2", "splannequin", 2, [], "test", METHODS / "splannequin_seed2")
     add("no_hidden", "no_hidden", 0, [], "test", METHODS / "no_hidden")
-    add("no_defective", "no_defective", 0, [], "test", METHODS / "no_defective")
-    add("tau20", "splannequin", 0, ["--tau", "20"], "test", METHODS / "splannequin_tau20")
-    add("lambda1", "splannequin", 0, ["--lambda-hidden", "1", "--lambda-defective", "1"], "test", METHODS / "splannequin_lambda1")
+    add("lambda1", "splannequin", 0, ["--lambda-hidden", "1", "--lambda-defective", "1"], "test", METHODS / "splannequin_lambda1", METHODS / "splannequin_lambda1_snap")
+    add("smooth10", "splannequin", 0, ["--time-smoothness-weight", "0.1"], "test", METHODS / "splannequin_smooth10")
     add("baseline", "baseline", 0, [], "train", METHODS / "baseline", METHODS / "baseline_snap")
     add("static", "static", 0, [], "train", METHODS / "static")
     return t
@@ -228,9 +229,9 @@ def case_specs():
         "reference_seed2": ("science", {"splannequin": m / "splannequin_seed2"}),
         "baseline_4dgaussians": ("science", {"splannequin": m / "baseline"}),
         "weaker_no_hidden": ("science", {"splannequin": m / "no_hidden"}),
-        "weaker_no_defective": ("science", {"splannequin": m / "no_defective"}),
-        "better_tau20": ("science", {"splannequin": m / "splannequin_tau20"}),
-        "sensitivity_lambda1": ("science", {"splannequin": m / "splannequin_lambda1"}),
+        "better_lambda1": ("science", {"splannequin": m / "splannequin_lambda1"}),
+        "better_lambda1_nearest_anchor_snap": ("science", {"splannequin": m / "splannequin_lambda1_snap"}),
+        "better_time_smoothness_x10": ("science", {"splannequin": m / "splannequin_smooth10"}),
         "better_nearest_anchor_snap": ("science", {"splannequin": m / "splannequin_snap"}),
         "baseline_nearest_anchor_snap": ("science", {"splannequin": m / "baseline_snap"}),
         "shortcut_static_reconstruction": ("science", {"splannequin": m / "static"}),
@@ -354,14 +355,19 @@ def score_case(name, entries):
 
 def cmd_cases():
     CASES.mkdir(parents=True, exist_ok=True)
-    missing = []
+    todo = []
     for name, (_, entries) in case_specs().items():
         needed = [s for s in entries.values() if isinstance(s, Path)]
         if any(not (s / "predictions").exists() for s in needed):
-            missing.append(name)
             print(f"[cases] {name}: skipped (training output missing)", flush=True)
             continue
-        score_case(name, entries)
+        todo.append((name, entries))
+    try:
+        workers = len(os.sched_getaffinity(0))
+    except AttributeError:
+        workers = os.cpu_count() or 1
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as ex:
+        list(ex.map(lambda item: score_case(*item), todo))
     return 0
 
 
@@ -454,12 +460,12 @@ def cmd_summary():
     summary["seed_spread"] = spread
     (ROOT / "redteam" / "hardening" / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True))
 
-    lines = ["| case | kind | rc | " + " | ".join(f"{e[:14]} {m}" for e in EXPERIMENTS for m in ("psnr", "ssim", "motion_preservation_error")) + " | rank delta |", "|" + "---|" * 10]
+    lines = ["| case | kind | rc | " + " | ".join(f"{e[:14]} {m}" for e in EXPERIMENTS for m in ("psnr", "ssim", "instant_selectivity")) + " | rank delta |", "|" + "---|" * 10]
     for name, c in summary["cases"].items():
         vals = []
         for e in EXPERIMENTS:
             t = c["test"].get(e) or {}
-            vals += [f"{t.get(m, float('nan')):.4f}" if t else "-" for m in ("psnr", "ssim", "motion_preservation_error")]
+            vals += [f"{t.get(m, float('nan')):.4f}" if t else "-" for m in ("psnr", "ssim", "instant_selectivity")]
         d = c["illustrative_rank_delta"]
         lines.append(f"| {name} | {c['kind']} | {c['hidden_returncode']} | " + " | ".join(vals) + f" | {d:+.3f} |" if d is not None else f"| {name} | {c['kind']} | {c['hidden_returncode']} | " + " | ".join(vals) + " | n/a |")
     (ROOT / "redteam" / "hardening" / "summary.md").write_text("\n".join(lines) + "\n")
