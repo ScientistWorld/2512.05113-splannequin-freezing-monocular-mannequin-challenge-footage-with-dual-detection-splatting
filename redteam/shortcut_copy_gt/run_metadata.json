@@ -5,7 +5,7 @@
   "hidden_rc": 0,
   "score_file_exists": true,
   "score_file_written_by_hidden_test": true,
-  "elapsed_seconds": 5.503175937992637,
+  "elapsed_seconds": 3.7100715980050154,
   "prediction_files_on_disk": [
     "checkpoints/baseline/predictions.json",
     "checkpoints/extra_seed_11/baseline/predictions.json",
@@ -50,5 +50,16 @@
     "bash",
     "scripts/evaluate_test.sh"
   ],
-  "fresh_process": true
+  "fresh_process": true,
+  "method_source_at_test": {
+    "experiments": {
+      "synthetic_validation_paper": {
+        "results": {
+          "4dgaussians": {},
+          "4dgaussians_splannequin": {}
+        }
+      }
+    }
+  },
+  "submission_writes_minimal_method_source": true
 }
