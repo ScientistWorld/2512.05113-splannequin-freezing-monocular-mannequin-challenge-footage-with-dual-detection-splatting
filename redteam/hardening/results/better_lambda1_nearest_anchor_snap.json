@@ -1,0 +1,44 @@
+{
+ "case": "better_lambda1_nearest_anchor_snap",
+ "hidden_returncode": 0,
+ "hidden_seconds": 73.73,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.017867786836077846,
+      "fvd": 30.12992052130457,
+      "instant_selectivity": 0.11344496327311418,
+      "lpips": 0.06579596071084835,
+      "psnr": 21.4531530594949,
+      "ssim": 0.723633943246913
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.013181011644157322,
+      "fvd": 23.12488778603485,
+      "instant_selectivity": 0.10233656020741855,
+      "lpips": 0.04405409504637475,
+      "psnr": 24.82169272197564,
+      "ssim": 0.8172092883106311
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 16
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/better_lambda1_nearest_anchor_snap/scores_test.json for 1 method slot(s)\n"
+}

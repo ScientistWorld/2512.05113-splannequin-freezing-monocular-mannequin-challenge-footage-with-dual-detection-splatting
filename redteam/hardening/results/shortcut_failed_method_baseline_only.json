@@ -1,0 +1,60 @@
+{
+ "case": "shortcut_failed_method_baseline_only",
+ "hidden_returncode": 0,
+ "hidden_seconds": 374.75,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians": {
+      "edge_mae": 0.017728571981648733,
+      "fvd": 30.464361690388703,
+      "instant_selectivity": 0.05113887776397852,
+      "lpips": 0.0677775528459709,
+      "psnr": 21.043574248324887,
+      "ssim": 0.7253977435566767
+     },
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.02342764522347407,
+      "fvd": 34.60537978600981,
+      "instant_selectivity": -6.447799395952896e-19,
+      "lpips": 0.33653846856340913,
+      "psnr": 7.9300075236755605,
+      "ssim": 0.08396475499274336
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians": {
+      "edge_mae": 0.013606794445943747,
+      "fvd": 23.794220188511137,
+      "instant_selectivity": 0.033245618125441696,
+      "lpips": 0.04485434434681304,
+      "psnr": 24.381052097227705,
+      "ssim": 0.8151138065690472
+     },
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.022798270156266554,
+      "fvd": 33.1333050875538,
+      "instant_selectivity": 2.1466314947019638e-18,
+      "lpips": 0.3347714412823457,
+      "psnr": 7.8823982366968375,
+      "ssim": 0.09199968224351858
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 16
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/shortcut_failed_method_baseline_only/scores_test.json for 2 method slot(s)\n"
+}

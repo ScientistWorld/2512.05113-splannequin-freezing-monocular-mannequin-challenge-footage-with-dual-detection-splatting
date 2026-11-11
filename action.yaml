@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Hardening job: generate moving-subject train/test scenes (private test answers), smoke test, train reference Splannequin (4DGaussians-style HexPlane, paper schedule) + baseline/static/ablations/seeds/variants, score all cases and shortcuts through the hidden evaluator, regenerate reference scores."
+notes: "Hardening round 2: regenerate 96-frame scenes (16 private test scenes/experiment), retrain reference + baseline/static/seeds/no_hidden/lambda1/smooth10 variants, score every case and shortcut through the hidden evaluator with the instant-selectivity constraint metric and per-view PSNR, regenerate reference scores."

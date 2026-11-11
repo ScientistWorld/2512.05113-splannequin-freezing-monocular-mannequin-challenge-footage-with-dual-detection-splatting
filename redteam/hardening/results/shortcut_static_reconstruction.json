@@ -1,0 +1,81 @@
+{
+ "case": "shortcut_static_reconstruction",
+ "hidden_returncode": 0,
+ "hidden_seconds": 594.95,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.017764034571046628,
+      "fvd": 29.244094881398485,
+      "instant_selectivity": -0.2914132926771383,
+      "lpips": 0.07630020836137745,
+      "psnr": 18.792870184928187,
+      "ssim": 0.7013975632014239
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012122189669655323,
+      "fvd": 20.796780714899207,
+      "instant_selectivity": -0.2944713279973909,
+      "lpips": 0.04059146643297195,
+      "psnr": 24.01976494444617,
+      "ssim": 0.8412424918678266
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 16
+   },
+   "slice": "test"
+  }
+ },
+ "scores_train": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016666149987430542,
+      "fvd": 27.858075048138087,
+      "instant_selectivity": -0.3086658945982415,
+      "lpips": 0.07188442698908037,
+      "psnr": 19.33302079622589,
+      "ssim": 0.7141641322417779
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01310471625661797,
+      "fvd": 21.430005136258952,
+      "instant_selectivity": -0.23231443093971235,
+      "lpips": 0.04585800931666047,
+      "psnr": 23.15850153838826,
+      "ssim": 0.8131267643095179
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 6,
+    "synthetic_validation_paper": 6
+   },
+   "slice": "train"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/shortcut_static_reconstruction/scores_test.json for 1 method slot(s)\n",
+ "train_returncode": 0
+}

@@ -3,24 +3,24 @@
     "synthetic_large_motion": {
       "results": {
         "4dgaussians_splannequin": {
-          "edge_mae": 0.01744197371597535,
-          "fvd": 50.702816808588715,
-          "lpips": 0.06488856238947872,
-          "motion_preservation_error": 0.08009380642857114,
-          "psnr": 18.25513189419572,
-          "ssim": 0.7308967873084941
+          "edge_mae": 0.017728571981648733,
+          "fvd": 30.464361690388703,
+          "instant_selectivity": 0.05113887776397852,
+          "lpips": 0.0677775528459709,
+          "psnr": 21.043574248324887,
+          "ssim": 0.7253977435566767
         }
       }
     },
     "synthetic_validation_paper": {
       "results": {
         "4dgaussians_splannequin": {
-          "edge_mae": 0.012779932920630446,
-          "fvd": 36.207602853093874,
-          "lpips": 0.040658534728262204,
-          "motion_preservation_error": 0.039440475825296334,
-          "psnr": 21.734078352897495,
-          "ssim": 0.8234317999214946
+          "edge_mae": 0.013606794445943747,
+          "fvd": 23.794220188511137,
+          "instant_selectivity": 0.033245618125441696,
+          "lpips": 0.04485434434681304,
+          "psnr": 24.381052097227705,
+          "ssim": 0.8151138065690472
         }
       }
     }
@@ -28,8 +28,8 @@
   "metadata": {
     "failed_methods": {},
     "scenes_per_experiment": {
-      "synthetic_large_motion": 8,
-      "synthetic_validation_paper": 8
+      "synthetic_large_motion": 16,
+      "synthetic_validation_paper": 16
     },
     "slice": "test"
   }

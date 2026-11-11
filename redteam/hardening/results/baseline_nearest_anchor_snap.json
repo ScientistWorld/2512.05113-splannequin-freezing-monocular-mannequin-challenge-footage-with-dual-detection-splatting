@@ -1,0 +1,81 @@
+{
+ "case": "baseline_nearest_anchor_snap",
+ "hidden_returncode": 0,
+ "hidden_seconds": 808.01,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.018272757669187723,
+      "fvd": 31.036292328858725,
+      "instant_selectivity": 0.12744439604638416,
+      "lpips": 0.06777877604921066,
+      "psnr": 21.30060984872218,
+      "ssim": 0.7129627126619034
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.013786721668884427,
+      "fvd": 24.03806947719636,
+      "instant_selectivity": 0.11988069259562753,
+      "lpips": 0.04435914016810091,
+      "psnr": 24.59492427719519,
+      "ssim": 0.8098059074678746
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 16
+   },
+   "slice": "test"
+  }
+ },
+ "scores_train": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.018598355478561937,
+      "fvd": 30.974581106500953,
+      "instant_selectivity": 0.12417120645832282,
+      "lpips": 0.067403428737789,
+      "psnr": 21.034648685411653,
+      "ssim": 0.7058723037907624
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.014848040578115444,
+      "fvd": 24.58770480471874,
+      "instant_selectivity": 0.16832796320334134,
+      "lpips": 0.04776951052617415,
+      "psnr": 23.748924670136912,
+      "ssim": 0.7868068604661091
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 6,
+    "synthetic_validation_paper": 6
+   },
+   "slice": "train"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/baseline_nearest_anchor_snap/scores_test.json for 1 method slot(s)\n",
+ "train_returncode": 0
+}

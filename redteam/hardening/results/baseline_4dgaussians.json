@@ -1,0 +1,81 @@
+{
+ "case": "baseline_4dgaussians",
+ "hidden_returncode": 0,
+ "hidden_seconds": 137.76,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.018999547947797037,
+      "fvd": 32.031139880163934,
+      "instant_selectivity": 0.13657953921503344,
+      "lpips": 0.06907130587854658,
+      "psnr": 21.05646418709066,
+      "ssim": 0.7104356577455583
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.014893761934861511,
+      "fvd": 25.93634294949936,
+      "instant_selectivity": 0.1178663913098904,
+      "lpips": 0.048024195253107284,
+      "psnr": 24.050764986424564,
+      "ssim": 0.7960868412335
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 16
+   },
+   "slice": "test"
+  }
+ },
+ "scores_train": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.020021249223922885,
+      "fvd": 32.06120932317297,
+      "instant_selectivity": 0.15374283487287296,
+      "lpips": 0.06913401772489003,
+      "psnr": 20.824158551905555,
+      "ssim": 0.6984952311065636
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01606727324290054,
+      "fvd": 26.05733814879744,
+      "instant_selectivity": 0.17422618288025085,
+      "lpips": 0.05110348684332281,
+      "psnr": 23.322938212325212,
+      "ssim": 0.7731636366960514
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 6,
+    "synthetic_validation_paper": 6
+   },
+   "slice": "train"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening/cases/baseline_4dgaussians/scores_test.json for 1 method slot(s)\n",
+ "train_returncode": 0
+}
