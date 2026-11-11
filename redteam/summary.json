@@ -1,0 +1,1358 @@
+{
+  "reference": {
+    "4dgaussians": {
+      "edge_mae": 0.04595673829317093,
+      "foreground_mae": 0.11713884770870209,
+      "fvd": 139.33607935905457,
+      "inference_overhead": 0.0,
+      "lpips": 0.10465773940086365,
+      "psnr": 16.925284904357664,
+      "ssim": 0.7260458897399431
+    },
+    "4dgaussians_splannequin": {
+      "edge_mae": 0.03945033624768257,
+      "foreground_mae": 0.12487918138504028,
+      "fvd": 130.37508726119995,
+      "inference_overhead": 0.0,
+      "lpips": 0.10838660597801208,
+      "psnr": 16.60527879555161,
+      "ssim": 0.6600767943610802
+    }
+  },
+  "runs": {
+    "better_initialization": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03734187036752701,
+          "foreground_mae": 0.11574749648571014,
+          "fvd": 122.03884869813919,
+          "inference_overhead": 0.0,
+          "lpips": 0.09453984349966049,
+          "psnr": 17.326867470358845,
+          "ssim": 0.7201841281652338
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.1857327534552113,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": 0.014659662571224622,
+        "4dgaussians_splannequin/foreground_mae": 0.02154252225210724,
+        "4dgaussians_splannequin/fvd": 0.024107798305235253,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.056030080044486154,
+        "4dgaussians_splannequin/psnr": 0.008372495664573857,
+        "4dgaussians_splannequin/ssim": 0.0610201946175842
+      },
+      "scientific_cohort_normalized_delta": 1.927306385177957,
+      "missing_reference_methods": [],
+      "improved_slots": 6,
+      "worsened_slots": 0
+    },
+    "better_longer_small_lr": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.039999254047870636,
+          "foreground_mae": 0.11868163198232651,
+          "fvd": 143.30744743347168,
+          "inference_overhead": 0.0,
+          "lpips": 0.1016683578491211,
+          "psnr": 16.678973073125086,
+          "ssim": 0.6949605309556344
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.03685823858024055,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.0038164951142117694,
+        "4dgaussians_splannequin/foreground_mae": 0.014620614638848216,
+        "4dgaussians_splannequin/fvd": -0.03739944919826209,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.02718498139973103,
+        "4dgaussians_splannequin/psnr": 0.000855064721813521,
+        "4dgaussians_splannequin/ssim": 0.03541352213232164
+      },
+      "scientific_cohort_normalized_delta": 0.37322511003195513,
+      "missing_reference_methods": [],
+      "improved_slots": 4,
+      "worsened_slots": 2
+    },
+    "better_more_training": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.04150984436273575,
+          "foreground_mae": 0.11065521836280823,
+          "fvd": 123.12241643667221,
+          "inference_overhead": 0.0,
+          "lpips": 0.09597326815128326,
+          "psnr": 17.072178557014745,
+          "ssim": 0.71395805471801
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.15055737770676947,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.014319270856377755,
+        "4dgaussians_splannequin/foreground_mae": 0.03355569572292866,
+        "4dgaussians_splannequin/fvd": 0.020974198865511117,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.05022981459660762,
+        "4dgaussians_splannequin/psnr": 0.005417374697136073,
+        "4dgaussians_splannequin/ssim": 0.054699564680963764
+      },
+      "scientific_cohort_normalized_delta": 1.5238281536693368,
+      "missing_reference_methods": [],
+      "improved_slots": 5,
+      "worsened_slots": 1
+    },
+    "reference_existing": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03945033624768257,
+          "foreground_mae": 0.12487918138504028,
+          "fvd": 130.37508726119995,
+          "inference_overhead": 0.0,
+          "lpips": 0.10838660597801208,
+          "psnr": 16.60527879555161,
+          "ssim": 0.6600767943610802
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.0,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.0,
+        "4dgaussians_splannequin/foreground_mae": -0.0,
+        "4dgaussians_splannequin/fvd": -0.0,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": -0.0,
+        "4dgaussians_splannequin/psnr": 0.0,
+        "4dgaussians_splannequin/ssim": 0.0
+      },
+      "scientific_cohort_normalized_delta": 0.0,
+      "missing_reference_methods": [],
+      "improved_slots": 0,
+      "worsened_slots": 0
+    },
+    "reference_seed_17": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.046566978096961975,
+          "foreground_mae": 0.13305847346782684,
+          "fvd": 159.30628776550293,
+          "inference_overhead": 0.0,
+          "lpips": 0.1171075701713562,
+          "psnr": 15.673839704184108,
+          "ssim": 0.5727737789885253
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": -0.2871681071727011,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.04948032080224828,
+        "4dgaussians_splannequin/foreground_mae": -0.01929573607087992,
+        "4dgaussians_splannequin/fvd": -0.08366693697762558,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": -0.03528884983635097,
+        "4dgaussians_splannequin/psnr": -0.01080736162658357,
+        "4dgaussians_splannequin/ssim": -0.08862890185901277
+      },
+      "scientific_cohort_normalized_delta": -2.6300010905569033,
+      "missing_reference_methods": [],
+      "improved_slots": 0,
+      "worsened_slots": 6
+    },
+    "reference_seed_27": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.046889595687389374,
+          "foreground_mae": 0.1165819838643074,
+          "fvd": 133.8220089673996,
+          "inference_overhead": 0.0,
+          "lpips": 0.10165199637413025,
+          "psnr": 16.712895204601224,
+          "ssim": 0.6861800809420557
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.012881801632778349,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.05172340429708685,
+        "4dgaussians_splannequin/foreground_mae": 0.01957388632996183,
+        "4dgaussians_splannequin/fvd": -0.0099682479859943,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.027251187110619482,
+        "4dgaussians_splannequin/psnr": 0.0012486586190472153,
+        "4dgaussians_splannequin/ssim": 0.026499721856230972
+      },
+      "scientific_cohort_normalized_delta": 0.29706696524451026,
+      "missing_reference_methods": [],
+      "improved_slots": 4,
+      "worsened_slots": 2
+    },
+    "reference_seed_7": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.04257131740450859,
+          "foreground_mae": 0.1289614737033844,
+          "fvd": 133.29720497131348,
+          "inference_overhead": 0.0,
+          "lpips": 0.11078616231679916,
+          "psnr": 16.336188208394955,
+          "ssim": 0.6342489111896937
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": -0.07883252946863148,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.02169944084978225,
+        "4dgaussians_splannequin/foreground_mae": -0.009630519896058358,
+        "4dgaussians_splannequin/fvd": -0.008450552829873387,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": -0.009709658408865812,
+        "4dgaussians_splannequin/psnr": -0.0031222216381771397,
+        "4dgaussians_splannequin/ssim": -0.026220135845874532
+      },
+      "scientific_cohort_normalized_delta": -0.7501744312059859,
+      "missing_reference_methods": [],
+      "improved_slots": 0,
+      "worsened_slots": 6
+    },
+    "shortcut_baseline_inflation": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03945033624768257,
+          "foreground_mae": 0.12487918138504028,
+          "fvd": 130.37508726119995,
+          "inference_overhead": -0.999999,
+          "lpips": 0.10838660597801208,
+          "psnr": 16.60527879555161,
+          "ssim": 0.6600767943610802
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 1.0930834661577494e-07,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.0,
+        "4dgaussians_splannequin/foreground_mae": -0.0,
+        "4dgaussians_splannequin/fvd": -0.0,
+        "4dgaussians_splannequin/inference_overhead": 1.0930834661577494e-07,
+        "4dgaussians_splannequin/lpips": -0.0,
+        "4dgaussians_splannequin/psnr": 0.0,
+        "4dgaussians_splannequin/ssim": 0.0
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 1,
+      "worsened_slots": 0
+    },
+    "shortcut_bruteforce_seed": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.0,
+          "foreground_mae": 0.0,
+          "fvd": 0.0,
+          "inference_overhead": 0.0,
+          "lpips": 0.0,
+          "psnr": 99.0,
+          "ssim": 1.0
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 2.685606384858168,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": 0.2742888197316757,
+        "4dgaussians_splannequin/foreground_mae": 0.2946019900456167,
+        "4dgaussians_splannequin/fvd": 0.37703531202284113,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.4385797920772276,
+        "4dgaussians_splannequin/psnr": 0.9560147909088244,
+        "4dgaussians_splannequin/ssim": 0.34508568007198226
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 6,
+      "worsened_slots": 0
+    },
+    "shortcut_constant_zero": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03846270963549614,
+          "foreground_mae": 0.2571587860584259,
+          "fvd": 118.60612779855728,
+          "inference_overhead": 0.0,
+          "lpips": 0.19940541684627533,
+          "psnr": 11.372990318527664,
+          "ssim": 6.63402638731929e-05
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": -1.3702043413740466,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": 0.00686673330466538,
+        "4dgaussians_splannequin/foreground_mae": -0.31206029977944105,
+        "4dgaussians_splannequin/fvd": 0.03403497858675801,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": -0.36830206818928896,
+        "4dgaussians_splannequin/psnr": -0.06070953455773861,
+        "4dgaussians_splannequin/ssim": -0.6700341507390013
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 2,
+      "worsened_slots": 4
+    },
+    "shortcut_copy_gt": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.0,
+          "foreground_mae": 0.0,
+          "fvd": 0.0,
+          "inference_overhead": 0.0,
+          "lpips": 0.0,
+          "psnr": 99.0,
+          "ssim": 1.0
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 2.685606384858168,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": 0.2742888197316757,
+        "4dgaussians_splannequin/foreground_mae": 0.2946019900456167,
+        "4dgaussians_splannequin/fvd": 0.37703531202284113,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.4385797920772276,
+        "4dgaussians_splannequin/psnr": 0.9560147909088244,
+        "4dgaussians_splannequin/ssim": 0.34508568007198226
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 6,
+      "worsened_slots": 0
+    },
+    "shortcut_copy_input": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.0,
+          "foreground_mae": 0.0,
+          "fvd": 0.0,
+          "inference_overhead": 0.0,
+          "lpips": 0.0,
+          "psnr": 99.0,
+          "ssim": 1.0
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 2.685606384858168,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": 0.2742888197316757,
+        "4dgaussians_splannequin/foreground_mae": 0.2946019900456167,
+        "4dgaussians_splannequin/fvd": 0.37703531202284113,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.4385797920772276,
+        "4dgaussians_splannequin/psnr": 0.9560147909088244,
+        "4dgaussians_splannequin/ssim": 0.34508568007198226
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 6,
+      "worsened_slots": 0
+    },
+    "shortcut_empty_predictions": {
+      "hidden_rc": 1,
+      "train_rc": 1,
+      "score_file_written_by_hidden_test": false
+    },
+    "shortcut_extra_method_ignored": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03945033624768257,
+          "foreground_mae": 0.12487918138504028,
+          "fvd": 130.37508726119995,
+          "inference_overhead": 0.0,
+          "lpips": 0.10838660597801208,
+          "psnr": 16.60527879555161,
+          "ssim": 0.6600767943610802
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.0,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.0,
+        "4dgaussians_splannequin/foreground_mae": -0.0,
+        "4dgaussians_splannequin/fvd": -0.0,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": -0.0,
+        "4dgaussians_splannequin/psnr": 0.0,
+        "4dgaussians_splannequin/ssim": 0.0
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 0,
+      "worsened_slots": 0
+    },
+    "shortcut_extra_scenes_ignored": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03945033624768257,
+          "foreground_mae": 0.12487918138504028,
+          "fvd": 130.37508726119995,
+          "inference_overhead": 0.0,
+          "lpips": 0.10838660597801208,
+          "psnr": 16.60527879555161,
+          "ssim": 0.6600767943610802
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.0,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.0,
+        "4dgaussians_splannequin/foreground_mae": -0.0,
+        "4dgaussians_splannequin/fvd": -0.0,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": -0.0,
+        "4dgaussians_splannequin/psnr": 0.0,
+        "4dgaussians_splannequin/ssim": 0.0
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 0,
+      "worsened_slots": 0
+    },
+    "shortcut_failed_method_baseline_only": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.0,
+          "foreground_mae": 0.0,
+          "fvd": 0.0,
+          "inference_overhead": 0.0,
+          "lpips": 0.0,
+          "psnr": 99.0,
+          "ssim": 1.0
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 5.239708389755851,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": 0.5126039646534417,
+        "4dgaussians/foreground_mae": 0.6016686783794113,
+        "4dgaussians/fvd": 0.6871111228268167,
+        "4dgaussians/lpips": 0.8604255101055029,
+        "4dgaussians/psnr": 1.7184536558010624,
+        "4dgaussians/ssim": 0.8594454579896159
+      },
+      "missing_reference_methods": [
+        "4dgaussians_splannequin"
+      ],
+      "improved_slots": 6,
+      "worsened_slots": 0
+    },
+    "shortcut_failed_stale_scores": {
+      "hidden_rc": 1,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": false
+    },
+    "shortcut_forged_metrics": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03945033624768257,
+          "foreground_mae": 0.12487918138504028,
+          "fvd": 130.37508726119995,
+          "inference_overhead": 0.0,
+          "lpips": 0.10838660597801208,
+          "psnr": 16.60527879555161,
+          "ssim": 0.6600767943610802
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.0,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.0,
+        "4dgaussians_splannequin/foreground_mae": -0.0,
+        "4dgaussians_splannequin/fvd": -0.0,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": -0.0,
+        "4dgaussians_splannequin/psnr": 0.0,
+        "4dgaussians_splannequin/ssim": 0.0
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 0,
+      "worsened_slots": 0
+    },
+    "shortcut_infinite_predictions": {
+      "hidden_rc": 1,
+      "train_rc": 1,
+      "score_file_written_by_hidden_test": false
+    },
+    "shortcut_negative_state": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03945033624768257,
+          "foreground_mae": 0.12487918138504028,
+          "fvd": 130.37508726119995,
+          "inference_overhead": -4201681.672268908,
+          "lpips": 0.10838660597801208,
+          "psnr": 16.60527879555161,
+          "ssim": 0.6600767943610802
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.4592793358808545,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.0,
+        "4dgaussians_splannequin/foreground_mae": -0.0,
+        "4dgaussians_splannequin/fvd": -0.0,
+        "4dgaussians_splannequin/inference_overhead": 0.4592793358808545,
+        "4dgaussians_splannequin/lpips": -0.0,
+        "4dgaussians_splannequin/psnr": 0.0,
+        "4dgaussians_splannequin/ssim": 0.0
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 1,
+      "worsened_slots": 0
+    },
+    "shortcut_null_predictions": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": NaN,
+          "foreground_mae": NaN,
+          "fvd": NaN,
+          "inference_overhead": 0.0,
+          "lpips": NaN,
+          "psnr": NaN,
+          "ssim": NaN
+        }
+      },
+      "nonfinite_metrics": [
+        "4dgaussians_splannequin/edge_mae",
+        "4dgaussians_splannequin/foreground_mae",
+        "4dgaussians_splannequin/fvd",
+        "4dgaussians_splannequin/lpips",
+        "4dgaussians_splannequin/psnr",
+        "4dgaussians_splannequin/ssim"
+      ],
+      "missing_reference_methods": [],
+      "improved_slots": 0,
+      "worsened_slots": 0
+    },
+    "shortcut_omit_proposed": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.0,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0
+      },
+      "missing_reference_methods": [
+        "4dgaussians_splannequin"
+      ],
+      "improved_slots": 0,
+      "worsened_slots": 0
+    },
+    "shortcut_psnr_epsilon": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 1.7809501651200321e-09,
+          "foreground_mae": 1.099214955502248e-06,
+          "fvd": 3.036205731277164e-06,
+          "inference_overhead": 0.0,
+          "lpips": 1.099587393582624e-06,
+          "psnr": 119.17518079039252,
+          "ssim": 0.9999999999848146
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 2.919689211374168,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": 0.27428880734915206,
+        "4dgaussians_splannequin/foreground_mae": 0.2945993968918998,
+        "4dgaussians_splannequin/fvd": 0.37703530324235396,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.4385753426638882,
+        "4dgaussians_splannequin/psnr": 1.1901046811703075,
+        "4dgaussians_splannequin/ssim": 0.3450856800565662
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 6,
+      "worsened_slots": 0
+    },
+    "shortcut_rebuild_seed": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.0,
+          "foreground_mae": 0.0,
+          "fvd": 0.0,
+          "inference_overhead": 0.0,
+          "lpips": 0.0,
+          "psnr": 99.0,
+          "ssim": 1.0
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 2.685606384858168,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": 0.2742888197316757,
+        "4dgaussians_splannequin/foreground_mae": 0.2946019900456167,
+        "4dgaussians_splannequin/fvd": 0.37703531202284113,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.4385797920772276,
+        "4dgaussians_splannequin/psnr": 0.9560147909088244,
+        "4dgaussians_splannequin/ssim": 0.34508568007198226
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 6,
+      "worsened_slots": 0
+    },
+    "shortcut_replace_fixed_target": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.03479175642132759,
+          "foreground_mae": 0.11568676680326462,
+          "fvd": 116.94509536027908,
+          "inference_overhead": 0.0,
+          "lpips": 0.0953182652592659,
+          "psnr": 17.14915383896554,
+          "ssim": 0.7286870458044121
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.0,
+          "foreground_mae": 0.0,
+          "fvd": 0.0,
+          "inference_overhead": 0.0,
+          "lpips": 0.0,
+          "psnr": 99.0,
+          "ssim": 1.0
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 3.0177727578378133,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": 0.12453481655466304,
+        "4dgaussians/foreground_mae": 0.00745842746760806,
+        "4dgaussians/fvd": 0.11041715991556017,
+        "4dgaussians/lpips": 0.07678287194434741,
+        "4dgaussians/psnr": 0.0046872948465174445,
+        "4dgaussians/ssim": 0.00828580225094943,
+        "4dgaussians_splannequin/edge_mae": 0.2742888197316757,
+        "4dgaussians_splannequin/foreground_mae": 0.2946019900456167,
+        "4dgaussians_splannequin/fvd": 0.37703531202284113,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.4385797920772276,
+        "4dgaussians_splannequin/psnr": 0.9560147909088244,
+        "4dgaussians_splannequin/ssim": 0.34508568007198226
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 12,
+      "worsened_slots": 0
+    },
+    "shortcut_static_reconstruction": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.004194937646389008,
+          "foreground_mae": 0.011976709589362144,
+          "fvd": 14.339789748191833,
+          "inference_overhead": 0.0,
+          "lpips": 0.009220236912369728,
+          "psnr": 34.12844644034152,
+          "ssim": 0.9942287987802011
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 1.7908523111060772,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": 0.2451224144404253,
+        "4dgaussians_splannequin/foreground_mae": 0.2663477811367234,
+        "4dgaussians_splannequin/fvd": 0.33556567840166024,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.4012706656271361,
+        "4dgaussians_splannequin/psnr": 0.20331894091158914,
+        "4dgaussians_splannequin/ssim": 0.3392268305885431
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 6,
+      "worsened_slots": 0
+    },
+    "shortcut_zero_state": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.03945033624768257,
+          "foreground_mae": 0.12487918138504028,
+          "fvd": 130.37508726119995,
+          "inference_overhead": -1.0,
+          "lpips": 0.10838660597801208,
+          "psnr": 16.60527879555161,
+          "ssim": 0.6600767943610802
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 1.0930845592423087e-07,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.0,
+        "4dgaussians_splannequin/foreground_mae": -0.0,
+        "4dgaussians_splannequin/fvd": -0.0,
+        "4dgaussians_splannequin/inference_overhead": 1.0930845592423087e-07,
+        "4dgaussians_splannequin/lpips": -0.0,
+        "4dgaussians_splannequin/psnr": 0.0,
+        "4dgaussians_splannequin/ssim": 0.0
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 1,
+      "worsened_slots": 0
+    },
+    "shortcut_zero_target_and_outputs": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.0,
+          "foreground_mae": 0.0,
+          "fvd": 0.0,
+          "inference_overhead": 0.0,
+          "lpips": 0.0,
+          "psnr": 99.0,
+          "ssim": 1.0
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.0,
+          "foreground_mae": 0.0,
+          "fvd": 0.0,
+          "inference_overhead": 0.0,
+          "lpips": 0.0,
+          "psnr": 99.0,
+          "ssim": 1.0
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 7.925314774614018,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": 0.5126039646534417,
+        "4dgaussians/foreground_mae": 0.6016686783794113,
+        "4dgaussians/fvd": 0.6871111228268167,
+        "4dgaussians/lpips": 0.8604255101055029,
+        "4dgaussians/psnr": 1.7184536558010624,
+        "4dgaussians/ssim": 0.8594454579896159,
+        "4dgaussians_splannequin/edge_mae": 0.2742888197316757,
+        "4dgaussians_splannequin/foreground_mae": 0.2946019900456167,
+        "4dgaussians_splannequin/fvd": 0.37703531202284113,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.4385797920772276,
+        "4dgaussians_splannequin/psnr": 0.9560147909088244,
+        "4dgaussians_splannequin/ssim": 0.34508568007198226
+      },
+      "missing_reference_methods": [],
+      "improved_slots": 12,
+      "worsened_slots": 0
+    },
+    "weaker_remove_anchors": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": 0.03288078094044569,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.04523746835900788,
+        "4dgaussians_splannequin/foreground_mae": 0.0182601910052199,
+        "4dgaussians_splannequin/fvd": -0.025914540290047527,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.015088631231992378,
+        "4dgaussians_splannequin/psnr": 0.003712987540071322,
+        "4dgaussians_splannequin/ssim": 0.0669709798122175
+      },
+      "scientific_cohort_normalized_delta": 0.5375208488207315,
+      "missing_reference_methods": [],
+      "improved_slots": 4,
+      "worsened_slots": 2
+    },
+    "weaker_short_training": {
+      "hidden_rc": 0,
+      "train_rc": 0,
+      "score_file_written_by_hidden_test": true,
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.045832645148038864,
+          "foreground_mae": 0.12341637164354324,
+          "fvd": 138.44050467014313,
+          "inference_overhead": 0.0,
+          "lpips": 0.10735557973384857,
+          "psnr": 16.613580057272944,
+          "ssim": 0.6598983428934295
+        }
+      },
+      "nonfinite_metrics": [],
+      "audit_cohort_normalized_delta": -0.06016123096479031,
+      "audit_cohort_terms": {
+        "4dgaussians/edge_mae": -0.0,
+        "4dgaussians/foreground_mae": -0.0,
+        "4dgaussians/fvd": -0.0,
+        "4dgaussians/lpips": -0.0,
+        "4dgaussians/psnr": 0.0,
+        "4dgaussians/ssim": 0.0,
+        "4dgaussians_splannequin/edge_mae": -0.044374678189074535,
+        "4dgaussians_splannequin/foreground_mae": 0.003450908759358401,
+        "4dgaussians_splannequin/fvd": -0.02332460313743039,
+        "4dgaussians_splannequin/inference_overhead": -0.0,
+        "4dgaussians_splannequin/lpips": 0.0041719848288554375,
+        "4dgaussians_splannequin/psnr": 9.631841546147042e-05,
+        "4dgaussians_splannequin/ssim": -0.00018116164196070182
+      },
+      "scientific_cohort_normalized_delta": -0.31794416824178307,
+      "missing_reference_methods": [],
+      "improved_slots": 3,
+      "worsened_slots": 3
+    }
+  },
+  "seed_spread": {
+    "psnr": {
+      "values": [
+        16.336188208394955,
+        15.673839704184108,
+        16.712895204601224
+      ],
+      "min": 15.673839704184108,
+      "max": 16.712895204601224,
+      "range": 1.039055500417117,
+      "population_sd": 0.42950230046831367
+    },
+    "ssim": {
+      "values": [
+        0.6342489111896937,
+        0.5727737789885253,
+        0.6861800809420557
+      ],
+      "min": 0.5727737789885253,
+      "max": 0.6861800809420557,
+      "range": 0.11340630195353041,
+      "population_sd": 0.04635254708784152
+    },
+    "lpips": {
+      "values": [
+        0.11078616231679916,
+        0.1171075701713562,
+        0.10165199637413025
+      ],
+      "min": 0.10165199637413025,
+      "max": 0.1171075701713562,
+      "range": 0.015455573797225952,
+      "population_sd": 0.006344445918661329
+    },
+    "fvd": {
+      "values": [
+        133.29720497131348,
+        159.30628776550293,
+        133.8220089673996
+      ],
+      "min": 133.29720497131348,
+      "max": 159.30628776550293,
+      "range": 26.009082794189453,
+      "population_sd": 12.138992603675373
+    },
+    "foreground_mae": {
+      "values": [
+        0.1289614737033844,
+        0.13305847346782684,
+        0.1165819838643074
+      ],
+      "min": 0.1165819838643074,
+      "max": 0.13305847346782684,
+      "range": 0.01647648960351944,
+      "population_sd": 0.007004061404329286
+    },
+    "edge_mae": {
+      "values": [
+        0.04257131740450859,
+        0.046566978096961975,
+        0.046889595687389374
+      ],
+      "min": 0.04257131740450859,
+      "max": 0.046889595687389374,
+      "range": 0.004318278282880783,
+      "population_sd": 0.0019640353529085087
+    },
+    "inference_overhead": {
+      "values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "min": 0.0,
+      "max": 0.0,
+      "range": 0.0,
+      "population_sd": 0.0
+    },
+    "scientific_cohort_normalized_delta": {
+      "values": [
+        -0.7501744312059859,
+        -2.6300010905569033,
+        0.29706696524451026
+      ],
+      "min": -2.6300010905569033,
+      "max": 0.29706696524451026,
+      "range": 2.9270680558014135
+    },
+    "audit_cohort_normalized_delta": {
+      "values": [
+        -0.07883252946863148,
+        -0.2871681071727011,
+        0.012881801632778349
+      ],
+      "min": -0.2871681071727011,
+      "max": 0.012881801632778349,
+      "range": 0.30004990880547944
+    }
+  },
+  "scientific_cohort_scales": {
+    "4dgaussians/edge_mae": null,
+    "4dgaussians/foreground_mae": null,
+    "4dgaussians/fvd": null,
+    "4dgaussians/inference_overhead": null,
+    "4dgaussians/lpips": null,
+    "4dgaussians/psnr": null,
+    "4dgaussians/ssim": null,
+    "4dgaussians_splannequin/edge_mae": 0.00334257880073903,
+    "4dgaussians_splannequin/foreground_mae": 0.006700602145748444,
+    "4dgaussians_splannequin/fvd": 10.635373216051747,
+    "4dgaussians_splannequin/inference_overhead": null,
+    "4dgaussians_splannequin/lpips": 0.0067453408696309825,
+    "4dgaussians_splannequin/psnr": 0.44355256473384647,
+    "4dgaussians_splannequin/ssim": 0.04624223726277784
+  },
+  "audit_cohort_scales": {
+    "4dgaussians/edge_mae": 0.012103222170301683,
+    "4dgaussians/foreground_mae": 0.030663667857555383,
+    "4dgaussians/fvd": 36.501365574533494,
+    "4dgaussians/inference_overhead": null,
+    "4dgaussians/lpips": 0.027367844268479363,
+    "4dgaussians/psnr": 21.49235835855133,
+    "4dgaussians/ssim": 0.07172028688440349,
+    "4dgaussians_splannequin/edge_mae": 0.01941674253674332,
+    "4dgaussians_splannequin/foreground_mae": 0.0667628588153744,
+    "4dgaussians_splannequin/fvd": 62.242222303024796,
+    "4dgaussians_splannequin/inference_overhead": 823358.0763631419,
+    "4dgaussians_splannequin/lpips": 0.05560444595394975,
+    "4dgaussians_splannequin/psnr": 38.783526044355824,
+    "4dgaussians_splannequin/ssim": 0.22163400478629897
+  },
+  "normalization_note": "Illustrative population standard deviations over the recorded audit runs, per method/metric. Actual future-attempt variances are not available. Do not treat these deltas as an absolute official rank. Missing slots contribute zero per the stated rank contract; failed and nonfinite runs are not ranked."
+}

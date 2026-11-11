@@ -1,0 +1,30 @@
+{
+  "experiments": {
+    "synthetic_validation_paper": {
+      "results": {
+        "4dgaussians": {
+          "edge_mae": 0.04595673829317093,
+          "foreground_mae": 0.11713884770870209,
+          "fvd": 139.33607935905457,
+          "inference_overhead": 0.0,
+          "lpips": 0.10465773940086365,
+          "psnr": 16.925284904357664,
+          "ssim": 0.7260458897399431
+        },
+        "4dgaussians_splannequin": {
+          "edge_mae": 0.04150984436273575,
+          "foreground_mae": 0.11065521836280823,
+          "fvd": 123.12241643667221,
+          "inference_overhead": 0.0,
+          "lpips": 0.09597326815128326,
+          "psnr": 17.072178557014745,
+          "ssim": 0.71395805471801
+        }
+      }
+    }
+  },
+  "metadata": {
+    "slice": "test",
+    "split_rule": "views where index mod 4 is 2 or 3"
+  }
+}

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/user/eval/test/evaluate.py", line 184, in <module>
+    main()
+  File "/home/user/eval/test/evaluate.py", line 169, in main
+    metrics, state_value = evaluate_prediction(prediction_files[name], target, indices)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/test/evaluate.py", line 125, in evaluate_prediction
+    "psnr": psnr(pred_slice, target_slice),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/eval/test/evaluate.py", line 30, in psnr
+    return 99.0 if mse <= 1e-12 else 10.0 * math.log10(1.0 / mse)
+                                            ^^^^^^^^^^^^^^^^^^^^^
+ValueError: math domain error

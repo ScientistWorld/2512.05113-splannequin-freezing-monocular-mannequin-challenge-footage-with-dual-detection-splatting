@@ -1,0 +1,1 @@
+{"experiments": {"synthetic_validation_paper": {"results": {"4dgaussians": {"psnr": 99.0, "ssim": 1.0, "lpips": 0.0, "fvd": 0.0, "foreground_mae": 0.0, "edge_mae": 0.0, "inference_overhead": 0.0}, "4dgaussians_splannequin": {"psnr": 99.0, "ssim": 1.0, "lpips": 0.0, "fvd": 0.0, "foreground_mae": 0.0, "edge_mae": 0.0, "inference_overhead": 0.0}}}}}

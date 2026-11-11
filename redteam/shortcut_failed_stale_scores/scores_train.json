@@ -1,0 +1,1 @@
+{"experiments": {"synthetic_validation_paper": {"results": {}}}, "metadata": {"slice": "train", "split_rule": "views where index mod 4 is 0 or 1"}}

@@ -1,0 +1,54 @@
+{
+  "case": "shortcut_empty_predictions",
+  "preparation_rc": 0,
+  "train_rc": 1,
+  "hidden_rc": 1,
+  "score_file_exists": false,
+  "score_file_written_by_hidden_test": false,
+  "elapsed_seconds": 2.0488390410027932,
+  "prediction_files_on_disk": [
+    "checkpoints/baseline/predictions.json",
+    "checkpoints/extra_seed_11/baseline/predictions.json",
+    "checkpoints/extra_seed_11/no_defective/predictions.json",
+    "checkpoints/extra_seed_11/no_hidden/predictions.json",
+    "checkpoints/extra_seed_11/splannequin/predictions.json",
+    "checkpoints/extra_seed_29/baseline/predictions.json",
+    "checkpoints/extra_seed_29/no_defective/predictions.json",
+    "checkpoints/extra_seed_29/no_hidden/predictions.json",
+    "checkpoints/extra_seed_29/splannequin/predictions.json",
+    "checkpoints/no_defective/predictions.json",
+    "checkpoints/no_hidden/predictions.json",
+    "checkpoints/splannequin/predictions.json"
+  ],
+  "proposed_artifact": {
+    "variant": "splannequin",
+    "steps": 900,
+    "num_primitives": 34,
+    "inference_state_values": 238,
+    "training_summary": {
+      "regularization_updates": 35,
+      "hidden_anchor_terms": 380,
+      "defective_anchor_terms": 5,
+      "hidden_anchor_items": 4350,
+      "defective_anchor_items": 5,
+      "regularization_loss_sum": 3.229728080332279
+    }
+  },
+  "evaluator_sha256_before": {
+    "eval/evaluate_freeze.py": "ad4a628c49cbf3b04f81ee8d3a43b7f197445208e53b2f39fa1d33361a966a3a",
+    "eval/test/evaluate.py": "56f58460f5d6677446b7016d68f124c8374348051d20db02035114e5f48fd1b7",
+    "eval/train/evaluate.py": "087816da49005ffc34150e370d65793bb28d02f58b46124e826d8daf851eb67f",
+    "scripts/evaluate_test.sh": "7b81c6c216a5979d8ad8fde0dc9333ac350311391056c1be5a6b0370f07736cb"
+  },
+  "evaluator_sha256_after": {
+    "eval/evaluate_freeze.py": "ad4a628c49cbf3b04f81ee8d3a43b7f197445208e53b2f39fa1d33361a966a3a",
+    "eval/test/evaluate.py": "56f58460f5d6677446b7016d68f124c8374348051d20db02035114e5f48fd1b7",
+    "eval/train/evaluate.py": "087816da49005ffc34150e370d65793bb28d02f58b46124e826d8daf851eb67f",
+    "scripts/evaluate_test.sh": "7b81c6c216a5979d8ad8fde0dc9333ac350311391056c1be5a6b0370f07736cb"
+  },
+  "hidden_command": [
+    "bash",
+    "scripts/evaluate_test.sh"
+  ],
+  "fresh_process": true
+}
