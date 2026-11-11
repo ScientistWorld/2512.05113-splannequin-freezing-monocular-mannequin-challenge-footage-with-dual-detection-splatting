@@ -1,25 +1,22 @@
 #!/bin/bash
-# Run a baseline method from the paper.
-#
-# Baselines are simple reference methods the paper compares against. 
-# Implement this only if applicable, i.e. the paper has baselines.
-# You do not need to implement all baselines to begin — 
-# just enough to validate that the evaluation pipeline works 
-# and provide a reference point. You can decide to expand more baselines later.
-# Each baseline must be actually run and scored through evaluate.sh
-# so the numbers are verified, not self-reported.
-# You can decide what this baseline script should do yourself.
-#
-# Usage:
-#   bash scripts/baseline.sh <name>
-
+# Run a comparison method from the paper on every visible scene.
+#   bash scripts/baseline.sh            # 4DGaussians without Splannequin (dynamic baseline)
+#   bash scripts/baseline.sh static     # static 3DGS-style reconstruction (no timestamp control)
+# Writes checkpoints/<name>/predictions/. These directories are scored like any
+# other method on disk.
 set -e
-
 cd /home/user
-
-python data/synthetic_mannequin.py --out data/synthetic_mannequin.json
-python method/splannequin_1d.py \
-  --variant baseline \
-  --data data/synthetic_mannequin.json \
-  --out checkpoints/baseline/predictions.json \
-  --steps "${STEPS:-900}"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+VARIANT="${1:-baseline}"
+mkdir -p logs
+pids=()
+for split in train test; do
+  for exp in synthetic_validation_paper synthetic_large_motion; do
+    python method/splannequin.py --variant "$VARIANT" --scenes data/$split/$exp/*.json \
+      --out-dir "checkpoints/$VARIANT" > "logs/${VARIANT}_${split}_${exp}.log" 2>&1 &
+    pids+=($!)
+  done
+done
+status=0
+for pid in "${pids[@]}"; do wait "$pid" || status=1; done
+exit $status

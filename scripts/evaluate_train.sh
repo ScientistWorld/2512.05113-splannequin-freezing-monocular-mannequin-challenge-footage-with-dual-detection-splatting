@@ -1,18 +1,11 @@
 #!/bin/bash
-# Visible train-slice evaluator for future improvement agents.
-#
-# Mirrors scripts/evaluate.sh's standalone contract: read pre-generated
-# checkpoint predictions, stay method-agnostic, and write a scoring JSON.
-
+# Visible train-slice evaluator. Scores every method directory on disk
+# (checkpoints/<method>/predictions/) on the public training scenes in
+# data/train/ and writes scoring/scores_train.json plus a per-scene
+# breakdown in scoring/diagnostics_train.json.
 set -e
-
 cd /home/user
-
 CHECKPOINTS_DIR="${1:-/home/user/checkpoints}"
-
 mkdir -p scoring
-
-python eval/train/evaluate.py \
-  --data data/synthetic_mannequin.json \
-  --checkpoints "$CHECKPOINTS_DIR" \
-  --out scoring/scores_train.json
+rm -f scoring/scores_train.json
+python eval/train/evaluate.py --checkpoints "$CHECKPOINTS_DIR" --out scoring/scores_train.json

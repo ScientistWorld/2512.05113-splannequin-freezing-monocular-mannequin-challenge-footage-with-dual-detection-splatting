@@ -1,90 +1,22 @@
 #!/bin/bash
-# Run the paper's proposed method.
-#
-# This script trains/runs the paper's method using code in method/.
-#
-# Usage:
-#   bash scripts/method.sh
-
+# Run the paper's method (Splannequin on a 4DGaussians-style dynamic Gaussian
+# model) on every visible scene: public training scenes and the test-scene
+# inputs. Writes checkpoints/splannequin/predictions/<experiment>/<scene_id>.json.
+# Each batch of scenes trains in its own single-threaded process.
 set -e
-
 cd /home/user
-
-python data/synthetic_mannequin.py --out data/synthetic_mannequin.json
-python method/splannequin_1d.py \
-  --variant splannequin \
-  --data data/synthetic_mannequin.json \
-  --out checkpoints/splannequin/predictions.json \
-  --steps "${STEPS:-900}" \
-  --reg-start "${REG_START:-550}" \
-  --lambda-reg "${LAMBDA_REG:-0.75}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-1}" \
-  --reg-interval "${REG_INTERVAL:-10}" \
-  --l1-start "${L1_START:-750}" \
-  --init-noise "${INIT_NOISE:-0.25}"
-python method/splannequin_1d.py \
-  --variant no_hidden \
-  --data data/synthetic_mannequin.json \
-  --out checkpoints/no_hidden/predictions.json \
-  --steps "${STEPS:-900}" \
-  --reg-start "${REG_START:-550}" \
-  --lambda-reg "${LAMBDA_REG:-0.75}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-1}" \
-  --reg-interval "${REG_INTERVAL:-10}" \
-  --l1-start "${L1_START:-750}" \
-  --init-noise "${INIT_NOISE:-0.25}"
-python method/splannequin_1d.py \
-  --variant no_defective \
-  --data data/synthetic_mannequin.json \
-  --out checkpoints/no_defective/predictions.json \
-  --steps "${STEPS:-900}" \
-  --reg-start "${REG_START:-550}" \
-  --lambda-reg "${LAMBDA_REG:-0.75}" \
-  --anchor-samples "${ANCHOR_SAMPLES:-1}" \
-  --reg-interval "${REG_INTERVAL:-10}" \
-  --l1-start "${L1_START:-750}" \
-  --init-noise "${INIT_NOISE:-0.25}"
-
-for seed in 11 29; do
-  scene="extra_seed_${seed}"
-  python method/splannequin_1d.py \
-    --variant baseline \
-    --data "data/${scene}.json" \
-    --out "checkpoints/${scene}/baseline/predictions.json" \
-    --steps "${EXTRA_STEPS:-${STEPS:-900}}"
-  python method/splannequin_1d.py \
-    --variant splannequin \
-    --data "data/${scene}.json" \
-    --out "checkpoints/${scene}/splannequin/predictions.json" \
-    --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
-    --reg-start "${REG_START:-550}" \
-    --lambda-reg "${LAMBDA_REG:-0.75}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-1}" \
-    --reg-interval "${REG_INTERVAL:-10}" \
-    --l1-start "${L1_START:-750}" \
-    --init-noise "${INIT_NOISE:-0.25}"
-  python method/splannequin_1d.py \
-    --variant no_hidden \
-    --data "data/${scene}.json" \
-    --out "checkpoints/${scene}/no_hidden/predictions.json" \
-    --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
-    --reg-start "${REG_START:-550}" \
-    --lambda-reg "${LAMBDA_REG:-0.75}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-1}" \
-    --reg-interval "${REG_INTERVAL:-10}" \
-    --l1-start "${L1_START:-750}" \
-    --init-noise "${INIT_NOISE:-0.25}"
-  python method/splannequin_1d.py \
-    --variant no_defective \
-    --data "data/${scene}.json" \
-    --out "checkpoints/${scene}/no_defective/predictions.json" \
-    --steps "${EXTRA_STEPS:-${STEPS:-900}}" \
-    --reg-start "${REG_START:-550}" \
-    --lambda-reg "${LAMBDA_REG:-0.75}" \
-    --anchor-samples "${ANCHOR_SAMPLES:-1}" \
-    --reg-interval "${REG_INTERVAL:-10}" \
-    --l1-start "${L1_START:-750}" \
-    --init-noise "${INIT_NOISE:-0.25}"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
+mkdir -p logs
+pids=()
+for split in train test; do
+  for exp in synthetic_validation_paper synthetic_large_motion; do
+    python method/splannequin.py --variant splannequin --seed "${SEED:-0}" \
+      --scenes data/$split/$exp/*.json --out-dir checkpoints/splannequin \
+      > "logs/method_${split}_${exp}.log" 2>&1 &
+    pids+=($!)
+  done
 done
-
-bash scripts/evaluate.sh
+status=0
+for pid in "${pids[@]}"; do wait "$pid" || status=1; done
+tail -n 2 logs/method_*.log
+exit $status

@@ -1,96 +1,130 @@
 {
   "experiments": {
     "synthetic_validation_paper": {
-      "description": "Paper Table 1 synthetic validation of Splannequin added to 4DGaussians. Parameter/inference overhead is a constraint: the regularizer should not add inference state.",
-      "weight": 0.45,
+      "description": "Scaled counterpart of the paper's synthetic validation (Table 1): forward-moving monocular camera through a near-static scene whose subjects make small smooth unintended motions; render every input camera pose at evaluator-chosen freeze instants (every 8th frame, private offset) and compare with the true scene state at that instant. Validity gate (zero inference overhead): a submission is a frozen Gaussian state per timestamp with at most 64 primitives rendered by the evaluator's fixed rasterizer; exceeding the budget or any invalid value fails the run (worst values everywhere). Non-underscore results are this gym's hidden-test reference values; underscore results are the paper's reported numbers.",
+      "weight": 0.7,
       "primary_metric": "psnr",
       "metrics": {
         "psnr": {
           "higher_is_better": true,
           "coefficient": 1.0,
-          "description": "Measures fixed-time reconstruction fidelity against the synthetic freeze target."
+          "description": "Peak signal-to-noise ratio (dB) of each freeze-time video (every camera pose rendered at one freeze instant) against the true scene state at that instant; averaged over freeze instants and scenes. Capped monotonically at 100 dB (MSE floor 1e-10)."
         },
         "ssim": {
           "higher_is_better": true,
           "coefficient": 0.5,
-          "description": "Measures structural agreement with the fixed-time target."
+          "description": "Windowed structural similarity (Gaussian window, sigma 1.5 px, along the image line, per channel) of freeze-time renders against the target; averaged over views, freeze instants and scenes. Range [-1, 1]."
         },
         "lpips": {
           "higher_is_better": false,
           "coefficient": -0.5,
-          "description": "Proxy perceptual reconstruction error from mean absolute RGB residual."
+          "description": "Perceptual-error proxy: mean absolute RGB error averaged over a 4-level resolution pyramid (2x average pooling). Stands in for LPIPS, which needs 2D images and a pretrained network."
         },
         "fvd": {
           "higher_is_better": false,
-          "coefficient": -0.4,
-          "description": "Proxy temporal video error from mismatch in cross-view frame derivatives."
-        },
-        "foreground_mae": {
-          "higher_is_better": false,
-          "coefficient": -0.35,
-          "description": "Residual on non-background target pixels, reducing the reward for background-only shortcuts. This gym metric is not reported in the paper table."
+          "coefficient": -0.5,
+          "description": "Video-distance proxy: 1000 x mean absolute difference between the view-to-view temporal derivatives of the rendered and target freeze-time videos (flicker / temporal inconsistency). Stands in for FVD."
         },
         "edge_mae": {
           "higher_is_better": false,
           "coefficient": -0.3,
-          "description": "High-frequency residual along the image axis, penalizing blur and double-contour artifacts. This gym metric is not reported in the paper table."
+          "description": "Mean absolute error of image-axis gradients; penalises blur, ghosting and double contours. Gym metric, not reported in the paper."
         },
-        "inference_overhead": {
+        "motion_preservation_error": {
           "higher_is_better": false,
-          "coefficient": -0.2,
-          "description": "Relative increase in inference-time state values compared with the baseline renderer."
+          "coefficient": -0.5,
+          "description": "Constraint metric for user-selectable freeze instants: mean absolute error between the rendered change and the true change of the freeze-time video from one evaluated freeze instant to the next. A reconstruction that drops timestamp control (one static scene for every instant) scores the full true change."
         }
       },
       "results": {
-        "4dgaussians": {"type": "baseline", "psnr": 28.03, "ssim": 0.81, "lpips": 0.09, "fvd": 98.93, "inference_overhead": 0.0},
-        "4dgaussians_splannequin": {"type": "proposed", "psnr": 28.85, "ssim": 0.83, "lpips": 0.08, "fvd": 82.73, "inference_overhead": 0.0}
-      }
+        "4dgaussians_splannequin": {
+          "type": "proposed",
+          "psnr": 0.0
+        },
+        "4dgaussians": {
+          "type": "baseline"
+        },
+        "_paper_4dgaussians": {
+          "type": "baseline",
+          "psnr": 28.03,
+          "ssim": 0.81,
+          "lpips": 0.09,
+          "fvd": 98.93
+        },
+        "_paper_4dgaussians_splannequin": {
+          "type": "proposed",
+          "psnr": 28.85,
+          "ssim": 0.83,
+          "lpips": 0.08,
+          "fvd": 82.73
+        }
+      },
+      "_paper_results_note": "Paper Table 1 (synthetic Blender scenes, 4DGaussians vs 4DGaussians + Splannequin, 2D images, true LPIPS/FVD). Not on this gym's scale (1D image lines, proxy LPIPS/FVD); kept for reference only."
     },
-    "real_world_quality_improvement": {
-      "description": "Paper Table 2 real-world no-reference quality improvement when Splannequin is added to D-3DGS.",
-      "weight": 0.35,
-      "primary_metric": "cqa_average_improvement_pct",
+    "synthetic_large_motion": {
+      "description": "Stress test from the paper's stated limitation (Sec. 7: the method assumes nearly static scenes and degrades under larger motion; motion thresholds left for future work). Same protocol, validity gate and metrics as synthetic_validation_paper, but subject motion is about 2.7x larger and decorrelates about 2x faster. No paper numbers exist for this setting; results are this gym's hidden-test reference values.",
+      "weight": 0.3,
+      "primary_metric": "psnr",
       "metrics": {
-        "cqa_average_improvement_pct": {
+        "psnr": {
           "higher_is_better": true,
           "coefficient": 1.0,
-          "description": "No-reference quality improvement percentage reported for real-world reconstructions."
+          "description": "Peak signal-to-noise ratio (dB) of each freeze-time video (every camera pose rendered at one freeze instant) against the true scene state at that instant; averaged over freeze instants and scenes. Capped monotonically at 100 dB (MSE floor 1e-10)."
         },
-        "cover_technical_improvement_pct": {
+        "ssim": {
           "higher_is_better": true,
-          "coefficient": 0.8,
-          "description": "Technical-quality improvement percentage for real-world reconstructions."
+          "coefficient": 0.5,
+          "description": "Windowed structural similarity (Gaussian window, sigma 1.5 px, along the image line, per channel) of freeze-time renders against the target; averaged over views, freeze instants and scenes. Range [-1, 1]."
         },
-        "inference_overhead": {
+        "lpips": {
           "higher_is_better": false,
-          "coefficient": -0.2,
-          "description": "Relative increase in inference-time state values compared with the baseline renderer."
+          "coefficient": -0.5,
+          "description": "Perceptual-error proxy: mean absolute RGB error averaged over a 4-level resolution pyramid (2x average pooling). Stands in for LPIPS, which needs 2D images and a pretrained network."
+        },
+        "fvd": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Video-distance proxy: 1000 x mean absolute difference between the view-to-view temporal derivatives of the rendered and target freeze-time videos (flicker / temporal inconsistency). Stands in for FVD."
+        },
+        "edge_mae": {
+          "higher_is_better": false,
+          "coefficient": -0.3,
+          "description": "Mean absolute error of image-axis gradients; penalises blur, ghosting and double contours. Gym metric, not reported in the paper."
+        },
+        "motion_preservation_error": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Constraint metric for user-selectable freeze instants: mean absolute error between the rendered change and the true change of the freeze-time video from one evaluated freeze instant to the next. A reconstruction that drops timestamp control (one static scene for every instant) scores the full true change."
         }
       },
       "results": {
-        "d3dgs_splannequin": {"type": "proposed", "cqa_average_improvement_pct": 243.8, "cover_technical_improvement_pct": 339.85, "inference_overhead": 0.0}
-      }
-    },
-    "ablation_regularizers": {
-      "description": "Paper Table 3 ablation: removing hidden or defective anchoring degrades quality.",
-      "weight": 0.2,
-      "primary_metric": "cqa_average_degradation_pct",
-      "metrics": {
-        "cqa_average_degradation_pct": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Quality change when a component is removed; more negative means stronger degradation and better support for the component's necessity."
+        "4dgaussians_splannequin": {
+          "type": "proposed",
+          "psnr": 0.0
         },
-        "cover_technical_degradation_pct": {
-          "higher_is_better": false,
-          "coefficient": -0.8,
-          "description": "Technical-quality change when a component is removed; more negative means stronger degradation and better support for the component's necessity."
+        "4dgaussians": {
+          "type": "baseline"
         }
-      },
-      "results": {
-        "no_hidden_loss": {"type": "proposed", "cqa_average_degradation_pct": -162.23, "cover_technical_degradation_pct": -94.22},
-        "no_defective_loss": {"type": "proposed", "cqa_average_degradation_pct": -779.13, "cover_technical_degradation_pct": -197.87}
       }
     }
+  },
+  "_paper_unscored_results": {
+    "note": "Paper results this gym cannot measure (no real Mannequin-Challenge videos, CQA/COVER/IQA models or user study are available offline, and ablations are properties of the paper's method rather than of a submission). Kept unchanged for reference; not scored.",
+    "real_world_quality_improvement_table2_d3dgs_splannequin": {
+      "cqa_average_improvement_pct": 243.8,
+      "cover_technical_improvement_pct": 339.85,
+      "inference_overhead": 0.0
+    },
+    "ablation_regularizers_table3": {
+      "no_hidden_loss": {
+        "cqa_average_degradation_pct": -162.23,
+        "cover_technical_degradation_pct": -94.22
+      },
+      "no_defective_loss": {
+        "cqa_average_degradation_pct": -779.13,
+        "cover_technical_degradation_pct": -197.87
+      }
+    },
+    "zero_inference_overhead_claim": "Inference overhead 0.0 for Splannequin vs its base model (enforced in this gym as the primitive-budget validity gate)."
   }
 }
