@@ -1,4 +1,8 @@
-# Final verification complete. Do NOT sleep, poll, or wait.
-action: done
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
+gpus: 0
+test: false
 milestone: core_claim_plus
-notes: "Final validation passed: aggregate synthetic scoring supports Splannequin over the dynamic baseline with zero inference overhead; workspace is packaged as a scaled gym."
+notes: ""

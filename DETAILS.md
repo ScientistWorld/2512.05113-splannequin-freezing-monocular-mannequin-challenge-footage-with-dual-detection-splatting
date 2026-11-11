@@ -62,22 +62,25 @@ The central claim is that dual detection plus temporal anchoring reduces ghostin
 
 The paper evaluates fixed-time reconstruction quality with full-reference metrics on synthetic data and no-reference perceptual metrics on real video.
 
-For this reusable reproduction, the runnable benchmark uses a synthetic monocular forward-camera scene with known fixed-time ground truth:
+For this reusable reproduction, the runnable benchmark uses synthetic monocular forward-camera scenes with known fixed-time ground truth:
 
-- `freeze_psnr`: PSNR between rendered fixed-time views and static ground truth. Higher is better.
-- `ghosting_error`: mean high-frequency residual between rendered and ground-truth views. Lower is better.
-- `temporal_error`: mismatch in frame-to-frame variation along the fixed-time camera path. Lower is better.
-- `inference_state_values`: number of scalar state values needed at rendering time. Lower is better and checks the zero-overhead claim.
+- `psnr`: pixel fidelity between rendered fixed-time views and static ground truth. Higher is better.
+- `ssim`: global structural agreement with the fixed-time target. Higher is better.
+- `lpips`: lightweight perceptual-error proxy from RGB residuals. Lower is better.
+- `fvd`: lightweight video-distance proxy from cross-view temporal derivative error. Lower is better.
+- `foreground_mae`: non-background residual, included to discourage background-only shortcuts. Lower is better.
+- `edge_mae`: high-frequency residual, included to penalize blur and double contours. Lower is better.
+- `inference_overhead`: relative increase in rendering-time state size over the baseline. Lower is better and checks the zero-overhead claim.
 
 ## Baselines and Targets
 
-The baseline is the same dynamic Gaussian representation trained only on diagonal video observations and then rendered at a fixed timestamp. The proposed result should improve fixed-time quality without increasing inference state.
+The baseline is a dynamic reconstruction trained only on diagonal video observations and then rendered at a fixed timestamp. The proposed result should improve fixed-time quality without increasing inference state.
 
-The paper reports synthetic improvements for 4DGaussians + Splannequin over 4DGaussians: PSNR 28.85 vs 28.03, SSIM 0.83 vs 0.81, LPIPS 0.08 vs 0.09, and FVD 82.73 vs 98.93.
+The paper reports synthetic improvements of its proposed system over its dynamic reconstruction baseline: PSNR 28.85 vs 28.03, SSIM 0.83 vs 0.81, LPIPS 0.08 vs 0.09, and FVD 82.73 vs 98.93.
 
 ## Evaluation Protocol
 
-Train on the full monocular sequence, then render all input camera poses at a single selected timestamp. Evaluation reads saved render outputs from `checkpoints/*/predictions.json` and compares them to `data/synthetic_mannequin.json`. The evaluator does not import or call the method implementation.
+Train on the full monocular sequence, then render all input camera poses at a single selected timestamp. Evaluation reads saved render outputs from `checkpoints/*/predictions.json` and compares them to the generated validation scenes in `data/`. When extra validation scenes are present under `checkpoints/extra_seed_*`, `scores.json` reports the average over the canonical scene plus those extra scenes; `scoring/diagnostics.json` keeps the per-scene breakdown. The evaluator does not import or call the method implementation.
 
 ---
 
