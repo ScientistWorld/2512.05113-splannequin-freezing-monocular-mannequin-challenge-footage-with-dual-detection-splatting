@@ -1,0 +1,7 @@
+**/__pycache__/
+**/*.pyc
+**/training.log
+**/evaluator.log
+**/train_evaluator.log
+**/predictions.json
+!original/checkpoints/**/predictions.json
