@@ -1,0 +1,230 @@
+{
+  "starting_commit": "a21d5e9f06255db3a0da84a4a3feb413c902bb64",
+  "completed_cases": 30,
+  "shortcut_cases": 21,
+  "successful_hidden_test_exits": 27,
+  "failed_hidden_test_cases": [
+    "shortcut_empty_predictions",
+    "shortcut_failed_stale_scores",
+    "shortcut_infinite_predictions"
+  ],
+  "nonfinite_success_cases": [
+    "shortcut_null_predictions"
+  ],
+  "all_case_evaluators_match_starting_git_files": true,
+  "all_hidden_commands_have_no_arguments_and_run_in_fresh_processes": true,
+  "tracked_gym_files_changed_from_start": [],
+  "unexpected_tracked_additions_outside_audit": [],
+  "restoration_exclusions": {
+    "protocol": [
+      "action.yaml"
+    ],
+    "preexisting_system_artifacts": [
+      "README.md",
+      "manifest.json",
+      "trajectory/"
+    ]
+  },
+  "scenes": {
+    "synthetic_mannequin.json": {
+      "observations_equal_freeze_target": true,
+      "all_true_states_equal": true,
+      "frame_count": 24,
+      "width": 96
+    },
+    "extra_seed_11.json": {
+      "observations_equal_freeze_target": true,
+      "all_true_states_equal": true,
+      "frame_count": 24,
+      "width": 96
+    },
+    "extra_seed_29.json": {
+      "observations_equal_freeze_target": true,
+      "all_true_states_equal": true,
+      "frame_count": 24,
+      "width": 96
+    }
+  },
+  "runs": {
+    "better_initialization": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 246.4137329140067
+    },
+    "better_longer_small_lr": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 350.6424098330026
+    },
+    "better_more_training": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 505.28466458199546
+    },
+    "reference_existing": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 3.2090495390002616
+    },
+    "reference_seed_17": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 207.30509995299508
+    },
+    "reference_seed_27": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 192.22555843699956
+    },
+    "reference_seed_7": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 174.97826538600202
+    },
+    "shortcut_baseline_inflation": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 5.593639518003329
+    },
+    "shortcut_bruteforce_seed": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 3.5962371549976524
+    },
+    "shortcut_constant_zero": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 3.461502598001971
+    },
+    "shortcut_copy_gt": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 5.503175937992637
+    },
+    "shortcut_copy_input": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 3.428297272999771
+    },
+    "shortcut_empty_predictions": {
+      "hidden_exit_code": 1,
+      "scores_written_by_hidden_test": false,
+      "evaluator_unchanged": true,
+      "seconds": 2.0488390410027932
+    },
+    "shortcut_extra_method_ignored": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 7.636083659002907
+    },
+    "shortcut_extra_scenes_ignored": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 4.559212922002189
+    },
+    "shortcut_failed_method_baseline_only": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 3.1458369640022283
+    },
+    "shortcut_failed_stale_scores": {
+      "hidden_exit_code": 1,
+      "scores_written_by_hidden_test": false,
+      "evaluator_unchanged": true,
+      "seconds": 5.360036936996039
+    },
+    "shortcut_forged_metrics": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 5.113104219999514
+    },
+    "shortcut_infinite_predictions": {
+      "hidden_exit_code": 1,
+      "scores_written_by_hidden_test": false,
+      "evaluator_unchanged": true,
+      "seconds": 4.030282200008514
+    },
+    "shortcut_negative_state": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 2.796246062993305
+    },
+    "shortcut_null_predictions": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 6.441306485008681
+    },
+    "shortcut_omit_proposed": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 3.664384264993714
+    },
+    "shortcut_psnr_epsilon": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 5.383607349998783
+    },
+    "shortcut_rebuild_seed": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 5.384813053999096
+    },
+    "shortcut_replace_fixed_target": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 7.282005391010898
+    },
+    "shortcut_static_reconstruction": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 210.77658558999246
+    },
+    "shortcut_zero_state": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 3.0007454739970854
+    },
+    "shortcut_zero_target_and_outputs": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 5.797045426996192
+    },
+    "weaker_remove_anchors": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 3.163483840995468
+    },
+    "weaker_short_training": {
+      "hidden_exit_code": 0,
+      "scores_written_by_hidden_test": true,
+      "evaluator_unchanged": true,
+      "seconds": 60.08186664800451
+    }
+  }
+}

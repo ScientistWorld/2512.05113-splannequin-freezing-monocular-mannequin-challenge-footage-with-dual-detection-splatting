@@ -116,6 +116,8 @@ def run_case(case):
         'evaluator_sha256_after': evaluator_hashes(),
         'hidden_command': ['bash', 'scripts/evaluate_test.sh'],
         'fresh_process': True,
+        'method_source_at_test': json.loads((ROOT / 'scoring/scores.json').read_text()),
+        'submission_writes_minimal_method_source': case.startswith('shortcut_'),
     }
     (out / 'run_metadata.json').write_text(json.dumps(metadata, indent=2))
     if (out / 'training.log').read_text():
@@ -132,13 +134,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--case', choices=CASES)
     parser.add_argument('--all', action='store_true')
+    parser.add_argument('--shortcuts', action='store_true', help='Rerun every shortcut, including completed ones')
     parser.add_argument('--restore', action='store_true')
     args = parser.parse_args()
     if args.restore:
         restore()
         return
     try:
-        for case in CASES if args.all else [args.case]:
+        cases = ([case for case in CASES if case.startswith('shortcut_')] if args.shortcuts
+                 else CASES if args.all else [args.case])
+        for case in cases:
             if args.all and (BASE / case / 'run_metadata.json').exists():
                 print(f'{case}: already completed', flush=True)
                 continue

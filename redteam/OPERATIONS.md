@@ -19,6 +19,13 @@ The payload does not read the audit's original test scores, hidden evaluator,
 paper, or scoring coefficients. Those are read only by the audit driver and
 reporter. All real training runs use the visible method and scene.
 
+The final visibility check reruns all 21 shortcuts after making every shortcut
+explicitly create a minimal `scoring/scores.json` method list. Future agents do
+not receive that file; they can create it using names exposed by `eval/train/`.
+It contains two empty method objects, no reference metrics. This checks that
+method selection does not depend on a hidden starting scoring artifact.
+Use `python redteam/audit.py --shortcuts` to repeat that check.
+
 The population of future ranked attempts is unknown. `summary.json` records all
 raw metrics and two explicitly illustrative normalized deltas, using the given
 absolute coefficients, metric directions, and experiment weights. One uses

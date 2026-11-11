@@ -106,6 +106,13 @@ def shortcut_static_reconstruction():
 
 
 def prepare(case):
+    if case.startswith('shortcut_'):
+        # Future agents do not receive scoring/scores.json. Create this mutable
+        # selection input ourselves using aliases exposed by eval/train; no
+        # reference values or other hidden inputs are needed.
+        write(ROOT / 'scoring/scores.json', {'experiments': {EXPERIMENT: {'results': {
+            '4dgaussians': {}, '4dgaussians_splannequin': {},
+        }}}})
     scene_path = ROOT / 'data/synthetic_mannequin.json'
     scene = read(scene_path)
     obj = read(predictions())
