@@ -1,0 +1,23 @@
+{
+  "shortcut_baseline_inflation": "a59e4cd98bd24aa30bcae8e42482416802d6dc830f3c171c2084fc2bd4d01085",
+  "shortcut_bruteforce_seed": "9f7a71da3e398c20241f428631099a55fbbd18cb192d20e2626648675a85bbed",
+  "shortcut_constant_zero": "020931be27fc12f450ba14868c083ea89b2400a052aebb508b52b95cb71e3aab",
+  "shortcut_copy_gt": "9f7a71da3e398c20241f428631099a55fbbd18cb192d20e2626648675a85bbed",
+  "shortcut_copy_input": "9f7a71da3e398c20241f428631099a55fbbd18cb192d20e2626648675a85bbed",
+  "shortcut_empty_predictions": null,
+  "shortcut_extra_method_ignored": "e640843fb5edf08f9c1cb2a814524ca3f58a76e29c7424dcb23482459460394e",
+  "shortcut_extra_scenes_ignored": "e640843fb5edf08f9c1cb2a814524ca3f58a76e29c7424dcb23482459460394e",
+  "shortcut_failed_method_baseline_only": "f5b683a5a35f34f16ac0cc114835495045e18d381656d989c137c80cf3524c73",
+  "shortcut_failed_stale_scores": "2252466ff1d0b53dc21fb24b255d71e35501f1964e3665b21aac7b1b0fa1c665",
+  "shortcut_forged_metrics": "e640843fb5edf08f9c1cb2a814524ca3f58a76e29c7424dcb23482459460394e",
+  "shortcut_infinite_predictions": null,
+  "shortcut_negative_state": "38c0b37d36503af30a9eabe2fbc474c81c3a78f9096376b84982cc87cccac635",
+  "shortcut_null_predictions": "ab4021261c383e07cc148426aae8f3c2588893e51e7b3ba575a3caa27c7e643b",
+  "shortcut_omit_proposed": "30bd995e51749c7e106acaca947b10fcea979809de7c04f9573ecc92704f830f",
+  "shortcut_psnr_epsilon": "8c0c5b52d1e7d15a19b9411d8f34bc785004eeea5bfeeed2f5c131b8dd821cd6",
+  "shortcut_rebuild_seed": "9f7a71da3e398c20241f428631099a55fbbd18cb192d20e2626648675a85bbed",
+  "shortcut_replace_fixed_target": "2d290c4e15334ef5d751dc45463536c8a1db0c281b2a910f22100c9c057dd688",
+  "shortcut_static_reconstruction": "997d1fb5702171435f4bfc2e1f0c4ca809453e0538f6aaeafdbc3d0a96ee9371",
+  "shortcut_zero_state": "c455d649097a0f4077344dcb9006a36509b3e96b5f543f2d8b2d1d2daa5f81a9",
+  "shortcut_zero_target_and_outputs": "17885c1ebd2d590e864321ff70228fad5230c50e4b1620a5c1758880d685a8e4"
+}
