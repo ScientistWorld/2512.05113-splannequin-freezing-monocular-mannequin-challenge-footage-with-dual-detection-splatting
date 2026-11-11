@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: core_claim_plus
-notes: "Hardening round 2: regenerate 96-frame scenes (16 private test scenes/experiment), retrain reference + baseline/static/seeds/no_hidden/lambda1/smooth10 variants, score every case and shortcut through the hidden evaluator with the instant-selectivity constraint metric and per-view PSNR, regenerate reference scores."
+notes: "Hardened gym: moving-subject scenes with private test answers and instants, evaluator-rendered frozen states with 64-primitive gate and worst-value failures; paper-faithful 4DGaussians+Splannequin reference beats its baseline (+0.33 dB paired) on the near-static experiment; better variants beat reference beyond seed noise; all REDTEAM shortcuts closed or below reference (see HARDENING.md)."
