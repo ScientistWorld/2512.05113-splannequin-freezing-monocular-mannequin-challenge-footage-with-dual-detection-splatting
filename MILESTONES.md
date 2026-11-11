@@ -54,3 +54,8 @@
 - CPU validation job `68600302-ce7` completed with exit code 0 and `python validate.py --compare` passed.
 - Aggregate synthetic validation across the canonical scene plus two extra generated scenes shows Splannequin improving PSNR, SSIM, LPIPS proxy, FVD proxy, foreground residual, and edge residual over the dynamic baseline with zero inference overhead.
 - Milestone restored to `core_claim_plus`; the single canonical scene remains documented in diagnostics as a regression case, and secondary ablation claims are not claimed.
+
+### [2026-11-11] - core_claim_plus (iteration 11, hardening)
+- Rebuilt the benchmark with moving subjects, private test scenes and instants, and an evaluator-rendered frozen-state submission format with a 64-primitive gate. The reference method was restored to a 4DGaussians-style HexPlane model with the paper's Splannequin schedule (30k/10k/20k, λ = 10, τ = 5).
+- Near-static experiment, hidden test: Splannequin beats 4DGaussians (+0.33 ± 0.14 dB paired PSNR, better SSIM / LPIPS proxy / FVD proxy / edge). Hidden anchoring carries the effect. Defective anchoring has no measurable effect, so the Table 3 ablation claim is not reproduced. Under larger motion the gain vanishes, matching the paper's stated limitation.
+- Every shortcut from REDTEAM.md is closed or scores below the reference. Two genuine better variants beat the reference beyond seed noise. See HARDENING.md.

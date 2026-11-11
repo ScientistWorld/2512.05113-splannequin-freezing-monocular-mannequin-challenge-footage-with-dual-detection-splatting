@@ -1,3 +1,5 @@
+> Superseded: this report describes the iteration-9 gym (static scene, per-timestamp tables). The current gym and its audit are described in `HARDENING.md`.
+
 # Verification Report
 
 ## Initial Assessment

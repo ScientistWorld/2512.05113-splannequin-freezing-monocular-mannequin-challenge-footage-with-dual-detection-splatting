@@ -1,7 +1,7 @@
 {
   "experiments": {
     "synthetic_validation_paper": {
-      "description": "Scaled counterpart of the paper's synthetic validation (Table 1): forward-moving monocular camera through a near-static scene whose subjects make small smooth unintended motions; render every input camera pose at evaluator-chosen freeze instants (every 8th frame, private offset) and compare with the true scene state at that instant. Validity gate (zero inference overhead): a submission is a frozen Gaussian state per timestamp with at most 64 primitives rendered by the evaluator's fixed rasterizer; exceeding the budget or any invalid value fails the run (worst values everywhere). Non-underscore results are this gym's hidden-test reference values; underscore results are the paper's reported numbers.",
+      "description": "Scaled counterpart of the paper's synthetic validation (Table 1): a forward-moving monocular camera (96 frames) through a near-static scene whose subjects make small smooth unintended motions; every input camera pose is rendered at evaluator-chosen freeze instants (every 8th frame from a private per-scene offset, 12 instants) and compared with the true scene state at that instant. 16 hidden test scenes. Validity gate (zero inference overhead): a submission is a frozen Gaussian state per timestamp with at most 64 primitives, rendered by the evaluator's fixed rasterizer; exceeding the budget, a missing scene, or any non-finite/out-of-range value fails the run (worst value of every metric in every experiment). Non-underscore results are this gym's hidden-test reference values (4dgaussians = the same dynamic model without anchoring, for context; it is not a ranked slot); underscore results are the paper's reported numbers on its own scale.",
       "weight": 0.7,
       "primary_metric": "psnr",
       "metrics": {
@@ -39,10 +39,21 @@
       "results": {
         "4dgaussians_splannequin": {
           "type": "proposed",
-          "psnr": 0.0
+          "edge_mae": 0.013607,
+          "fvd": 23.79422,
+          "instant_selectivity": 0.033246,
+          "lpips": 0.044854,
+          "psnr": 24.381052,
+          "ssim": 0.815114
         },
         "4dgaussians": {
-          "type": "baseline"
+          "type": "baseline",
+          "edge_mae": 0.014894,
+          "fvd": 25.936343,
+          "instant_selectivity": 0.117866,
+          "lpips": 0.048024,
+          "psnr": 24.050765,
+          "ssim": 0.796087
         },
         "_paper_4dgaussians": {
           "type": "baseline",
@@ -100,10 +111,21 @@
       "results": {
         "4dgaussians_splannequin": {
           "type": "proposed",
-          "psnr": 0.0
+          "edge_mae": 0.017729,
+          "fvd": 30.464362,
+          "instant_selectivity": 0.051139,
+          "lpips": 0.067778,
+          "psnr": 21.043574,
+          "ssim": 0.725398
         },
         "4dgaussians": {
-          "type": "baseline"
+          "type": "baseline",
+          "edge_mae": 0.019,
+          "fvd": 32.03114,
+          "instant_selectivity": 0.13658,
+          "lpips": 0.069071,
+          "psnr": 21.056464,
+          "ssim": 0.710436
         }
       }
     }

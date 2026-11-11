@@ -2,24 +2,23 @@
 
 ## Task Scope
 
-Submissions must solve fixed-time reconstruction from sparse monocular temporal supervision. Replacing the task with generic image-to-image translation, video diffusion, or direct per-frame regression is out of scope because those systems sidestep the benchmark's temporal reconstruction problem.
+Submissions must solve fixed-time reconstruction from the provided monocular inputs. Each scene is reconstructed from its own frames, camera poses, timestamps and initial point cloud, and the output is a frozen Gaussian state per timestamp. Replacing the task with image-to-image translation, video diffusion, or regression of the renders themselves is out of scope.
 
 ## Data
 
-Submissions must train and evaluate on the provided generated validation scenes in `data/` for the reported `synthetic_validation_paper` score. External data, pretrained image models, or privately generated extra scenes may not be used for this score.
+Use only the provided scenes. The public training scenes (`data/train`, answers included) may be used for development and hyperparameter selection. Test scenes (`data/test`) may only be used as reconstruction inputs. Do not train priors on additional scenes produced with the public generator, and do not use external data or pretrained image models.
 
 ## Evaluation
 
-Submissions must write predictions in the same JSON format consumed by `eval/evaluate_freeze.py`. Evaluation must use the provided fixed-time ground truth and must not tune on or alter `gt_freeze`.
+Write predictions in the format in `briefing/evaluation.md` to `checkpoints/splannequin/predictions/`, covering every train and test scene of both experiments. Do not modify `eval/`, `data/scenes.py`, `data/train` or `data/test`. Scores are computed only by the evaluators from the submitted frozen states.
 
 ## Resource Scale
 
-Submissions may change optimization details but may not increase the scene-capacity budget or image width for the reported score. Improvements should come from better handling of sparse temporal supervision, not from a larger reconstruction budget.
+At most 64 primitives per frozen state (enforced), with the fixed renderer and image width. Improvements must come from better handling of sparse temporal supervision, not from a larger reconstruction budget.
 
 ## Compliance Checklist
 
-- [ ] Solves fixed-time reconstruction from the provided monocular sequence.
-- [ ] Uses only the provided generated validation scenes in `data/` for the reported score.
-- [ ] Does not alter fixed-time ground truth.
-- [ ] Does not increase scene-capacity count or render width.
-- [ ] Reports scores through `bash scripts/evaluate.sh`.
+- [ ] Reconstructs each scene from its own inputs only.
+- [ ] Produces one valid frozen state per timestamp, with ≤ 64 primitives, for every train and test scene.
+- [ ] Does not modify evaluators, scenes or the generator.
+- [ ] Reports visible scores with `bash scripts/evaluate_train.sh`.

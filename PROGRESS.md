@@ -87,3 +87,11 @@ Job `a6cba056-d35` showed the adjusted schedule became too weak/sparse. The curr
 The paper trains full 2D/3D dynamic Gaussian splatting pipelines on 640x360 real Mannequin-Challenge videos and Blender scenes for 30,000 iterations. This reproduction uses a 1D differentiable Gaussian splatting scene with a forward camera path and known fixed-time ground truth. The deviation scales data dimensionality and runtime while preserving the paper's core computational steps: dynamic Gaussian primitive states, visibility and near-zero-gradient detection, hidden/past anchoring, defective/future anchoring, temporal-distance confidence weighting, and fixed-time rendering.
 
 The paper reports SSIM, LPIPS, FVD, no-reference IQA, and COVER. The runnable evaluator uses PSNR plus artifact/stability proxy metrics suitable for the synthetic benchmark because heavyweight perceptual and video-quality models would require large external downloads and are unnecessary for the minimum core-claim check.
+
+## Iteration 11 (hardening)
+
+The gym was rebuilt; see `HARDENING.md` for the design, the audit numbers and the remaining limitations. Current reference (hidden test, seed 0):
+- `synthetic_validation_paper`: PSNR 24.381, SSIM 0.815, instant selectivity 0.033.
+- `synthetic_large_motion`: PSNR 21.044, SSIM 0.725, instant selectivity 0.051.
+
+The 4DGaussians baseline scores 24.051 / 21.056 dB.
