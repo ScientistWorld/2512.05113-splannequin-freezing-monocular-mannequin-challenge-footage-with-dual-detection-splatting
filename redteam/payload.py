@@ -57,7 +57,17 @@ def train_method(case):
         args += ['--steps', '10']
     else:
         raise ValueError(case)
-    subprocess.run([sys.executable, 'method/splannequin_1d.py', *args,
+    # Limit CPU parallelism and add logging without changing any computation.
+    # The evaluator is a separate process and does not receive this setting.
+    source = (ROOT / 'method/splannequin_1d.py').read_text()
+    source = source.replace('import torch\n', 'import torch\ntorch.set_num_threads(1)\n')
+    source = source.replace('        opt.step()\n',
+        '        opt.step()\n'
+        '        if step % 100 == 0 or step == args.steps - 1:\n'
+        '            print(f"step={step + 1}/{args.steps} loss={loss.detach().item():.8g}", flush=True)\n')
+    trainer = ROOT / 'method/audit_trainer.py'
+    trainer.write_text(source)
+    subprocess.run([sys.executable, str(trainer), *args,
                     '--data', 'data/synthetic_mannequin.json',
                     '--out', str(predictions())], cwd=ROOT, check=True)
 
@@ -83,6 +93,8 @@ def shortcut_static_reconstruction():
         loss = F.mse_loss(imgs, scene['frames'])
         loss.backward()
         opt.step()
+        if step % 100 == 0 or step == 899:
+            print(f'shortcut static step={step + 1}/900 loss={loss.detach().item():.8g}', flush=True)
     with torch.no_grad():
         imgs = torch.stack([method.render(state, color, opacity, log_scale, z,
                                          scene['width'])[0] for z in scene['cam_z']])

@@ -16,12 +16,10 @@ ORIGINAL = BASE / 'original'
 EXPERIMENT = 'synthetic_validation_paper'
 CASES = [
     'reference_existing',
-    'reference_seed_7', 'reference_seed_17', 'reference_seed_27',
-    'better_initialization', 'better_more_training', 'better_longer_small_lr',
-    'weaker_short_training', 'weaker_remove_anchors',
+    'weaker_remove_anchors',
     'shortcut_copy_gt', 'shortcut_copy_input', 'shortcut_rebuild_seed',
     'shortcut_psnr_epsilon',
-    'shortcut_bruteforce_seed', 'shortcut_static_reconstruction',
+    'shortcut_bruteforce_seed',
     'shortcut_zero_state', 'shortcut_negative_state', 'shortcut_baseline_inflation',
     'shortcut_forged_metrics', 'shortcut_replace_fixed_target',
     'shortcut_zero_target_and_outputs', 'shortcut_constant_zero',
@@ -30,6 +28,10 @@ CASES = [
     'shortcut_failed_method_baseline_only',
     'shortcut_extra_method_ignored', 'shortcut_extra_scenes_ignored',
     'shortcut_failed_stale_scores',
+    'weaker_short_training',
+    'reference_seed_7', 'reference_seed_17', 'reference_seed_27',
+    'better_initialization', 'better_more_training', 'better_longer_small_lr',
+    'shortcut_static_reconstruction',
 ]
 RESTORE_FILES = [
     'data/synthetic_mannequin.json', 'data/extra_seed_11.json', 'data/extra_seed_29.json',
@@ -49,6 +51,7 @@ def restore():
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, destination)
     (ROOT / 'method/audit_submission.py').unlink(missing_ok=True)
+    (ROOT / 'method/audit_trainer.py').unlink(missing_ok=True)
 
 
 def evaluator_hashes():
@@ -56,10 +59,19 @@ def evaluator_hashes():
     return {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 
-def invoke(command, path):
+def invoke(command, path, echo=False):
     with path.open('w') as log:
-        result = subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
-    return result.returncode
+        if echo:
+            result = subprocess.Popen(command, cwd=ROOT, stdout=subprocess.PIPE,
+                                      stderr=subprocess.STDOUT, text=True, bufsize=1)
+            for line in result.stdout:
+                log.write(line)
+                log.flush()
+                print(line, end='', flush=True)
+            return result.wait()
+        else:
+            result = subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+            return result.returncode
 
 
 def run_case(case):
@@ -69,8 +81,9 @@ def run_case(case):
     hashes = evaluator_hashes()
     shutil.copyfile(BASE / 'payload.py', ROOT / 'method/audit_submission.py')
     start = time.monotonic()
+    print(f'{case}: starting', flush=True)
     preparation_rc = invoke([sys.executable, 'method/audit_submission.py', '--case', case,
-                             '--stage', 'prepare'], out / 'training.log')
+                             '--stage', 'prepare'], out / 'training.log', echo=True)
     if preparation_rc:
         raise RuntimeError(f'{case}: preparation failed; inspect training.log')
     train_rc = invoke(['bash', 'scripts/evaluate_train.sh'], out / 'train_evaluator.log')
@@ -105,6 +118,8 @@ def run_case(case):
         'fresh_process': True,
     }
     (out / 'run_metadata.json').write_text(json.dumps(metadata, indent=2))
+    if (out / 'training.log').read_text():
+        shutil.copyfile(out / 'training.log', out / 'training_progress.txt')
     # Preserve compact diagnostics even for ignored logs and failed evaluation.
     for filename in ['evaluator.log', 'train_evaluator.log']:
         content = (out / filename).read_text()
