@@ -32,8 +32,8 @@
         },
         "instant_selectivity": {
           "higher_is_better": true,
-          "coefficient": 1.0,
-          "description": "Constraint metric for user-selectable freeze instants (the capability the paper claims over static 3DGS): fraction of the true instant-specific appearance change recovered, sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|) over the evaluated freeze instants j of a scene, averaged over scenes. Range [-1, 1]; 1 = true freeze-time videos, 0 = the same render for every instant (no timestamp control); pixels that never change contribute nothing."
+          "coefficient": 1.5,
+          "description": "Constraint metric for user-selectable freeze instants (the capability the paper claims over static 3DGS, Sec. 6.4 / Table 4): fraction of the true instant-specific appearance change recovered, sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|) over the evaluated freeze instants j of a scene, averaged over scenes. Range [-1, 1]; 1 = true freeze-time videos; any render that is the same for every instant scores at most 0; pixels that never change contribute nothing. A submission whose frozen state is identical at every timestamp of a scene fails the run outright."
         }
       },
       "results": {
@@ -104,8 +104,8 @@
         },
         "instant_selectivity": {
           "higher_is_better": true,
-          "coefficient": 1.0,
-          "description": "Constraint metric for user-selectable freeze instants (the capability the paper claims over static 3DGS): fraction of the true instant-specific appearance change recovered, sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|) over the evaluated freeze instants j of a scene, averaged over scenes. Range [-1, 1]; 1 = true freeze-time videos, 0 = the same render for every instant (no timestamp control); pixels that never change contribute nothing."
+          "coefficient": 1.5,
+          "description": "Constraint metric for user-selectable freeze instants (the capability the paper claims over static 3DGS, Sec. 6.4 / Table 4): fraction of the true instant-specific appearance change recovered, sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|) over the evaluated freeze instants j of a scene, averaged over scenes. Range [-1, 1]; 1 = true freeze-time videos; any render that is the same for every instant scores at most 0; pixels that never change contribute nothing. A submission whose frozen state is identical at every timestamp of a scene fails the run outright."
         }
       },
       "results": {

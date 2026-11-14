@@ -10,7 +10,7 @@ field f_theta(mu_k, t) -> (d_mu, d_log_scale): multi-resolution feature planes
 and a small MLP decoder. Training follows 4DGaussians: a coarse static stage,
 then a fine stage with the deformation field and the K-planes TV / time
 smoothness / L1-time-plane regularizers. One random training frame (one view
-and its timestamp) per iteration, L1 photometric loss.
+and its timestamp, from a view stack) per iteration, L1 photometric loss.
 
 Splannequin (Sec. 4.1 and 5, paper settings): every `reg_interval` iterations
 from `reg_start`, two random view-timestamp pairs (frames a < b) are rendered.
@@ -19,7 +19,12 @@ For each primitive and each of the two states:
                  3-sigma footprint is off the image);
   * defective -- visible, but its reconstruction gradient norm is <= 1e-9
                  (contributions below 1/255 or fully occluded after the
-                 transmittance cut-off);
+                 transmittance cut-off). The paper's threshold is stated for
+                 the L1 loss of a 640x360 RGB frame (a mean over 691,200
+                 values); this image line has 128 x 3 values, so the same
+                 per-pixel criterion is applied by rescaling the gradient of
+                 our per-frame loss to the paper's frame size
+                 (--grad-loss-values 691200, the default);
   * well-supervised otherwise.
 A hidden state at the later time b is anchored to its well-supervised past
 state at a; a defective state at the earlier time a is anchored to its
@@ -34,7 +39,9 @@ timestamp. This script exports that frozen state for every timestamp.
 Scale-downs (documented in the gym): 2D scene / 1D image lines instead of 3D /
 2D images, a fixed primitive budget without adaptive densification, and the
 paper's optimisation schedule otherwise unchanged (30k iterations, anchoring
-from 10k, L1 from 20k, lambda = 10, tau = 5, every 10 iterations).
+from 10k, L1 from 20k, lambda = 10, tau = 5, every 10 iterations). Training
+views are picked as in 4DGaussians: popped at random from a view stack without
+replacement, refilled when empty (fresh stack for the coarse and fine stages).
 Several scenes are trained in one process as independent batch entries; each
 scene's parameters, optimizer state and random schedules are independent.
 """
@@ -491,9 +498,9 @@ def main():
     p.add_argument(
         "--grad-loss-values",
         type=int,
-        default=0,
-        help="number of values the per-frame L1 loss is averaged over when the gradient threshold is applied; "
-        "0 = this image line (width x 3). 691200 expresses the threshold for the paper's 640x360 RGB frames.",
+        default=691200,
+        help="number of values the per-frame L1 loss is averaged over when the gradient threshold is applied "
+        "(default 691200: the paper's 640x360 RGB frames); 0 = this image line's own width x 3 values.",
     )
     args = p.parse_args()
 

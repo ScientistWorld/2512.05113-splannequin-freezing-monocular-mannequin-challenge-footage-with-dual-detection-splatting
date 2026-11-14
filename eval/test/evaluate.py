@@ -8,7 +8,8 @@ its own renderer and compares against the true freeze-time video. Nothing a
 method writes besides those states is read.
 
 Failure handling: a method whose outputs are missing, malformed, non-finite,
-out of range, or over the primitive budget fails as a whole and receives the
+out of range, over the primitive budget, or identical at every timestamp of a
+scene (no instant selection) fails as a whole and receives the
 worst value of every metric in every experiment. Required slots that are not
 on disk are scored the same way.
 """
@@ -148,9 +149,10 @@ def instant_selectivity(renders, targets):
 
     renders/targets [F, N, W, C] for the F evaluated freeze instants of one scene.
     sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|), in [-1, 1]:
-    1 for the true freeze-time videos, 0 for any reconstruction that renders the
-    same image for every instant (no timestamp control), and pixels that do not
-    change between instants contribute nothing.
+    1 for the true freeze-time videos, at most 0 for any reconstruction that
+    renders the same image for every instant (no timestamp control; by
+    convexity of |.|), and pixels that do not change between instants
+    contribute nothing.
     """
     mean_t = targets.mean(axis=0, keepdims=True)
     denom = float(np.abs(targets - mean_t).sum())
@@ -238,6 +240,10 @@ def load_frozen_states(path: Path, num_frames: int):
         raise SubmissionError(f"{path}: scale outside (0, 10]")
     if np.any(np.abs(pos) > 1000.0):
         raise SubmissionError(f"{path}: position magnitude above 1000")
+    if all(np.array_equal(a, np.broadcast_to(a[:1], a.shape)) for a in (pos, scale, opacity, color)):
+        # The same state at every timestamp cannot select an instant: the
+        # instant-selection constraint fails outright.
+        raise SubmissionError(f"{path}: the frozen state is identical at every timestamp (no instant selection)")
     return pos, scale, opacity, color
 
 
