@@ -1,0 +1,44 @@
+{
+ "case": "reference_seed2",
+ "hidden_returncode": 0,
+ "hidden_seconds": 57.56,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016624793744046143,
+      "fvd": 33.18069899755202,
+      "instant_selectivity": -0.016550021556298977,
+      "lpips": 0.07558961989360818,
+      "psnr": 20.47815876201396,
+      "ssim": 0.7191105616241762
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012122602276237949,
+      "fvd": 25.14093974464604,
+      "instant_selectivity": -0.08224571605955536,
+      "lpips": 0.04465674454347561,
+      "psnr": 24.73439858537674,
+      "ssim": 0.8255708570492483
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/reference_seed2/scores_test.json for 1 method slot(s)\n"
+}

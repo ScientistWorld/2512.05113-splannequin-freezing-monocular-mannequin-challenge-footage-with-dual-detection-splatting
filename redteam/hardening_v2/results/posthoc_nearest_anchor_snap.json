@@ -1,0 +1,44 @@
+{
+ "case": "posthoc_nearest_anchor_snap",
+ "hidden_returncode": 0,
+ "hidden_seconds": 54.07,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016658115729208403,
+      "fvd": 32.479805908707036,
+      "instant_selectivity": 0.002678033062316734,
+      "lpips": 0.07406686033054853,
+      "psnr": 20.730422520641095,
+      "ssim": 0.7218252214466498
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012501747966301163,
+      "fvd": 25.380116082932343,
+      "instant_selectivity": -0.07005995125446149,
+      "lpips": 0.04663274608605255,
+      "psnr": 24.464412191282197,
+      "ssim": 0.8160017492692863
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/posthoc_nearest_anchor_snap/scores_test.json for 1 method slot(s)\n"
+}

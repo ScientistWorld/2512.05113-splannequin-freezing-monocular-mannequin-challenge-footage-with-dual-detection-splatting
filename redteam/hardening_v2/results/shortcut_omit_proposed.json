@@ -1,0 +1,62 @@
+{
+ "case": "shortcut_omit_proposed",
+ "hidden_returncode": 0,
+ "hidden_seconds": 55.5,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians": {
+      "edge_mae": 0.018643096000049656,
+      "fvd": 35.84713649788079,
+      "instant_selectivity": 0.05072693754543037,
+      "lpips": 0.08046157907735633,
+      "psnr": 20.331862562699285,
+      "ssim": 0.691560677975985
+     },
+     "4dgaussians_splannequin": {
+      "edge_mae": 2.0,
+      "fvd": 2000.0,
+      "instant_selectivity": -1.0,
+      "lpips": 1.0,
+      "psnr": 0.0,
+      "ssim": -1.0
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians": {
+      "edge_mae": 0.013151169509463215,
+      "fvd": 26.79847713574771,
+      "instant_selectivity": 0.0031822143966018014,
+      "lpips": 0.05044528128706589,
+      "psnr": 24.445730175339246,
+      "ssim": 0.8042577516755458
+     },
+     "4dgaussians_splannequin": {
+      "edge_mae": 2.0,
+      "fvd": 2000.0,
+      "instant_selectivity": -1.0,
+      "lpips": 1.0,
+      "psnr": 0.0,
+      "ssim": -1.0
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {
+    "4dgaussians_splannequin": "SubmissionError: no predictions on disk for this slot"
+   },
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] 4dgaussians_splannequin: FAILED -> worst values (SubmissionError: no predictions on disk for this slot)\n[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/shortcut_omit_proposed/scores_test.json for 2 method slot(s)\n"
+}

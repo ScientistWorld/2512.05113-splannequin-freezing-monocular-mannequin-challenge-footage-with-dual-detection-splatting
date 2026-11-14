@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Hardening 12 pilot: revised crowded scene layout; Splannequin vs baseline, no-defective / no-hidden ablations, literal vs frame-normalised 1e-9 gradient threshold, better variants, static; 14 single-thread trainings of 8 scenes (30k iters)"
+notes: "Hardening 12 audit: regenerate scenes (crowded layout; 40 near-static + 16 large-motion hidden test scenes); train reference (seed 0, train+test), seeds 1-2, 4DGaussians baseline, no-defective, no-hidden, lambda 1/3, static; score ~27 cases with the hidden evaluator; regenerate scores_{train,test}.json from the reference"

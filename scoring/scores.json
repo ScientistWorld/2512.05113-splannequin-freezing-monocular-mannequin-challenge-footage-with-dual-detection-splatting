@@ -3,24 +3,24 @@
     "synthetic_large_motion": {
       "results": {
         "4dgaussians_splannequin": {
-          "edge_mae": 0.017853014786315402,
-          "fvd": 30.173715876674457,
-          "instant_selectivity": 0.04909068395904658,
-          "lpips": 0.06589934943311228,
-          "psnr": 21.14416628079361,
-          "ssim": 0.720815646676777
+          "edge_mae": 0.014911037712429694,
+          "fvd": 30.937651883522893,
+          "instant_selectivity": -0.04534569772755373,
+          "lpips": 0.06504107576388145,
+          "psnr": 21.848682999418713,
+          "ssim": 0.7524456063246862
         }
       }
     },
     "synthetic_validation_paper": {
       "results": {
         "4dgaussians_splannequin": {
-          "edge_mae": 0.014477583117563622,
-          "fvd": 23.95377389381058,
-          "instant_selectivity": 0.08278310539495685,
-          "lpips": 0.048533219372336234,
-          "psnr": 23.459028921860416,
-          "ssim": 0.793584315242192
+          "edge_mae": 0.012506117146739042,
+          "fvd": 24.260417673865305,
+          "instant_selectivity": -0.03693110954729659,
+          "lpips": 0.041784568270686044,
+          "psnr": 25.270951899042302,
+          "ssim": 0.8268748818422834
         }
       }
     }
@@ -28,8 +28,8 @@
   "metadata": {
     "failed_methods": {},
     "scenes_per_experiment": {
-      "synthetic_large_motion": 6,
-      "synthetic_validation_paper": 6
+      "synthetic_large_motion": 8,
+      "synthetic_validation_paper": 8
     },
     "slice": "train"
   }

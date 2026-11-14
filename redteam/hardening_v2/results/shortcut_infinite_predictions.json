@@ -1,0 +1,46 @@
+{
+ "case": "shortcut_infinite_predictions",
+ "hidden_returncode": 0,
+ "hidden_seconds": 27.26,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 2.0,
+      "fvd": 2000.0,
+      "instant_selectivity": -1.0,
+      "lpips": 1.0,
+      "psnr": 0.0,
+      "ssim": -1.0
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 2.0,
+      "fvd": 2000.0,
+      "instant_selectivity": -1.0,
+      "lpips": 1.0,
+      "psnr": 0.0,
+      "ssim": -1.0
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {
+    "4dgaussians_splannequin": "SubmissionError: /home/user/tmp/hardening_v2/cases/shortcut_infinite_predictions/ckpt/splannequin/predictions/synthetic_validation_paper/synthetic_validation_paper_test_00.json: 'positions' contains non-finite values"
+   },
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] 4dgaussians_splannequin: FAILED -> worst values (SubmissionError: /home/user/tmp/hardening_v2/cases/shortcut_infinite_predictions/ckpt/splannequin/predictions/synthetic_validation_paper/synthetic_validation_paper_test_00.json: 'positions' contains non-finite values)\n[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/shortcut_infinite_predictions/scores_test.json for 1 method slot(s)\n"
+}
