@@ -1,4 +1,4 @@
-"""Hardening audit driver (iteration 12).
+"""Hardening audit driver (iteration 12; run 2 after restoring adaptive density control and the stable anchor).
 
   python redteam/hardening_v2/audit.py train    # train reference, seeds, baselines, ablations, variants (resumable)
   python redteam/hardening_v2/audit.py cases    # build every case submission and score it with the hidden test
@@ -74,6 +74,9 @@ def tasks():
     add("lambda1", "splannequin", 0, ["--lambda-hidden", "1", "--lambda-defective", "1"], "test", METHODS / "splannequin_lambda1")
     add("lambda3", "splannequin", 0, ["--lambda-hidden", "3", "--lambda-defective", "3"], "test", METHODS / "splannequin_lambda3")
     add("static", "static", 0, [], "test", METHODS / "static")
+    add("canonical_grad", "splannequin", 0, ["--anchor-canonical-grad"], "test", METHODS / "splannequin_canonical_grad")
+    add("smooth10", "splannequin", 0, ["--time-smoothness-weight", "0.1"], "test", METHODS / "splannequin_smooth10")
+    add("lambda30", "splannequin", 0, ["--lambda-hidden", "30", "--lambda-defective", "30"], "test", METHODS / "splannequin_lambda30")
     add("baseline", "baseline", 0, [], "train", METHODS / "baseline")
     add("static", "static", 0, [], "train", METHODS / "static")
     return t
@@ -244,6 +247,9 @@ def case_specs():
         "weaker_no_hidden": ("science", {"splannequin": m / "no_hidden"}),
         "better_lambda1": ("science", {"splannequin": m / "splannequin_lambda1"}),
         "better_lambda3": ("science", {"splannequin": m / "splannequin_lambda3"}),
+        "variant_lambda30": ("science", {"splannequin": m / "splannequin_lambda30"}),
+        "variant_time_smoothness_x10": ("science", {"splannequin": m / "splannequin_smooth10"}),
+        "variant_anchor_canonical_grad": ("science", {"splannequin": m / "splannequin_canonical_grad"}),
         "posthoc_nearest_anchor_snap": ("science", {"splannequin": m / "splannequin_snap"}),
         "static_plus_epsilon": ("science", {"splannequin": ("modify", "nudge", m / "static")}),
         "simple_init_points": ("trivial", {"splannequin": "init_points"}),

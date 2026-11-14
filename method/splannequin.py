@@ -31,13 +31,23 @@ state at a; a defective state at the earlier time a is anchored to its
 well-supervised future state at b. The loss is
   lambda * exp(-tau |t - t_ref|) * D(theta_k(t), sg[theta_k(t_ref)]),
 summed over instances, with D the squared L2 norm until `l1_start` and the L1
-norm afterwards; theta = (position, scale, opacity, color).
+norm afterwards; theta = (position, scale, opacity, color). The anchor is held
+fixed: the canonical parameters that theta_k(t) shares with theta_k(t_ref)
+receive no anchoring gradient (moving them would move the anchor with the
+state), so anchoring acts on the deformation of the ill-supervised state.
+
+Adaptive density control follows 3DGS / 4DGaussians practice (the paper:
+"we follow standard adaptive densification practices"), capped at the
+primitive budget: every 100 iterations from 500 to 15k, primitives with
+opacity < 0.005 are pruned and their slots are refilled by splitting / cloning
+the primitives with the largest mean positional gradient; opacities are reset
+to <= 0.01 every 3k iterations until 15k.
 
 After training, fixed-time rendering uses the deformed state at a chosen
 timestamp. This script exports that frozen state for every timestamp.
 
 Scale-downs (documented in the gym): 2D scene / 1D image lines instead of 3D /
-2D images, a fixed primitive budget without adaptive densification, and the
+2D images, densification capped at a fixed primitive budget, and the
 paper's optimisation schedule otherwise unchanged (30k iterations, anchoring
 from 10k, L1 from 20k, lambda = 10, tau = 5, every 10 iterations). Training
 views are picked as in 4DGaussians: popped at random from a view stack without
@@ -209,13 +219,19 @@ class DynamicGaussians(torch.nn.Module):
             gens, lo - margin, hi + margin, args.time_res, args.feat_dim, args.base_res, (1, 2), args.hidden
         )
 
-    def state(self, t_idx, deform):
-        pos, log_scale = self.xyz, self.log_scale
+    def state(self, t_idx, deform, detach_canonical=False):
+        """Gaussian state at timestamps t_idx. With detach_canonical, gradients reach only the
+        deformation field (the canonical parameters are shared with every other timestamp)."""
+        xyz, log_scale = self.xyz, self.log_scale
+        op_logit, col_logit = self.opacity_logit, self.color_logit
+        if detach_canonical:
+            xyz, log_scale, op_logit, col_logit = xyz.detach(), log_scale.detach(), op_logit.detach(), col_logit.detach()
+        pos = xyz
         if deform:
-            d_pos, d_ls = self.field(self.xyz, self.times[t_idx])
+            d_pos, d_ls = self.field(xyz, self.times[t_idx])
             pos = pos + d_pos
             log_scale = log_scale + d_ls
-        return pos, log_scale, torch.sigmoid(self.opacity_logit), torch.sigmoid(self.color_logit)
+        return pos, log_scale, torch.sigmoid(op_logit), torch.sigmoid(col_logit)
 
 
 def theta(state):
@@ -285,7 +301,18 @@ def anchoring_loss(model, batch, pair, args, cfg, use_l1, stats):
     defective_a = vis_a & ~well_a
     hidden_b = ~vis_b
     phi = torch.exp(-args.tau * (model.times[tb] - model.times[ta]))[:, None]  # [B,1]
-    th_a, th_b = theta(sa), theta(sb)
+    # Anchor targets are the well-supervised states, held fixed (stop-gradient). The
+    # ill-supervised state theta_k(t) = canonical_k + deformation(canonical_k, t) shares its
+    # canonical parameters with the anchor theta_k(t_ref); a gradient into them would move the
+    # anchor by exactly as much as the ill-supervised state and cannot reduce the discrepancy,
+    # so the anchoring gradient reaches the deformation of the ill-supervised state only
+    # (--anchor-canonical-grad restores the gradient into the canonical parameters).
+    if args.anchor_canonical_grad:
+        ill_a, ill_b = theta(sa), theta(sb)
+    else:
+        ill_a = theta(model.state(ta, True, detach_canonical=True)) if cfg["defective"] else None
+        ill_b = theta(model.state(tb, True, detach_canonical=True)) if cfg["hidden"] else None
+    anchor_a, anchor_b = theta(sa).detach(), theta(sb).detach()
 
     def disc(x, y):
         d = x - y
@@ -294,16 +321,76 @@ def anchoring_loss(model, batch, pair, args, cfg, use_l1, stats):
     reg = torch.zeros((), dtype=torch.float32)
     if cfg["hidden"]:
         m = (hidden_b & well_a).float()
-        reg = reg + args.lambda_hidden * (phi * disc(th_b, th_a.detach()) * m).sum()
+        reg = reg + args.lambda_hidden * (phi * disc(ill_b, anchor_a) * m).sum()
         stats["hidden_anchor_items"] += int(m.sum().item())
     if cfg["defective"]:
         m = (defective_a & well_b).float()
-        reg = reg + args.lambda_defective * (phi * disc(th_a, th_b.detach()) * m).sum()
+        reg = reg + args.lambda_defective * (phi * disc(ill_a, anchor_b) * m).sum()
         stats["defective_anchor_items"] += int(m.sum().item())
     stats["regularization_steps"] += 1
     stats["hidden_states_seen"] += int(hidden_b.sum().item())
     stats["defective_states_seen"] += int(defective_a.sum().item())
     return reg
+
+
+# ----------------------------------------------------------------------------
+# Adaptive density control (3DGS / 4DGaussians practice) within the fixed budget
+
+
+def _reset_adam_rows(opt, param, mask):
+    st = opt.state.get(param)
+    if not st:
+        return
+    for key in ("exp_avg", "exp_avg_sq"):
+        if key in st:
+            st[key][mask] = 0.0
+
+
+@torch.no_grad()
+def densify_and_prune(model, opt, grad_accum, denom, args, extent, gens):
+    """3DGS densify-and-prune with the primitive count capped at the budget: primitives whose
+    opacity fell below `prune_opacity` are pruned, and their slots are refilled by densifying
+    the primitives with the largest mean positional gradient (split if larger than
+    percent_dense * scene extent, clone otherwise), as 3DGS densification would add them."""
+    opacity = torch.sigmoid(model.opacity_logit)
+    dead = opacity < args.prune_opacity
+    score = grad_accum / denom.clamp_min(1.0)
+    score = torch.where(dead | (denom <= 0), torch.full_like(score, -float("inf")), score)
+    touched = torch.zeros_like(dead)
+    moved = 0
+    for b in range(dead.shape[0]):
+        free = torch.nonzero(dead[b]).flatten()
+        n = min(int(free.numel()), int(torch.isfinite(score[b]).sum()))
+        if n == 0:
+            continue
+        parents = torch.topk(score[b], n).indices
+        for slot, par in zip(free[:n].tolist(), parents.tolist()):
+            size = float(torch.exp(model.log_scale[b, par]))
+            if size > args.percent_dense * extent:  # split into two children, scale / 1.6
+                base = model.xyz[b, par].clone()
+                model.xyz[b, par] = base + torch.randn(2, generator=gens[b]) * size
+                model.xyz[b, slot] = base + torch.randn(2, generator=gens[b]) * size
+                model.log_scale[b, par] = math.log(size / 1.6)
+                model.log_scale[b, slot] = math.log(size / 1.6)
+                touched[b, par] = True
+            else:  # clone
+                model.xyz[b, slot] = model.xyz[b, par]
+                model.log_scale[b, slot] = model.log_scale[b, par]
+            model.opacity_logit[b, slot] = model.opacity_logit[b, par]
+            model.color_logit[b, slot] = model.color_logit[b, par]
+            touched[b, slot] = True
+            moved += 1
+    for prm in (model.xyz, model.log_scale, model.opacity_logit, model.color_logit):
+        _reset_adam_rows(opt, prm, touched)
+    return moved
+
+
+@torch.no_grad()
+def reset_opacity(model, opt):
+    """3DGS opacity reset: opacity <- min(opacity, 0.01), optimizer moments cleared."""
+    op = torch.clamp(torch.sigmoid(model.opacity_logit), max=0.01)
+    model.opacity_logit.copy_(torch.log(op / (1.0 - op)))
+    _reset_adam_rows(opt, model.opacity_logit, torch.ones_like(model.opacity_logit, dtype=torch.bool))
 
 
 def view_stack_order(rng, num_frames, n):
@@ -357,7 +444,17 @@ def train(batch, args, cfg):
         "defective_anchor_items": 0,
         "hidden_states_seen": 0,
         "defective_states_seen": 0,
+        "densify_relocated": 0,
+        "opacity_resets": 0,
     }
+    adc = args.densify_until > 0
+    adc_gens = []
+    for sid in batch.scene_ids:
+        g = torch.Generator()
+        g.manual_seed(scene_seed(args.seed + 104729, sid))
+        adc_gens.append(g)
+    grad_accum = torch.zeros(batch.init_pos.shape[:2])
+    denom = torch.zeros(batch.init_pos.shape[:2])
     start = time.time()
     anchoring = cfg["hidden"] or cfg["defective"]
     for it in range(args.iterations):
@@ -371,7 +468,7 @@ def train(batch, args, cfg):
         fine = cfg["dynamic"] and it >= args.coarse_iterations
         t_idx = frame_sched[:, it]
         state = model.state(t_idx, fine)
-        img, _ = render(*state, batch.cam_x[batch.bidx, t_idx], batch.cam_z[batch.bidx, t_idx], batch.width)
+        img, vis = render(*state, batch.cam_x[batch.bidx, t_idx], batch.cam_z[batch.bidx, t_idx], batch.width)
         loss = (img - batch.frames[batch.bidx, t_idx]).abs().mean(dim=(1, 2)).sum()
         if fine:
             loss = loss + model.field.regularization(args.plane_tv_weight, args.time_smoothness_weight, args.l1_time_planes).sum()
@@ -383,6 +480,20 @@ def train(batch, args, cfg):
         opt.zero_grad(set_to_none=True)
         loss.backward()
         opt.step()
+        it1 = it + 1  # 3DGS counts iterations from 1
+        if adc and it1 < args.densify_until:
+            with torch.no_grad():
+                if model.xyz.grad is not None:
+                    v = vis.float()
+                    grad_accum += model.xyz.grad.norm(dim=-1) * v
+                    denom += v
+                if it1 > args.densify_from and it1 % args.densify_interval == 0:
+                    stats["densify_relocated"] += densify_and_prune(model, opt, grad_accum, denom, args, e, adc_gens)
+                    grad_accum.zero_()
+                    denom.zero_()
+                if it1 % args.opacity_reset_interval == 0:
+                    reset_opacity(model, opt)
+                    stats["opacity_resets"] += 1
         if (it + 1) % args.log_every == 0 or it == 0:
             print(f"[{args.variant} seed={args.seed}] it {it + 1}/{args.iterations} loss {loss.item():.5f} "
                   f"elapsed {time.time() - start:.1f}s", flush=True)
@@ -487,6 +598,13 @@ def main():
     p.add_argument("--plane-tv-weight", type=float, default=1e-4)
     p.add_argument("--time-smoothness-weight", type=float, default=1e-2)
     p.add_argument("--l1-time-planes", type=float, default=1e-4)
+    # Adaptive density control (3DGS / 4DGaussians defaults), capped at the primitive budget.
+    p.add_argument("--densify-from", type=int, default=500)
+    p.add_argument("--densify-until", type=int, default=15000, help="0 disables adaptive density control")
+    p.add_argument("--densify-interval", type=int, default=100)
+    p.add_argument("--opacity-reset-interval", type=int, default=3000)
+    p.add_argument("--prune-opacity", type=float, default=0.005)
+    p.add_argument("--percent-dense", type=float, default=0.01)
     # Splannequin settings (paper Sec. 6.1).
     p.add_argument("--reg-start", type=int, default=10000)
     p.add_argument("--l1-start", type=int, default=20000)
@@ -494,6 +612,8 @@ def main():
     p.add_argument("--lambda-hidden", type=float, default=10.0)
     p.add_argument("--lambda-defective", type=float, default=10.0)
     p.add_argument("--tau", type=float, default=5.0)
+    p.add_argument("--anchor-canonical-grad", action="store_true",
+                   help="let the anchoring gradient reach the canonical parameters shared with the anchor (iteration-11 behaviour)")
     p.add_argument("--grad-threshold", type=float, default=1e-9, help="defective test: gradient norm <= this (paper: 1e-9)")
     p.add_argument(
         "--grad-loss-values",
