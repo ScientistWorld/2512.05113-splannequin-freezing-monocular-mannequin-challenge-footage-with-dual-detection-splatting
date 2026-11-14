@@ -1,8 +1,5 @@
-# Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends.
-action: pending
+action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: ""
+notes: "Hardening 12 pilot: revised crowded scene layout; Splannequin vs baseline, no-defective / no-hidden ablations, literal vs frame-normalised 1e-9 gradient threshold, better variants, static; 14 single-thread trainings of 8 scenes (30k iters)"
