@@ -6,6 +6,12 @@ position x, depth z) and records a 1D RGB image line per frame. The scene is
 small, smooth, unintended motions (random smooth trajectories), as people do in
 Mannequin-Challenge footage.
 
+As in real Mannequin-Challenge walks, the scene is crowded: a group of people
+stands across the walking line near the start, so the camera only sees the
+rest of the hallway (further subjects, far walls, most of the backdrop) once it
+has moved past them. Content is therefore poorly observed both before the
+camera reaches it (occluded or far away) and after it has passed it.
+
 The task is to render the scene as it was at one chosen instant t* from every
 camera pose of the video (a freeze-time video). The target for instant t* is
 the true scene state at t* rendered from all camera poses.
@@ -41,6 +47,8 @@ NOISE_STD = 0.01
 CAMERA_TRAVEL = 6.2
 
 NUM_CLUSTERS = 6
+NUM_FRONT = 3  # clusters (people) standing across the walking line near the start
+FRONT_X = (-0.2, 0.0, 0.2)
 PRIMS_PER_CLUSTER = 6
 NUM_WALL = 20
 NUM_BACKDROP = 8
@@ -55,8 +63,8 @@ REGIMES = {
 
 # Public training scenes. Test scenes use private seeds held by the evaluator.
 TRAIN_SEEDS = {
-    "synthetic_validation_paper": [101, 102, 103, 104, 105, 106],
-    "synthetic_large_motion": [201, 202, 203, 204, 205, 206],
+    "synthetic_validation_paper": [101, 102, 103, 104, 105, 106, 107, 108],
+    "synthetic_large_motion": [201, 202, 203, 204, 205, 206, 207, 208],
 }
 
 
@@ -119,22 +127,31 @@ def make_scene(seed: int, experiment: str, num_frames: int = NUM_FRAMES, width: 
     cam_z = CAMERA_TRAVEL * times
     cam_x = 0.03 * smooth_noise(rng, 1, times, 0.3)[0]
 
-    # Subjects: clusters spread along the hallway, each a few primitives.
-    centers_z = np.linspace(1.8, 8.2, NUM_CLUSTERS) + rng.uniform(-0.4, 0.4, NUM_CLUSTERS)
-    centers_x = rng.uniform(-0.3, 0.3, NUM_CLUSTERS)
+    # Subjects (people), each a cluster of a few primitives. A group of
+    # NUM_FRONT people stands across the walking line near the start (larger,
+    # nearly opaque bodies); the others stand further down the hallway.
+    n_far = NUM_CLUSTERS - NUM_FRONT
+    front_z0 = rng.uniform(1.6, 2.2)
+    centers_x = np.concatenate(
+        [np.asarray(FRONT_X) + rng.uniform(-0.04, 0.04, NUM_FRONT), rng.uniform(-0.3, 0.3, n_far)]
+    )
+    centers_z = np.concatenate(
+        [front_z0 + rng.uniform(-0.15, 0.15, NUM_FRONT), 3.6 + 2.3 * np.arange(n_far) + rng.uniform(-0.3, 0.3, n_far)]
+    )
     cluster_of = np.repeat(np.arange(NUM_CLUSTERS), PRIMS_PER_CLUSTER)
     n_sub = cluster_of.size
+    front = cluster_of < NUM_FRONT
     sub_pos = np.stack(
         [
-            centers_x[cluster_of] + rng.uniform(-0.08, 0.08, n_sub),
-            centers_z[cluster_of] + rng.uniform(-0.06, 0.06, n_sub),
+            centers_x[cluster_of] + np.where(front, 0.1, 0.08) * rng.uniform(-1.0, 1.0, n_sub),
+            centers_z[cluster_of] + np.where(front, 0.08, 0.06) * rng.uniform(-1.0, 1.0, n_sub),
         ],
         axis=1,
     )
     base_colors = rng.uniform(0.2, 0.95, size=(NUM_CLUSTERS, 3))
     sub_color = np.clip(base_colors[cluster_of] + rng.normal(0.0, 0.06, size=(n_sub, 3)), 0.02, 0.98)
-    sub_opacity = rng.uniform(0.7, 0.98, n_sub)
-    sub_scale = rng.uniform(0.025, 0.05, n_sub)
+    sub_opacity = np.where(front, rng.uniform(0.9, 0.99, n_sub), rng.uniform(0.7, 0.98, n_sub))
+    sub_scale = np.where(front, rng.uniform(0.05, 0.08, n_sub), rng.uniform(0.025, 0.05, n_sub))
 
     # Static walls on both sides.
     side = np.where(np.arange(NUM_WALL) % 2 == 0, -1.0, 1.0)

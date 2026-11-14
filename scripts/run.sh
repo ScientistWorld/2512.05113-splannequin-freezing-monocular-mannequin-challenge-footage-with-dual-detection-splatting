@@ -1,15 +1,10 @@
 #!/bin/bash
-# Reproduce the gym's reference end to end: prepare scenes, train the paper's
-# method (Splannequin on a 4DGaussians-style model) on every visible scene, and
-# score it on the visible train slice and the hidden test slice.
-# The hardening audit of iteration 11 is redteam/hardening/audit.py
-# (train | cases | summary).
+# TEMPORARY (hardening iteration 12 pilot): checks the revised scene layout and
+# the defective-gradient threshold before the full audit. Restored to the
+# end-to-end reference reproduction afterwards.
 set -e
 cd /home/user
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONUNBUFFERED=1
-bash scripts/download.sh
-bash scripts/method.sh
-bash scripts/evaluate_train.sh
-bash scripts/evaluate_test.sh
-bash scripts/evaluate.sh
-python validate.py --post-design --compare
+python -c "import os, torch, numpy; print('cpus', len(os.sched_getaffinity(0)), 'torch', torch.__version__, 'numpy', numpy.__version__)"
+python redteam/hardening_v2/pilot.py run
+python redteam/hardening_v2/pilot.py summary

@@ -273,8 +273,8 @@ def anchoring_loss(model, batch, pair, args, cfg, use_l1, stats):
     sb = model.state(tb, True)
     ga, vis_a = detect(model, batch, sa, ta, retain=True)
     gb, vis_b = detect(model, batch, sb, tb, retain=True)
-    well_a = vis_a & (ga > args.grad_threshold)
-    well_b = vis_b & (gb > args.grad_threshold)
+    well_a = vis_a & (ga > args.grad_threshold_raw)
+    well_b = vis_b & (gb > args.grad_threshold_raw)
     defective_a = vis_a & ~well_a
     hidden_b = ~vis_b
     phi = torch.exp(-args.tau * (model.times[tb] - model.times[ta]))[:, None]  # [B,1]
@@ -299,13 +299,26 @@ def anchoring_loss(model, batch, pair, args, cfg, use_l1, stats):
     return reg
 
 
+def view_stack_order(rng, num_frames, n):
+    """4DGaussians / 3DGS camera picking: pop a random view from a stack without
+    replacement and refill the stack once it is empty (random epochs)."""
+    order = []
+    while len(order) < n:
+        order.extend(rng.permutation(num_frames).tolist())
+    return np.asarray(order[:n], dtype=np.int64)
+
+
 def make_schedules(batch, args):
     t = batch.num_frames
     n_reg = args.iterations // args.reg_interval + 1
     frames, pairs = [], []
     for sid in batch.scene_ids:
         rng = np.random.default_rng(scene_seed(args.seed, sid))
-        frames.append(rng.integers(0, t, size=args.iterations))
+        # The coarse and fine stages each start a fresh view stack, as in 4DGaussians.
+        n_coarse = min(args.coarse_iterations, args.iterations)
+        frames.append(
+            np.concatenate([view_stack_order(rng, t, n_coarse), view_stack_order(rng, t, args.iterations - n_coarse)])
+        )
         a = rng.integers(0, t, size=n_reg)
         b = rng.integers(0, t - 1, size=n_reg)
         b = b + (b >= a)
@@ -474,19 +487,31 @@ def main():
     p.add_argument("--lambda-hidden", type=float, default=10.0)
     p.add_argument("--lambda-defective", type=float, default=10.0)
     p.add_argument("--tau", type=float, default=5.0)
-    p.add_argument("--grad-threshold", type=float, default=1e-9)
+    p.add_argument("--grad-threshold", type=float, default=1e-9, help="defective test: gradient norm <= this (paper: 1e-9)")
+    p.add_argument(
+        "--grad-loss-values",
+        type=int,
+        default=0,
+        help="number of values the per-frame L1 loss is averaged over when the gradient threshold is applied; "
+        "0 = this image line (width x 3). 691200 expresses the threshold for the paper's 640x360 RGB frames.",
+    )
     args = p.parse_args()
 
     torch.set_num_threads(max(1, args.threads))
     torch.manual_seed(args.seed)
     cfg = VARIANTS[args.variant]
     batch = Batch(args.scenes)
+    # Gradients below are of the L1 loss averaged over this image line's width x 3 values; a
+    # threshold stated for a loss averaged over `grad_loss_values` values is rescaled accordingly.
+    own_values = batch.width * 3
+    args.grad_threshold_raw = args.grad_threshold * (args.grad_loss_values / own_values if args.grad_loss_values > 0 else 1.0)
     model, stats = train(batch, args, cfg)
+    stats["grad_threshold_raw"] = args.grad_threshold_raw
     deform = cfg["dynamic"]
     states = frozen_states(model, batch, deform)
     write_predictions(args.out_dir, batch, states, args.variant, args, stats)
     if args.snap_out_dir:
-        well, vis = supervision_masks(model, batch, deform, args.grad_threshold)
+        well, vis = supervision_masks(model, batch, deform, args.grad_threshold_raw)
         snapped = snap_to_nearest_supervised(states, well, vis)
         snap_stats = dict(stats, well_supervised_fraction=float(well.mean()), visible_fraction=float(vis.mean()))
         write_predictions(args.snap_out_dir, batch, snapped, args.variant + "+snap", args, snap_stats)
