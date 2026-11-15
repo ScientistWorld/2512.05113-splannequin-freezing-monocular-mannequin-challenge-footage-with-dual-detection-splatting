@@ -1,7 +1,7 @@
 {
  "case": "baseline_4dgaussians",
  "hidden_returncode": 0,
- "hidden_seconds": 67.64,
+ "hidden_seconds": 56.53,
  "notes": {},
  "scores_test": {
   "experiments": {

@@ -1,7 +1,7 @@
 {
  "case": "audit_oracle_plus_1e-4",
  "hidden_returncode": 0,
- "hidden_seconds": 57.39,
+ "hidden_seconds": 50.76,
  "notes": {},
  "scores_test": {
   "experiments": {

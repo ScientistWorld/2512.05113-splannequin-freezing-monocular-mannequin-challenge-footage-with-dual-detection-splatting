@@ -1,7 +1,7 @@
 {
  "case": "posthoc_nearest_anchor_snap",
  "hidden_returncode": 0,
- "hidden_seconds": 63.93,
+ "hidden_seconds": 56.67,
  "notes": {},
  "scores_test": {
   "experiments": {

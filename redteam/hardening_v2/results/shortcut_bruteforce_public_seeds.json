@@ -1,7 +1,7 @@
 {
  "case": "shortcut_bruteforce_public_seeds",
  "hidden_returncode": 0,
- "hidden_seconds": 63.7,
+ "hidden_seconds": 53.41,
  "notes": {
   "bruteforce": {
    "synthetic_large_motion_test_00": {

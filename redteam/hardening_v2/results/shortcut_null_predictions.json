@@ -1,7 +1,7 @@
 {
  "case": "shortcut_null_predictions",
  "hidden_returncode": 0,
- "hidden_seconds": 35.38,
+ "hidden_seconds": 27.73,
  "notes": {},
  "scores_test": {
   "experiments": {

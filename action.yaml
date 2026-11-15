@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Hardening 12 audit run 2: smoke test, then reference (seed 0 train+test), seeds 1-2, baseline, no-defective, no-hidden, lambda 1/3/30, time-smoothness x10, old canonical-gradient anchoring, static on 40+16 hidden scenes with adaptive density control restored and fixed anchors; ~30 hidden-test cases; scores_{train,test}.json from the reference"
+notes: "Hardening 12 final check: seeds 1-2 of time-smoothness x10 and of no-defective on the 40+16 hidden scenes (28 single-thread trainings), rescore all cases with the hidden evaluator, seed-matched summary"

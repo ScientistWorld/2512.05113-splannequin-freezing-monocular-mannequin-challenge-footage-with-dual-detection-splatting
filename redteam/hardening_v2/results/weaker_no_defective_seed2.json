@@ -1,0 +1,44 @@
+{
+ "case": "weaker_no_defective_seed2",
+ "hidden_returncode": 0,
+ "hidden_seconds": 58.01,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016355694225022078,
+      "fvd": 32.815958610436944,
+      "instant_selectivity": 0.016210560508344282,
+      "lpips": 0.07425538526393692,
+      "psnr": 20.687087977210258,
+      "ssim": 0.7228716531753797
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012126475697626656,
+      "fvd": 24.826562130929975,
+      "instant_selectivity": -0.035214533043020094,
+      "lpips": 0.046758895036111435,
+      "psnr": 24.40722480072929,
+      "ssim": 0.8140723212709076
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/weaker_no_defective_seed2/scores_test.json for 1 method slot(s)\n"
+}

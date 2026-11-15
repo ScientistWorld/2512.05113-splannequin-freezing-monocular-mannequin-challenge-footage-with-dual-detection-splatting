@@ -1,7 +1,7 @@
 {
  "case": "shortcut_failed_method_baseline_only",
  "hidden_returncode": 0,
- "hidden_seconds": 86.69,
+ "hidden_seconds": 77.98,
  "notes": {},
  "scores_test": {
   "experiments": {

@@ -1,7 +1,7 @@
 {
  "case": "weaker_no_hidden",
  "hidden_returncode": 0,
- "hidden_seconds": 65.33,
+ "hidden_seconds": 56.55,
  "notes": {},
  "scores_test": {
   "experiments": {
