@@ -59,3 +59,16 @@
 - Rebuilt the benchmark with moving subjects, private test scenes and instants, and an evaluator-rendered frozen-state submission format with a 64-primitive gate. The reference method was restored to a 4DGaussians-style HexPlane model with the paper's Splannequin schedule (30k/10k/20k, λ = 10, τ = 5).
 - Near-static experiment, hidden test: Splannequin beats 4DGaussians (+0.33 ± 0.14 dB paired PSNR, better SSIM / LPIPS proxy / FVD proxy / edge). Hidden anchoring carries the effect. Defective anchoring has no measurable effect, so the Table 3 ablation claim is not reproduced. Under larger motion the gain vanishes, matching the paper's stated limitation.
 - Every shortcut from REDTEAM.md is closed or scores below the reference. Two genuine better variants beat the reference beyond seed noise. See HARDENING.md.
+
+### [2026-11-15] - core_claim_plus (iteration 12, hardening)
+- Addressed REVIEW.md:
+  - Scenes are now crowded: people near the start hide the far hallway until the camera passes them, the paper's "not yet reached" defective case.
+  - The hidden test grew to 40 near-static + 16 large-motion scenes.
+  - The reference was restored toward the paper: adaptive density control (capped at 64 primitives), 4DGaussians view-stack sampling, the 1e-9 defective threshold at the paper's frame size, and the anchor held fixed.
+- Hidden test results:
+  - Splannequin beats 4DGaussians by +1.01 ± 0.12 dB (near-static) and +0.87 ± 0.18 dB (large motion), and is better on SSIM, LPIPS proxy, FVD proxy and edge error in both.
+  - Hidden ablation −0.85 dB.
+  - The defective ablation goes the paper's direction on quality but is small, so Table 3 is only partly reproduced.
+  - Reference seed 0 sits between the other seeds.
+  - A better variant (time smoothness ×10) beats every reference seed with each of its three seeds.
+- New gate: a state identical at every timestamp fails the run. See HARDENING.md.

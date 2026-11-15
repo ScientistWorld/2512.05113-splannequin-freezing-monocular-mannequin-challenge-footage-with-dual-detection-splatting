@@ -19,6 +19,6 @@ At most 64 primitives per frozen state (enforced), with the fixed renderer and i
 ## Compliance Checklist
 
 - [ ] Reconstructs each scene from its own inputs only.
-- [ ] Produces one valid frozen state per timestamp, with ≤ 64 primitives, for every train and test scene.
+- [ ] Produces one valid frozen state per timestamp, with ≤ 64 primitives, for every train and test scene, and keeps instant selection (states are not identical at every timestamp).
 - [ ] Does not modify evaluators, scenes or the generator.
 - [ ] Reports visible scores with `bash scripts/evaluate_train.sh`.

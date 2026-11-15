@@ -95,3 +95,20 @@ The gym was rebuilt; see `HARDENING.md` for the design, the audit numbers and th
 - `synthetic_large_motion`: PSNR 21.044, SSIM 0.725, instant selectivity 0.051.
 
 The 4DGaussians baseline scores 24.051 / 21.056 dB.
+
+## Iteration 12 (hardening, 2026-11-15)
+
+This supersedes the sections above for the current gym; see `HARDENING.md`.
+
+- **Benchmark.** Crowded scenes: three people across the walking line hide the far hallway until the camera passes them. 8 + 8 public train scenes and 40 + 16 hidden test scenes, from new private seeds.
+- **Reference method.** Restored toward the paper:
+  - adaptive density control capped at the 64-primitive budget;
+  - 4DGaussians view-stack sampling;
+  - the defective gradient threshold expressed at the paper's 640×360 frame size;
+  - the anchor held fixed (no anchoring gradient into the shared canonical parameters).
+- **Evaluators.** A frozen state identical at every timestamp fails the run.
+- **Hidden-test results.**
+  - Reference 24.35 / 20.57 dB vs 4DGaussians 23.34 / 19.70 dB (near-static / large motion).
+  - No hidden anchoring: 23.49 / 19.72 dB.
+  - No defective anchoring: 24.31 / 20.40 dB.
+  - Time smoothness ×10 (better variant): 24.63–24.92 / 20.72–20.96 dB over three seeds.

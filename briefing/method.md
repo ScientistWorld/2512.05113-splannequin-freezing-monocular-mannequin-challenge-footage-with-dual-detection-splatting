@@ -18,19 +18,26 @@ Every 10 iterations, two random view–timestamp pairs are sampled. A hidden sta
 
 `method/splannequin.py` implements:
 
-- A 4DGaussians-style model: a HexPlane with xz, xt and zt planes, multires (1, 2), time resolution 25, and an MLP decoder producing position and log-scale offsets. Training follows 4DGaussians: a 3k-iteration coarse static stage, then the K-planes TV, time-smoothness and L1-time regularizers, one random frame per iteration, L1 photometric loss, and 3DGS learning rates.
-- Splannequin with the paper's settings.
+- A 4DGaussians-style model: a HexPlane with xz, xt and zt planes, multires (1, 2), time resolution 25, and an MLP decoder producing position and log-scale offsets.
+- 4DGaussians-style training:
+  - a 3k-iteration coarse static stage, then the K-planes TV, time-smoothness and L1-time regularizers;
+  - one frame per iteration, popped from a view stack without replacement;
+  - L1 photometric loss and 3DGS learning rates;
+  - standard adaptive density control capped at the 64-primitive budget: every 100 iterations from 500 to 15k, primitives with opacity < 0.005 are pruned and their slots refilled by splitting or cloning the highest-gradient primitives; opacity is reset every 3k iterations until 15k.
+- Splannequin with the paper's settings, with two notes:
+  - The defective test applies the paper's 1e-9 gradient threshold to the loss normalised like the paper's 640×360 RGB frames (`--grad-loss-values 691200`), so it keeps the paper's per-pixel meaning on a 128-pixel line.
+  - The anchor is held fixed: the anchoring gradient reaches the deformation of the ill-supervised state but not the canonical parameters it shares with the anchor. `--anchor-canonical-grad` restores the other reading.
 
-Variants (`--variant`): `splannequin` (reference), `baseline` (4DGaussians without anchoring), `static` (3DGS-style, no deformation), `no_hidden`, `no_defective`. `--snap-out-dir` additionally exports a post-hoc variant that copies each ill-supervised state from its nearest well-supervised time.
+Variants (`--variant`): `splannequin` (reference), `baseline` (4DGaussians without anchoring), `static` (3DGS-style, no deformation; it fails the evaluator's instant-selection gate), `no_hidden`, `no_defective`. `--snap-out-dir` additionally exports a post-hoc variant that copies each ill-supervised state from its nearest well-supervised time.
 
-The scale-downs are 2D scenes with 1D image lines, 64 primitives with no densification, and several scenes trained as independent batch entries.
+The scale-downs are 2D scenes with 1D image lines, a 64-primitive cap on densification, and several scenes trained as independent batch entries.
 
 ## Main Claims
 
 Dual detection plus temporal anchoring reduces ghosting and blur in fixed-time renderings and improves full-reference quality over the dynamic baseline on synthetic scenes (Table 1). Both anchors are claimed to be necessary (Table 3). The method adds zero inference overhead. Unlike static 3DGS, it keeps user-selectable instants (Sec. 6.4, Table 4).
 
-In this gym:
-- The Table 1 direction reproduces on the near-static experiment.
-- Hidden anchoring carries the effect.
-- Defective anchoring has little measurable effect.
-- Under larger motion, the method's gain over the baseline vanishes, consistent with the paper's stated limitation.
+In this gym (hidden test, see `HARDENING.md`):
+- **Table 1 direction reproduces in both experiments.** Splannequin beats 4DGaussians by +1.0 dB PSNR (near-static) and +0.9 dB (large motion), and is better on SSIM, the LPIPS proxy, the FVD proxy and edge error.
+- **Hidden anchoring is necessary** (−0.85 dB without it).
+- **Defective anchoring helps only a little.** It goes the paper's direction on quality, mostly on early freeze instants, but is small (≈ −0.02 to −0.06 dB PSNR, −0.15 dB on early instants). The paper's finding that it matters more than hidden anchoring is not reproduced.
+- **Static reconstruction matches the method on some quality metrics but loses instant selection.** It is better on SSIM, LPIPS and FVD in the near-static experiment (as in Table 4) but loses on PSNR, under large motion, and on instant selection.

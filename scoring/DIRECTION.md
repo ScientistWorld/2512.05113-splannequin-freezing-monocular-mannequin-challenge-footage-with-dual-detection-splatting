@@ -14,4 +14,4 @@ In scope are approaches that address fixed-time rendering from sparse monocular 
 
 ## Out of Bounds
 
-Static reconstruction is out of bounds because it removes instant selection; it also scores 0 or lower on `instant_selectivity`. So are feed-forward renderers, video diffusion, generic image generators, raising scene capacity, or training priors on external data or extra generated scenes.
+Static reconstruction is out of bounds because it removes instant selection; a state identical at every timestamp fails the run, and any instant-independent render scores 0 or lower on `instant_selectivity`. So are feed-forward renderers, video diffusion, generic image generators, raising scene capacity, or training priors on external data or extra generated scenes.
