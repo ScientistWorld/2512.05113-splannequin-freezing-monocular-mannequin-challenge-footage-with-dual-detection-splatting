@@ -1,5 +1,3 @@
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: core_claim_plus
-notes: "Hardening 12 final check: seeds 1-2 of time-smoothness x10 and of no-defective on the 40+16 hidden scenes (28 single-thread trainings), rescore all cases with the hidden evaluator, seed-matched summary"
+notes: "Hardening 12: crowded scenes + 40/16 hidden test; reference restored toward the paper (capped densification, view stack, frame-size defective threshold, fixed anchor) now beats 4DGaussians by +1.0/+0.9 dB; seed 0 mid-pack, better variant beats every reference seed; defective ablation only partly reproduced; exact-static gate added"
