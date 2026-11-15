@@ -1,0 +1,44 @@
+{
+ "case": "better_lambda1",
+ "hidden_returncode": 0,
+ "hidden_seconds": 65.06,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016663312369521486,
+      "fvd": 33.64350573812252,
+      "instant_selectivity": 0.022948517391964292,
+      "lpips": 0.07617102995013313,
+      "psnr": 20.594141624808056,
+      "ssim": 0.7157787392923177
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012403162610375437,
+      "fvd": 25.327294332625335,
+      "instant_selectivity": -0.031016943888822163,
+      "lpips": 0.04768589864172655,
+      "psnr": 24.25097756126395,
+      "ssim": 0.8072342645548974
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/better_lambda1/scores_test.json for 1 method slot(s)\n"
+}

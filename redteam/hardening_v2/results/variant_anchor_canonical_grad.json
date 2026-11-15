@@ -1,0 +1,44 @@
+{
+ "case": "variant_anchor_canonical_grad",
+ "hidden_returncode": 0,
+ "hidden_seconds": 63.68,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01753479136589325,
+      "fvd": 34.34825723676851,
+      "instant_selectivity": -0.027481511360720093,
+      "lpips": 0.07892241496462614,
+      "psnr": 20.121993198662484,
+      "ssim": 0.7029567076179134
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.013504608918404892,
+      "fvd": 27.03888252072749,
+      "instant_selectivity": -0.08331563338979338,
+      "lpips": 0.049735325605935396,
+      "psnr": 23.597410829390547,
+      "ssim": 0.7922619840267935
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/variant_anchor_canonical_grad/scores_test.json for 1 method slot(s)\n"
+}

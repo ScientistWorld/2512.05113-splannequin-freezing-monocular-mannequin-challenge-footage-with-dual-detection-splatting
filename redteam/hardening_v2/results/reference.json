@@ -1,0 +1,81 @@
+{
+ "case": "reference",
+ "hidden_returncode": 0,
+ "hidden_seconds": 67.49,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016579626297314524,
+      "fvd": 33.18878301143257,
+      "instant_selectivity": 0.005169373792644917,
+      "lpips": 0.07632465307811669,
+      "psnr": 20.57119590569282,
+      "ssim": 0.7181134775692731
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012134346702376968,
+      "fvd": 24.880815223315192,
+      "instant_selectivity": -0.04785311610856078,
+      "lpips": 0.04681033303807292,
+      "psnr": 24.347597276554822,
+      "ssim": 0.8125678802484458
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "scores_train": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.01506437924657003,
+      "fvd": 31.565280849813217,
+      "instant_selectivity": -0.0331677545373239,
+      "lpips": 0.06853767522014965,
+      "psnr": 21.577338891595307,
+      "ssim": 0.7378487781547607
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012350488253208253,
+      "fvd": 23.135153324405014,
+      "instant_selectivity": 0.005703582053254355,
+      "lpips": 0.04161308410722923,
+      "psnr": 25.017097018092922,
+      "ssim": 0.8239120457475219
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 8,
+    "synthetic_validation_paper": 8
+   },
+   "slice": "train"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/reference/scores_test.json for 1 method slot(s)\n",
+ "train_returncode": 0
+}

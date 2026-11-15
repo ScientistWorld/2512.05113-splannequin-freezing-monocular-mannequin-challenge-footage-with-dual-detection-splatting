@@ -1,0 +1,44 @@
+{
+ "case": "shortcut_forged_fields",
+ "hidden_returncode": 0,
+ "hidden_seconds": 61.54,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016579626297314524,
+      "fvd": 33.18878301143257,
+      "instant_selectivity": 0.005169373792644917,
+      "lpips": 0.07632465307811669,
+      "psnr": 20.57119590569282,
+      "ssim": 0.7181134775692731
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012134346702376968,
+      "fvd": 24.880815223315192,
+      "instant_selectivity": -0.04785311610856078,
+      "lpips": 0.04681033303807292,
+      "psnr": 24.347597276554822,
+      "ssim": 0.8125678802484458
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/shortcut_forged_fields/scores_test.json for 1 method slot(s)\n"
+}

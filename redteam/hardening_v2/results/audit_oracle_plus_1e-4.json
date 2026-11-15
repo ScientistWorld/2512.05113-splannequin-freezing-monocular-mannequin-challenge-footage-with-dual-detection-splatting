@@ -1,0 +1,44 @@
+{
+ "case": "audit_oracle_plus_1e-4",
+ "hidden_returncode": 0,
+ "hidden_seconds": 57.39,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 5.765326200081134e-05,
+      "fvd": 0.16416120636235293,
+      "instant_selectivity": 0.9979326250767638,
+      "lpips": 0.00017007067621483576,
+      "psnr": 73.33168153976693,
+      "ssim": 0.9999282202762837
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 5.4646968138228966e-05,
+      "fvd": 0.10987221531921429,
+      "instant_selectivity": 0.9964330837285598,
+      "lpips": 0.00014271402399467309,
+      "psnr": 73.42276049672549,
+      "ssim": 0.9999725674709876
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/audit_oracle_plus_1e-4/scores_test.json for 1 method slot(s)\n"
+}

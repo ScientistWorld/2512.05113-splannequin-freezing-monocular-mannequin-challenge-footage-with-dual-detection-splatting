@@ -1,0 +1,44 @@
+{
+ "case": "variant_lambda30",
+ "hidden_returncode": 0,
+ "hidden_seconds": 68.8,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016628530505341917,
+      "fvd": 33.3758762922218,
+      "instant_selectivity": -0.016157946975000365,
+      "lpips": 0.07731188122518041,
+      "psnr": 20.245980448772936,
+      "ssim": 0.7175345782879069
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.012141198267050702,
+      "fvd": 24.69439827560672,
+      "instant_selectivity": -0.05997043698169409,
+      "lpips": 0.04691696115422131,
+      "psnr": 24.374709753371203,
+      "ssim": 0.8126220945309169
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/variant_lambda30/scores_test.json for 1 method slot(s)\n"
+}

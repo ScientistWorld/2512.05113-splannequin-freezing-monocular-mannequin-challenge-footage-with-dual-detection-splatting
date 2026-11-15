@@ -1,0 +1,44 @@
+{
+ "case": "variant_time_smoothness_x10",
+ "hidden_returncode": 0,
+ "hidden_seconds": 70.32,
+ "notes": {},
+ "scores_test": {
+  "experiments": {
+   "synthetic_large_motion": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.016295570015362377,
+      "fvd": 33.02791372847962,
+      "instant_selectivity": 0.021349826799228096,
+      "lpips": 0.07381144312058892,
+      "psnr": 20.72296631604205,
+      "ssim": 0.7267760037759879
+     }
+    }
+   },
+   "synthetic_validation_paper": {
+    "results": {
+     "4dgaussians_splannequin": {
+      "edge_mae": 0.011889049253259946,
+      "fvd": 24.909789546298718,
+      "instant_selectivity": -0.01715680267533959,
+      "lpips": 0.04534902946102135,
+      "psnr": 24.62643912962341,
+      "ssim": 0.8189867494347499
+     }
+    }
+   }
+  },
+  "metadata": {
+   "failed_methods": {},
+   "scenes_per_experiment": {
+    "synthetic_large_motion": 16,
+    "synthetic_validation_paper": 40
+   },
+   "slice": "test"
+  }
+ },
+ "stderr_tail": "",
+ "stdout_tail": "[evaluate_test] wrote /home/user/tmp/hardening_v2/cases/variant_time_smoothness_x10/scores_test.json for 1 method slot(s)\n"
+}
