@@ -79,6 +79,10 @@ def tasks():
     add("lambda30", "splannequin", 0, ["--lambda-hidden", "30", "--lambda-defective", "30"], "test", METHODS / "splannequin_lambda30")
     add("baseline", "baseline", 0, [], "train", METHODS / "baseline")
     add("static", "static", 0, [], "train", METHODS / "static")
+    # Seed-matched repeats of the best honest variant and of the defective ablation.
+    for sd in (1, 2):
+        add(f"smooth10_seed{sd}", "splannequin", sd, ["--time-smoothness-weight", "0.1"], "test", METHODS / f"splannequin_smooth10_seed{sd}")
+        add(f"no_defective_seed{sd}", "no_defective", sd, [], "test", METHODS / f"no_defective_seed{sd}")
     return t
 
 
@@ -250,6 +254,10 @@ def case_specs():
         "variant_lambda30": ("science", {"splannequin": m / "splannequin_lambda30"}),
         "variant_time_smoothness_x10": ("science", {"splannequin": m / "splannequin_smooth10"}),
         "variant_anchor_canonical_grad": ("science", {"splannequin": m / "splannequin_canonical_grad"}),
+        "variant_time_smoothness_x10_seed1": ("seed_repeat", {"splannequin": m / "splannequin_smooth10_seed1"}),
+        "variant_time_smoothness_x10_seed2": ("seed_repeat", {"splannequin": m / "splannequin_smooth10_seed2"}),
+        "weaker_no_defective_seed1": ("seed_repeat", {"splannequin": m / "no_defective_seed1"}),
+        "weaker_no_defective_seed2": ("seed_repeat", {"splannequin": m / "no_defective_seed2"}),
         "posthoc_nearest_anchor_snap": ("science", {"splannequin": m / "splannequin_snap"}),
         "static_plus_epsilon": ("science", {"splannequin": ("modify", "nudge", m / "static")}),
         "simple_init_points": ("trivial", {"splannequin": "init_points"}),
@@ -500,6 +508,51 @@ def cmd_summary():
     deltas = [delta(n) for n in seeds]
     spread["illustrative_rank_delta"] = {"values": deltas, "range": float(max(deltas) - min(deltas)) if deltas else None}
     summary["seed_spread"] = spread
+
+    # Seed-matched comparisons: variant at seed k vs reference at seed k (same inputs, same
+    # seed), pooled over seeds 0-2; and 3-seed means with their illustrative rank delta
+    # against the 3-seed mean of the reference.
+    seed_names = {
+        "reference": ["reference", "reference_seed1", "reference_seed2"],
+        "variant_time_smoothness_x10": ["variant_time_smoothness_x10", "variant_time_smoothness_x10_seed1", "variant_time_smoothness_x10_seed2"],
+        "weaker_no_defective": ["weaker_no_defective", "weaker_no_defective_seed1", "weaker_no_defective_seed2"],
+    }
+    matched = {}
+    for var, names in seed_names.items():
+        if var == "reference" or not all(n in tables and all(tables[n].values()) for n in names + seed_names["reference"]):
+            continue
+        entry = {}
+        for exp in EXPERIMENTS:
+            per_metric = {}
+            for metric in ("psnr", "ssim", "lpips", "fvd", "edge_mae", "instant_selectivity"):
+                diffs, early = [], []
+                for vn, rn in zip(names, seed_names["reference"]):
+                    dv = [d for d in _details(vn) if d["experiment"] == exp]
+                    dr = [d for d in _details(rn) if d["experiment"] == exp]
+                    diffs += [a[metric] - b[metric] for a, b in zip(dv, dr)]
+                    if metric == "psnr":
+                        for a, b in zip(dv, dr):
+                            k = len(a["per_freeze_psnr"])
+                            early.append(float(np.mean(np.asarray(a["per_freeze_psnr"][: k // 3]) - np.asarray(b["per_freeze_psnr"][: k // 3]))))
+                diffs = np.asarray(diffs)
+                per_metric[metric] = {"mean": float(diffs.mean()), "se": float(diffs.std(ddof=1) / np.sqrt(diffs.size)), "n": int(diffs.size)}
+                if early:
+                    per_metric["psnr_early_third"] = {"mean": float(np.mean(early)), "se": float(np.std(early, ddof=1) / np.sqrt(len(early)))}
+            entry[exp] = per_metric
+        means = {exp: {m: float(np.mean([tables[n][exp][m] for n in names])) for m in ref_cfg[exp]["metrics"]} for exp in EXPERIMENTS}
+        ref_means = {exp: {m: float(np.mean([tables[n][exp][m] for n in seed_names["reference"]])) for m in ref_cfg[exp]["metrics"]} for exp in EXPERIMENTS}
+        tot = 0.0
+        for exp in EXPERIMENTS:
+            for metric, spec in ref_cfg[exp]["metrics"].items():
+                if sd[(exp, metric)] > 0:
+                    sign = 1.0 if spec["higher_is_better"] else -1.0
+                    tot += ref_cfg[exp]["weight"] * abs(spec["coefficient"]) * sign * (means[exp][metric] - ref_means[exp][metric]) / sd[(exp, metric)]
+        entry["three_seed_means"] = means
+        entry["reference_three_seed_means"] = ref_means
+        entry["illustrative_rank_delta_of_three_seed_means"] = tot
+        entry["per_seed_illustrative_rank_delta"] = [delta(n) for n in names]
+        matched[var] = entry
+    summary["seed_matched"] = matched
     (ROOT / "redteam" / "hardening_v2" / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True))
 
     cols = ("psnr", "ssim", "lpips", "fvd", "edge_mae", "instant_selectivity")
@@ -518,6 +571,7 @@ def cmd_summary():
     for name, c in summary["cases"].items():
         if c["paired_vs_reference"]:
             print(name, json.dumps(c["paired_vs_reference"]))
+    print(json.dumps(matched, indent=1))
     return 0
 
 

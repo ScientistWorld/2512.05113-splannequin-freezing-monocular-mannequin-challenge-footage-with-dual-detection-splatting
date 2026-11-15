@@ -1,7 +1,7 @@
 {
   "experiments": {
     "synthetic_validation_paper": {
-      "description": "Scaled counterpart of the paper's synthetic validation (Table 1): a forward-moving monocular camera (96 frames) through a near-static scene whose subjects make small smooth unintended motions; every input camera pose is rendered at evaluator-chosen freeze instants (every 8th frame from a private per-scene offset, 12 instants) and compared with the true scene state at that instant. 16 hidden test scenes. Validity gate (zero inference overhead): a submission is a frozen Gaussian state per timestamp with at most 64 primitives, rendered by the evaluator's fixed rasterizer; exceeding the budget, a missing scene, or any non-finite/out-of-range value fails the run (worst value of every metric in every experiment). Non-underscore results are this gym's hidden-test reference values (4dgaussians = the same dynamic model without anchoring, for context; it is not a ranked slot); underscore results are the paper's reported numbers on its own scale.",
+      "description": "Scaled counterpart of the paper's synthetic validation (Table 1): a forward-moving monocular camera (96 frames) through a crowded, near-static hallway (a group of people stands across the walking line near the start and hides the rest of the hallway until the camera has passed them; subjects make small smooth unintended motions); every input camera pose is rendered at evaluator-chosen freeze instants (every 8th frame from a private per-scene offset, 12 instants) and compared with the true scene state at that instant. 40 hidden test scenes. Validity gate (zero inference overhead, instant selection): a submission is a frozen Gaussian state per timestamp with at most 64 primitives, rendered by the evaluator's fixed rasterizer; exceeding the budget, a missing scene, any non-finite/out-of-range value, or a state identical at every timestamp of a scene fails the run (worst value of every metric in every experiment). Non-underscore results are this gym's hidden-test reference values (4dgaussians = the same dynamic model without anchoring, for context; it is not a ranked slot); underscore results are the paper's reported numbers on its own scale.",
       "weight": 0.7,
       "primary_metric": "psnr",
       "metrics": {
@@ -32,28 +32,28 @@
         },
         "instant_selectivity": {
           "higher_is_better": true,
-          "coefficient": 1.5,
+          "coefficient": 1.0,
           "description": "Constraint metric for user-selectable freeze instants (the capability the paper claims over static 3DGS, Sec. 6.4 / Table 4): fraction of the true instant-specific appearance change recovered, sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|) over the evaluated freeze instants j of a scene, averaged over scenes. Range [-1, 1]; 1 = true freeze-time videos; any render that is the same for every instant scores at most 0; pixels that never change contribute nothing. A submission whose frozen state is identical at every timestamp of a scene fails the run outright."
         }
       },
       "results": {
         "4dgaussians_splannequin": {
           "type": "proposed",
-          "edge_mae": 0.013607,
-          "fvd": 23.79422,
-          "instant_selectivity": 0.033246,
-          "lpips": 0.044854,
-          "psnr": 24.381052,
-          "ssim": 0.815114
+          "edge_mae": 0.012134,
+          "fvd": 24.880815,
+          "instant_selectivity": -0.047853,
+          "lpips": 0.04681,
+          "psnr": 24.347597,
+          "ssim": 0.812568
         },
         "4dgaussians": {
           "type": "baseline",
-          "edge_mae": 0.014894,
-          "fvd": 25.936343,
-          "instant_selectivity": 0.117866,
-          "lpips": 0.048024,
-          "psnr": 24.050765,
-          "ssim": 0.796087
+          "edge_mae": 0.014207,
+          "fvd": 28.471988,
+          "instant_selectivity": 0.004227,
+          "lpips": 0.054813,
+          "psnr": 23.337295,
+          "ssim": 0.775308
         },
         "_paper_4dgaussians": {
           "type": "baseline",
@@ -73,7 +73,7 @@
       "_paper_results_note": "Paper Table 1 (synthetic Blender scenes, 4DGaussians vs 4DGaussians + Splannequin, 2D images, true LPIPS/FVD). Not on this gym's scale (1D image lines, proxy LPIPS/FVD); kept for reference only."
     },
     "synthetic_large_motion": {
-      "description": "Stress test from the paper's stated limitation (Sec. 7: the method assumes nearly static scenes and degrades under larger motion; motion thresholds left for future work). Same protocol, validity gate and metrics as synthetic_validation_paper, but subject motion is about 2x larger and decorrelates about 2x faster. No paper numbers exist for this setting; results are this gym's hidden-test reference values.",
+      "description": "Stress test from the paper's stated limitation (Sec. 7: the method assumes nearly static scenes and degrades under larger motion; motion thresholds left for future work). Same scenes, protocol, validity gate and metrics as synthetic_validation_paper, but subject motion is about 2x larger and decorrelates about 2x faster. 16 hidden test scenes. No paper numbers exist for this setting; results are this gym's hidden-test reference values.",
       "weight": 0.3,
       "primary_metric": "psnr",
       "metrics": {
@@ -104,28 +104,28 @@
         },
         "instant_selectivity": {
           "higher_is_better": true,
-          "coefficient": 1.5,
+          "coefficient": 1.0,
           "description": "Constraint metric for user-selectable freeze instants (the capability the paper claims over static 3DGS, Sec. 6.4 / Table 4): fraction of the true instant-specific appearance change recovered, sum(|R_j - mean_j G| - |R_j - G_j|) / sum(|G_j - mean_j G|) over the evaluated freeze instants j of a scene, averaged over scenes. Range [-1, 1]; 1 = true freeze-time videos; any render that is the same for every instant scores at most 0; pixels that never change contribute nothing. A submission whose frozen state is identical at every timestamp of a scene fails the run outright."
         }
       },
       "results": {
         "4dgaussians_splannequin": {
           "type": "proposed",
-          "edge_mae": 0.017729,
-          "fvd": 30.464362,
-          "instant_selectivity": 0.051139,
-          "lpips": 0.067778,
-          "psnr": 21.043574,
-          "ssim": 0.725398
+          "edge_mae": 0.01658,
+          "fvd": 33.188783,
+          "instant_selectivity": 0.005169,
+          "lpips": 0.076325,
+          "psnr": 20.571196,
+          "ssim": 0.718113
         },
         "4dgaussians": {
           "type": "baseline",
-          "edge_mae": 0.019,
-          "fvd": 32.03114,
-          "instant_selectivity": 0.13658,
-          "lpips": 0.069071,
-          "psnr": 21.056464,
-          "ssim": 0.710436
+          "edge_mae": 0.019441,
+          "fvd": 37.517491,
+          "instant_selectivity": 0.039043,
+          "lpips": 0.087258,
+          "psnr": 19.702607,
+          "ssim": 0.671841
         }
       }
     }
